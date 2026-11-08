@@ -103,6 +103,12 @@
       .hero-content { max-width: 74%; }
       .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
+    @media (max-width: 700px) {
+      .file { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: start; gap: 8px 12px; }
+      .file-icon { grid-column: 1; }
+      .file-name { grid-column: 2; min-width: 0; }
+      .file-actions { grid-column: 1 / -1; flex-wrap: wrap; min-width: 0; }
+    }
     @media (max-width: 480px) {
       .shell { padding-inline: 16px; }
       .archive-nav { flex-direction: column; align-items: flex-start; }
@@ -116,8 +122,6 @@
       .card-foot .meta { font-size: 10px; }
       .folder-grid { grid-template-columns: 1fr; }
       .folder-card { min-height: 132px; }
-      .file { flex-wrap: wrap; }
-      .file-actions { margin-left: 48px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
   </style>
