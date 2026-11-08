@@ -14,13 +14,11 @@ const next = document.getElementById('next');
 const out = document.getElementById('out');
 const zoomIn = document.getElementById('in');
 const zoomLabel = document.getElementById('zoom-label');
-const mobileMode = document.getElementById('mobile-mode');
-const pageMode = document.getElementById('page-mode');
 const navigationMode = document.getElementById('navigation-mode');
 backLink.href = './' + (/^#dersler(?:\/|$)/.test(back) ? back : '#dersler');
 
 let documentPdf, pageNumber = 1, zoom = 1;
-let readingMode = window.matchMedia('(max-width: 600px)').matches;
+const readingMode = false;
 let continuous = true, slots = [], observer, scrollFrame = 0;
 let navigationAnchor = null, anchorObserver, anchorTimer, anchorFrame = 0;
 let source;
@@ -47,9 +45,7 @@ function updateControls() {
   zoomIn.disabled = !documentPdf || zoom >= 2.5;
   counter.textContent = documentPdf ? `${pageNumber} / ${documentPdf.numPages}` : '— / —';
   zoomLabel.textContent = `%${Math.round(zoom * 100)}`;
-  mobileMode.disabled = pageMode.disabled = navigationMode.disabled = !documentPdf;
-  mobileMode.setAttribute('aria-pressed', String(readingMode));
-  pageMode.setAttribute('aria-pressed', String(!readingMode));
+  navigationMode.disabled = !documentPdf;
 }
 function finishPage(slot, content) {
   slot.element.replaceChildren(content);
@@ -319,9 +315,6 @@ pages.addEventListener('pointerup', event => {
   if (!continuous && Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.5) goToPage(pageNumber + (dx < 0 ? 1 : -1));
 });
 
-function selectView(mobile) { if (readingMode === mobile) return; readingMode = mobile; zoom = 1; updateControls(); refreshPages(); }
-mobileMode.addEventListener('click', () => selectView(true));
-pageMode.addEventListener('click', () => selectView(false));
 navigationMode.addEventListener('change', () => { continuous = navigationMode.value === 'continuous'; refreshPages(); });
 previous.addEventListener('click', () => goToPage(pageNumber - 1));
 next.addEventListener('click', () => goToPage(pageNumber + 1));
