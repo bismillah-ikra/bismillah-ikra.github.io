@@ -1,0 +1,102 @@
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  src: url('NotoNaskhArabic-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+.site-header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 24px);
+  min-height: 64px;
+  padding: 7px clamp(12px, 3vw, 32px);
+}
+
+.site-mark {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  min-width: 65px;
+  min-height: 44px;
+  padding: 0 7px;
+  border: 1px solid #a9876b;
+  border-radius: 10px;
+  background: radial-gradient(ellipse at top, #344766, #141f33 78%);
+  box-shadow: inset 0 1px 1px #fff3, 0 2px 3px #0b142828;
+  color: #fff1e0;
+  text-decoration: none;
+}
+
+.site-mark span {
+  font: 24px/1.4 'Noto Naskh Arabic', serif;
+  text-shadow: 0 1px #c4a182, 0 2px #624337;
+  white-space: nowrap;
+}
+
+.site-header .site-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 3px;
+}
+
+.site-header .site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 5px clamp(6px, 1.4vw, 14px);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: clamp(12px, 2vw, 14px);
+  font-weight: 650;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.site-header .site-nav a:hover,
+.site-header .site-nav a[aria-current="page"] {
+  background: var(--accent-soft, var(--blue-soft));
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 5px 12px 5px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--accent, var(--navy));
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  border-color: #9caec2;
+  background: var(--accent-soft, var(--blue-soft));
+}
+
+.back-link-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--accent-soft, var(--blue-soft));
+}
+
+.back-link .back-link-icon svg {
+  width: 16px;
+  height: 16px;
+}
