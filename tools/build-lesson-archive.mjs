@@ -38,7 +38,8 @@ export async function buildLessonArchive(root, output) {
         if (word) {
           const wordFilename = filename.replace(/\.pdf$/i, '.docx');
           await writeFile(join(destination, wordFilename), await buildWord(word.entries, join(wordDirectory, 'parts')));
-          record.wordUrl = urlPrefix + encodeURIComponent(wordFilename);
+          const wordVersion = createHash('sha256').update(JSON.stringify(word.entries)).digest('hex').slice(0, 16);
+          record.wordUrl = urlPrefix + encodeURIComponent(wordFilename) + '?v=' + wordVersion;
           record.wordName = word.name;
         }
         files.push(record);
