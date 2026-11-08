@@ -1,0 +1,8 @@
+{
+  "name": "calisma-sorulari",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node test.cjs"
+  }
+}

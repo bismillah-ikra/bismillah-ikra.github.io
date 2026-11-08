@@ -1,0 +1,3 @@
+*.pdf binary
+*.z binary
+site/assets/pdfjs/**/LICENSE* -whitespace
