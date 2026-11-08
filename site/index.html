@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="3. sınıf ders dosyaları ve çalışma soruları.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light dark">
+  <title>Paylaşım</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css?v=soru-pdf-1">
+  <link rel="stylesheet" href="assets/brand.css?v=menu-kisa-1">
+  <script src="dersler/courses.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="course-data.js?v=tefsir-tum-haftalar" defer></script>
+  <script src="model.js?v=kayit-2" defer></script>
+  <script src="app.js?v=soru-pdf-1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">İçeriğe geç</a>
+  <header class="site-header" id="site-header">
+    <div class="site-header-inner">
+      <a class="site-mark" href="#home" aria-label="Ana sayfa"><span class="besmele-full" lang="ar" dir="rtl">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</span><span class="besmele-short" lang="ar" dir="rtl">بِسْمِ اللَّهِ</span></a>
+      <nav class="site-nav" aria-label="Ana menü">
+        <a href="./dersler/">Öğren</a>
+        <a id="practice-nav" href="#sorular">Pratik</a>
+      </nav>
+      <button id="theme" class="icon-button site-theme" aria-label="Koyu temayı aç" title="Temayı değiştir"></button>
+    </div>
+  </header>
+  <aside class="sidebar" id="course-sidebar" aria-label="Ders gezinmesi">
+    <button class="course-label" id="course-switch" type="button" data-action="switch-course" aria-label="Din-Bilim İlişkisi, ders değiştir" aria-haspopup="dialog" aria-controls="course-picker">
+      <span class="course-label-copy">
+        <strong id="current-course-name">Din-Bilim İlişkisi</strong>
+        <small id="course-switch-caption">Ders değiştir</small>
+      </span>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg>
+    </button>
+    <button class="course-menu-toggle" id="course-menu-toggle" type="button" aria-expanded="false" aria-controls="course-menu">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5h12M4 10h12M4 15h12"/></svg>
+      <span>Çalışma seçenekleri</span>
+    </button>
+    <div class="course-menu" id="course-menu">
+      <nav id="nav" aria-label="Çalışma seçenekleri"></nav>
+      <nav id="extra-question-nav" aria-label="Ek soru seti" hidden></nav>
+      <div class="sidebar-bottom">
+        <span id="storage-status" data-saved="false">Yalnızca bu oturum</span>
+        <a id="course-settings" href="#settings">Gizlilik ve tercihler <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </aside>
+  <div class="workspace">
+    <main id="main" tabindex="-1"></main>
+    <footer><span>Çalışma Soruları</span><a id="footer-settings" href="#settings">Gizlilik</a></footer>
+  </div>
+  <dialog class="course-picker" id="course-picker" aria-labelledby="course-picker-title">
+    <div class="course-picker-head">
+      <h2 id="course-picker-title">Ders değiştir</h2>
+      <form method="dialog">
+        <button class="icon-button" type="submit" aria-label="Ders seçiciyi kapat" autofocus>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+        </button>
+      </form>
+    </div>
+    <div id="course-picker-options"></div>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-text"></p><div class="actions"><button id="confirm-cancel" class="secondary">Vazgeç</button><button id="confirm-ok" class="primary">Onayla</button></div></dialog>
+  <noscript>Bu çalışma platformunu kullanmak için tarayıcınızda JavaScript’i etkinleştirin.</noscript>
+</body>
+</html>

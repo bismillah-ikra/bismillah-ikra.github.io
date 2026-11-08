@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF Görüntüleyici · Paylaşım</title>
+  <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
+  <style>
+    *{box-sizing:border-box} body{margin:0;background:#e9e6df;color:#202a3b;font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
+    .toolbar{position:sticky;top:0;z-index:2;background:#fffdf9;border-bottom:1px solid #ddd6cc;box-shadow:0 3px 12px #23334e12}
+    .top{max-width:1120px;margin:auto;display:flex;align-items:center;gap:12px;padding:11px 18px}
+    .back,.download,button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 13px;border:1px solid #d8d6d0;border-radius:8px;background:#fff;color:#243a5e;text-decoration:none;font:600 13px system-ui;cursor:pointer}
+    .back:hover,.download:hover,button:hover:not(:disabled){background:#eaf0f8} button:disabled{opacity:.4;cursor:default}
+    .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:650;font-size:14px}
+    .controls{max-width:1120px;margin:auto;padding:0 18px 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .counter{min-width:86px;text-align:center;font-variant-numeric:tabular-nums;font-size:13px;font-weight:600}.zoom{margin-left:auto;display:flex;gap:8px;align-items:center}
+    main{max-width:1120px;margin:0 auto;padding:24px 16px 48px}.sheet{display:flex;justify-content:safe center;overflow:auto;min-height:300px} .page-wrap{position:relative;flex:none}.annotations{position:absolute;inset:0}.annotations a{position:absolute;display:block}.annotations a:focus-visible{outline:3px solid #98724c;background:#d1e5ff66} canvas{display:block;max-width:none;height:auto;background:white;box-shadow:0 4px 20px #14203328}
+    .view-switch{max-width:1120px;margin:0 auto;padding:0 18px 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .view-options{display:inline-flex;gap:3px;padding:3px;background:#edf1f5;border:1px solid #dce2ea;border-radius:10px}
+    .view-options button{min-height:38px;border:0;background:transparent;color:#546277;padding:7px 16px;font-weight:600;box-shadow:none}
+    .view-options button[aria-pressed="true"]{background:#fff;color:#20385f;box-shadow:0 1px 4px #1b2e4c20}
+    .view-options button:hover:not(:disabled){background:#fff}
+    .view-switch select{min-height:44px;padding:7px 8px;border:1px solid #d8d6d0;border-radius:8px;background:#fff;color:#243a5e;font:600 13px system-ui}
+    .page-list{display:grid;gap:18px}
+    .pdf-page{min-width:0}
+    .single-page .reading,.single-page .sheet:not(.wide){touch-action:pan-y pinch-zoom}
+    button:focus-visible,a:focus-visible{outline:3px solid #98724c;outline-offset:2px}
+    .reading{max-width:760px;margin:auto;padding:26px 30px;background:#fffdf9;border:1px solid #ddd6cc;border-radius:10px;box-shadow:0 4px 20px #14203312;color:#202a3b;font-size:calc(19px * var(--reading-zoom, 1));line-height:1.75;overflow-wrap:anywhere;unicode-bidi:plaintext}
+    .reading p{margin:0 0 .32em;white-space:pre-wrap}.reading[hidden],.sheet[hidden]{display:none}
+    .message{margin:0 auto 16px;text-align:center;color:#505c70;font-size:14px;min-height:22px} .message:empty{display:none}
+    .browser-open{display:flex;width:max-content;margin:0 auto 16px}.download[hidden]{display:none}
+    @media(max-width:560px){.top{padding:9px 12px;gap:8px}.back,.download,button{padding:7px 10px;font-size:12px}.name{font-size:12px}.controls{padding:0 12px 9px;gap:5px}.counter{min-width:65px;font-size:12px}.zoom{gap:5px}main{padding:16px 12px 36px}.view-switch{padding:0 12px 9px}.view-options{display:flex;flex:1}.view-options button{flex:1;padding:7px 8px}.view-switch select{font-size:12px}.reading{padding:20px 18px}}
+  </style>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="top"><a id="back" class="back" href="./">← Dosyalara dön</a><span class="name" id="name">PDF görüntüleyici</span><a id="download" class="download" hidden>İndir</a></div>
+    <div class="view-switch">
+      <div class="view-options" role="group" aria-label="Görüntüleme biçimi"><button id="mobile-mode" type="button" aria-pressed="false" disabled>Telefona uygun</button><button id="page-mode" type="button" aria-pressed="false" disabled>PDF sayfası</button></div>
+      <select id="navigation-mode" aria-label="Sayfa geçişi" disabled><option value="continuous">Dikey akış</option><option value="single">Tek sayfa</option></select>
+    </div>
+    <div class="controls" aria-label="PDF kontrolleri">
+      <button id="previous" type="button" disabled>Önceki</button><span class="counter" id="counter" aria-live="polite">— / —</span><button id="next" type="button" disabled>Sonraki</button>
+      <div class="zoom"><button id="out" type="button" aria-label="Uzaklaştır" disabled>−</button><span id="zoom-label">%100</span><button id="in" type="button" aria-label="Yakınlaştır" disabled>+</button></div>
+    </div>
+  </header>
+  <main>
+    <p id="message" class="message" role="status" aria-live="polite">PDF yükleniyor…</p>
+    <a id="browser-open" class="download browser-open" target="_blank" rel="noopener" hidden>Tarayıcıda aç</a>
+    <div id="pages" class="page-list"></div>
+  </main>
+  <template id="pdf-page">
+    <p class="message" hidden></p>
+    <article class="reading" hidden></article>
+    <div class="sheet" hidden><div class="page-wrap"><canvas></canvas><div class="annotations" aria-label="PDF bağlantıları"></div></div></div>
+  </template>
+  <script type="module" src="./pdf-viewer.mjs?v=pages-1"></script>
+</body>
+</html>
