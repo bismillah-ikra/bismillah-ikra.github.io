@@ -294,7 +294,7 @@ test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
   assert.equal(h.app.getState().history.at(-1).correct,1);
   assert.equal(h.app.getState().records[q.id].lastAnswer,4);
 });
-test('Aktarılan soruların haftaları, şıkları ve cevap anahtarları geçerli',()=>{
+test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeriyor',()=>{
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,10);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
@@ -306,7 +306,11 @@ test('Aktarılan soruların haftaları, şıkları ve cevap anahtarları geçerl
       assert.ok(weeks.has(question.topic)&&question.stem,id);
       assert.equal(question.options.length,id==='din-bilim-iliskisi'?5:4,id);
       assert.ok(Number.isInteger(question.correct)&&question.options[question.correct]?.text,id);
-      assert.ok(question.options.every(option=>option.text),id);
+      const options=question.options.map(option=>option.text.trim());
+      assert.ok(options.every(Boolean),question.id);
+      assert.equal(new Set(options).size,options.length,question.id);
+      assert.ok(question.explanation?.trim(),question.id);
+      assert.doesNotMatch([question.stem, ...options, question.explanation].join(' '),/<\/?bdi\b/i,question.id);
     }
   }
 });
@@ -323,6 +327,9 @@ test('10. hafta üç derste çözülebilir',()=>{
     assert.ok(weekly.every(q=>q.options[q.correct]?.text),slug);
     h.nav(slug==='din-bilim-iliskisi'?'lesson/hafta-10':`ders/${slug}/lesson/hafta-10`);
     assert.equal((h.html().match(/class="bank-item"/g)||[]).length,20,slug);
+    h.app.actions.single(weekly[0].id);h.flush();
+    h.events.keydown({target:{matches:()=>false},key:'1',preventDefault(){}});
+    assert.match(h.html(),/Cevap açıklaması/,slug);
   }
 });
 test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır',()=>{
