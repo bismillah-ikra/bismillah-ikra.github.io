@@ -46,23 +46,74 @@
     .page-head h1 { font: 500 clamp(33px, 5vw, 51px)/1.08 Georgia, serif; letter-spacing: -.045em; margin: 6px 0 9px; }
     .eyebrow { color: #6d553d; font-size: 11px; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
     .section-line { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin: 25px 0 13px; }
-    .section-line h1, .section-line h2 { font-size: 20px; letter-spacing: -.35px; }
+    .section-line h1 { color: var(--navy); font: 400 33px/1.08 Georgia, serif; letter-spacing: -.035em; }
+    .section-line h2 { font-size: 20px; letter-spacing: -.35px; }
     .meta { color: var(--muted); font-size: 13px; }
     .grid { display: grid; gap: 13px; }
     .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .folder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .card { display: grid; align-content: space-between; gap: 12px; position: relative; min-width: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 17px 19px; box-shadow: 0 4px 11px #342c1910; transition: border-color .15s, background .15s; }
     .card:hover { border-color: #a4b2c1; background: #fff; }
-    .course-card, .extras-card { min-height: 94px; }
-    .extras-card { background: #fcf5e9; border-color: #dcc7aa; }
-    .extras-card:hover { background: #fff8ed; border-color: var(--gold); }
-    .card-top, .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .course-grid .card {
+      --course-paper: #fffdf9;
+      --course-tint: #e9eef6;
+      --course-line: #ddd6c8;
+      --course-edge: #d7d9dd;
+      --course-stripe: #546c8a;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      align-content: stretch;
+      min-height: 102px;
+      gap: 9px;
+      padding: 14px 12px 14px 17px;
+      border-color: var(--course-line);
+      border-radius: 14px;
+      background: linear-gradient(120deg, var(--course-paper) 62%, var(--course-tint));
+      box-shadow: 0 3px 0 var(--course-edge), 0 8px 15px #30384218;
+    }
+    .course-grid .card::before {
+      content: "";
+      position: absolute;
+      inset: 14px auto 14px 0;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--course-stripe);
+    }
+    .course-grid .card:hover { border-color: var(--course-stripe); }
+    .course-grid .card h2 {
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 670;
+      line-height: 1.32;
+      letter-spacing: -.012em;
+      text-wrap: pretty;
+    }
+    .course-grid .card .arrow {
+      width: 31px;
+      height: 31px;
+      border: 1px solid var(--course-line);
+      border-radius: 9px;
+      background: var(--course-paper);
+      box-shadow: 0 1px 2px #30384218;
+    }
+    .course-grid .card:hover .arrow, .course-grid .card:focus-visible .arrow {
+      border-color: var(--course-stripe);
+    }
+    .course-grid .extras-card {
+      --course-paper: #fff9ed;
+      --course-tint: #f3e5d1;
+      --course-line: #d8c4a8;
+      --course-edge: #d9c9b4;
+      --course-stripe: #a4764e;
+      grid-column: 1 / -1;
+      min-height: 74px;
+    }
+    .extras-card .meta { display: block; margin-top: 4px; font-size: 11px; letter-spacing: .055em; }
+    .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .card-icon { display: grid; place-items: center; color: #355474; background: var(--blue-soft); width: 39px; height: 39px; border-radius: 11px; flex: none; }
     .tone-sand { color: #815737; background: var(--gold-soft); }
     .tone-green { color: var(--green); background: var(--green-soft); }
-    .card-number { color: var(--muted); font-size: 12px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
-    .card h2, .card h3 { font-size: 16px; line-height: 1.28; letter-spacing: -.22px; }
-    .card-foot .meta { font-size: 11px; }
+    .card h3 { font-size: 16px; line-height: 1.28; letter-spacing: -.22px; }
     .arrow { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--blue-soft); color: var(--navy); flex: none; }
     .arrow svg { width: 15px; height: 15px; }
     .page-head { margin: 12px 0 25px; }
@@ -93,6 +144,8 @@
     footer { color: var(--muted); font-size: 12px; padding: 16px 0 22px; border-top: 1px solid var(--line); }
     @media (max-width: 800px) {
       .shell { padding-inline: 20px; }
+    }
+    @media (max-width: 620px) {
       .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 700px) {
@@ -107,10 +160,13 @@
       .switcher { display: flex; }
       .switcher a { flex: 1 1 120px; text-align: center; }
       .card { padding: 13px; gap: 9px; }
-      .card h2, .card h3 { font-size: 14px; }
-      .card-foot .meta { font-size: 10px; }
+      .card h3 { font-size: 14px; }
       .folder-grid { grid-template-columns: 1fr; }
       .folder-card { min-height: 132px; }
+    }
+    @media (max-width: 432px) {
+      .course-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+      .course-grid .card { min-height: 63px; padding-block: 10px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
   </style>
@@ -194,15 +250,15 @@
       return `
         <a class="card course-card" href="${courseUrl(id)}">
           <h2>${esc(name)}</h2>
-          <div class="card-foot"><span class="meta">Ders Notları · Çalışma Dosyaları</span>${arrow()}</div>
+          ${arrow()}
         </a>`;
     }
 
     function showCourses() {
       const cards = courses.filter(([id]) => !extraCourseIds.has(id)).map(courseCard).join('');
       const extras = `<a class="card extras-card" href="${extrasUrl}">
-        <div class="card-top"><h2>Ek Dersler</h2><span class="card-number">${extraCourseIds.size} ders</span></div>
-        <div class="card-foot"><strong class="meta">HADİS · KELAM · TEFSİR</strong>${arrow()}</div>
+        <div><h2>Ek Dersler</h2><strong class="meta">HADİS · KELAM · TEFSİR</strong></div>
+        ${arrow()}
       </a>`;
       main.innerHTML = archiveNav() + `
         <div class="section-line"><h1>Dersler</h1><span class="meta">${courses.length} ders</span></div>
