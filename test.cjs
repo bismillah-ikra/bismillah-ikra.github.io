@@ -156,8 +156,9 @@ test('Geçmiş çalışma cevapları incelenir ve yalnız seçilen sonuç silini
 });
 test('Arayüz kontrolü: ana sayfa sahte puan içermez ve bütün temel ekranlar açılır',()=>{
   const h=harness();
-  assert.match(h.html(),/Öğren/);
-  assert.match(h.html(),/Pratik/);
+  const homeText = h.html().replace(/<[^>]+>/g, ' ');
+  assert.match(homeText,/Ders\s+Dosyaları/);
+  assert.match(homeText,/Çalışma\s+Soruları/);
   assert.equal(h.node('nav').innerHTML,'');
   h.nav('sorular');
   assert.match(h.html(),/Din-Bilim İlişkisi/);

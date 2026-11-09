@@ -241,8 +241,18 @@
       <h1><span class="portal-grade">3</span>. Sınıf <em>Dersleri</em></h1>
     </section>
     <div class="entry-grid">
-      <a class="entry-card entry-card-primary" href="./dersler/"><div><h2>Öğren</h2><ul class="entry-details"><li>Ders notları</li><li>Çalışma dosyaları</li></ul></div><span class="entry-go" aria-hidden="true">${icon('arrow')}</span></a>
-      <a class="entry-card entry-card-primary" href="#sorular"><div><h2>Pratik</h2><ul class="entry-details"><li>Haftalık sorular</li><li>Denemeler</li><li>Tekrar</li></ul></div><span class="entry-go" aria-hidden="true">${icon('arrow')}</span></a>
+      <a class="entry-card" href="./dersler/">
+        <h2>Ders <span>Dosyaları</span></h2>
+        <ul class="entry-details"><li>Ders notları</li><li>Çalışma dosyaları</li></ul>
+        <span class="entry-emblem" aria-hidden="true"><span>${icon('book')}</span></span>
+        <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
+      </a>
+      <a class="entry-card entry-card-questions" href="#sorular">
+        <h2>Çalışma <span>Soruları</span></h2>
+        <ul class="entry-details"><li>Haftalık sorular</li><li>Denemeler</li><li>Tekrar</li></ul>
+        <span class="entry-emblem" aria-hidden="true"><span>${icon('exam')}</span></span>
+        <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
+      </a>
     </div>
     <section class="ayet-karti" aria-label="Tâhâ suresi 114. ayet">
       <div class="ayet-sus" aria-hidden="true"><span></span></div>
