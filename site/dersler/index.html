@@ -158,27 +158,26 @@
         .sort((left, right) => fileNameOrder.compare(left.name, right.name));
     }
 
-    function archiveNav({ course, folder, extras = false } = {}) {
+    function archiveNav({ course, folder, extras = false }) {
       const trail = [['#dersler', 'Ders Dosyaları']];
       const extraCourse = extraCourseIds.has(course);
       if (extras || extraCourse) trail.push([extrasUrl, 'Ek Dersler']);
       if (course) trail.push([courseUrl(course), courseById.get(course)]);
       if (folder) trail.push([courseUrl(course, folder), folders[folder].title]);
 
-      const parent = trail.at(-2)?.[0] ?? '../#home';
+      const parent = trail.at(-2)[0];
       const backLabel = folder ? 'Ders sayfasına dön'
         : extraCourse ? 'Ek derslere dön'
-        : course || extras ? 'Ders listesine dön'
-        : 'Ana sayfaya dön';
-      const steps = trail.length > 1 ? trail.map(([url, name], index) => {
+        : 'Ders listesine dön';
+      const steps = trail.map(([url, name], index) => {
         const step = index === trail.length - 1
           ? `<span aria-current="page">${esc(name)}</span>`
           : `<a href="${url}">${esc(name)}</a>`;
         return `<li>${index ? icon('chevron') : ''}${step}</li>`;
-      }).join('') : '';
+      }).join('');
       return `<div class="archive-nav">
         <a class="back-link" href="${parent}"><span class="back-link-icon">${icon('back')}</span>${backLabel}</a>
-        ${steps ? `<nav class="archive-trail" aria-label="Arşivdeki konum"><ol>${steps}</ol></nav>` : ''}
+        <nav class="archive-trail" aria-label="Arşivdeki konum"><ol>${steps}</ol></nav>
       </div>`;
     }
 
@@ -198,7 +197,7 @@
         <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
         <span class="course-card-arrow">${icon('arrow')}</span>
       </a>`;
-      main.innerHTML = archiveNav() + `
+      main.innerHTML = `
         <div class="section-line"><h1>Dersler</h1><span class="meta">${courses.length} ders</span></div>
         <section class="course-grid" aria-label="Ders listesi">${cards}${extras}</section>`;
     }

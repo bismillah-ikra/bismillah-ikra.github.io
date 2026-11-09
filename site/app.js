@@ -281,7 +281,7 @@
     const extras=`<a class="course-card extras-card" href="#sorular/ek-dersler">
       <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
       <span class="course-card-arrow">${icon('arrow')}</span></a>`;
-    main.innerHTML=backLink(inExtras?'#sorular':'#home',inExtras?'Ders listesine dön':'Ana sayfaya dön')+
+    main.innerHTML=(inExtras?backLink('#sorular','Ders listesine dön'):'')+
       heading('DERS SEÇİMİ',inExtras?'Ek Dersler':'Çalışma Soruları')+
       `<section class="course-grid" aria-label="Ders listesi">${cards}${inExtras?'':extras}</section>`;
   }
