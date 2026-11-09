@@ -43,15 +43,10 @@
     .archive-trail a { color: var(--navy); font-weight: 600; }
     .archive-trail a:hover { background: var(--blue-soft); text-decoration: underline; text-underline-offset: 3px; }
     .archive-trail [aria-current] { color: var(--navy); background: var(--gold-soft); font-weight: 700; }
-    .hero { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center; min-height: 174px; padding: 26px 34px; border-radius: 21px; color: #fff8ed; background: linear-gradient(112deg, #1e324e, #2c4764); }
-    .hero-content { position: relative; z-index: 1; max-width: min(100%, 600px); }
-    .hero h1, .page-head h1 { font: 500 clamp(33px, 5vw, 57px)/1.08 Georgia, serif; letter-spacing: -.045em; margin: 6px 0 9px; }
-    .hero h1 { margin-bottom: 0; }
+    .page-head h1 { font: 500 clamp(33px, 5vw, 51px)/1.08 Georgia, serif; letter-spacing: -.045em; margin: 6px 0 9px; }
     .eyebrow { color: #6d553d; font-size: 11px; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
-    .hero .eyebrow { color: #f0caa5; }
-    .hero-art { position: absolute; right: 18px; top: -12px; height: calc(100% + 24px); width: 44%; opacity: .92; z-index: 0; }
     .section-line { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin: 25px 0 13px; }
-    .section-line h2 { font-size: 20px; letter-spacing: -.35px; }
+    .section-line h1, .section-line h2 { font-size: 20px; letter-spacing: -.35px; }
     .meta { color: var(--muted); font-size: 13px; }
     .grid { display: grid; gap: 13px; }
     .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -66,12 +61,12 @@
     .tone-sand { color: #815737; background: var(--gold-soft); }
     .tone-green { color: var(--green); background: var(--green-soft); }
     .card-number { color: var(--muted); font-size: 12px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
-    .card h3 { font-size: 16px; line-height: 1.28; letter-spacing: -.22px; }
+    .card h2, .card h3 { font-size: 16px; line-height: 1.28; letter-spacing: -.22px; }
     .card-foot .meta { font-size: 11px; }
     .arrow { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--blue-soft); color: var(--navy); flex: none; }
     .arrow svg { width: 15px; height: 15px; }
     .page-head { margin: 12px 0 25px; }
-    .page-head h1 { color: var(--navy); font-size: clamp(33px, 5vw, 51px); }
+    .page-head h1 { color: var(--navy); }
     .folder-card { padding: 23px; min-height: 180px; }
     .folder-card h3 { font-size: 21px; }
     .folder-card .meta { font-size: 13px; }
@@ -98,9 +93,6 @@
     footer { color: var(--muted); font-size: 12px; padding: 16px 0 22px; border-top: 1px solid var(--line); }
     @media (max-width: 800px) {
       .shell { padding-inline: 20px; }
-      .hero { padding: 22px; min-height: 145px; }
-      .hero-art { right: -25px; width: 41%; opacity: .55; }
-      .hero-content { max-width: 74%; }
       .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 700px) {
@@ -114,11 +106,8 @@
       .archive-nav { flex-direction: column; align-items: flex-start; }
       .switcher { display: flex; }
       .switcher a { flex: 1 1 120px; text-align: center; }
-      .hero-art { display: none; }
-      .hero-content { max-width: none; }
-      .hero { min-height: 123px; padding: 19px; }
       .card { padding: 13px; gap: 9px; }
-      .card h3 { font-size: 14px; }
+      .card h2, .card h3 { font-size: 14px; }
       .card-foot .meta { font-size: 10px; }
       .folder-grid { grid-template-columns: 1fr; }
       .folder-card { min-height: 132px; }
@@ -176,7 +165,7 @@
     }
 
     function archiveNav({ course, folder, extras = false } = {}) {
-      const trail = [['#dersler', 'Dersleri Öğren']];
+      const trail = [['#dersler', 'Ders Dosyaları']];
       const extraCourse = extraCourseIds.has(course);
       if (extras || extraCourse) trail.push([extrasUrl, 'Ek Dersler']);
       if (course) trail.push([courseUrl(course), courseById.get(course)]);
@@ -204,7 +193,7 @@
     function courseCard([id, name]) {
       return `
         <a class="card course-card" href="${courseUrl(id)}">
-          <h3>${esc(name)}</h3>
+          <h2>${esc(name)}</h2>
           <div class="card-foot"><span class="meta">Ders Notları · Çalışma Dosyaları</span>${arrow()}</div>
         </a>`;
     }
@@ -212,31 +201,11 @@
     function showCourses() {
       const cards = courses.filter(([id]) => !extraCourseIds.has(id)).map(courseCard).join('');
       const extras = `<a class="card extras-card" href="${extrasUrl}">
-        <div class="card-top"><h3>Ek Dersler</h3><span class="card-number">${extraCourseIds.size} ders</span></div>
+        <div class="card-top"><h2>Ek Dersler</h2><span class="card-number">${extraCourseIds.size} ders</span></div>
         <div class="card-foot"><strong class="meta">HADİS · KELAM · TEFSİR</strong>${arrow()}</div>
       </a>`;
       main.innerHTML = archiveNav() + `
-        <section class="hero" aria-labelledby="page-title">
-          <svg class="hero-art" viewBox="0 0 380 240" fill="none" aria-hidden="true">
-            <defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0v20" stroke="#f0caa5" stroke-opacity=".13"/></pattern></defs>
-            <path d="M10 14h360v212H10z" fill="url(#grid)"/>
-            <circle cx="210" cy="120" r="101" stroke="#eac6a3" stroke-opacity=".36"/>
-            <circle cx="210" cy="120" r="84" stroke="#eac6a3" stroke-opacity=".21" stroke-dasharray="2 5"/>
-            <g transform="translate(112 55) rotate(-12 82 62)">
-              <rect width="152" height="111" rx="9" x="11" y="9" fill="#59718a" stroke="#93a6b9"/>
-              <rect width="152" height="111" rx="9" x="4" y="4" fill="#405b77" stroke="#a1b1c1"/>
-              <rect width="152" height="111" rx="9" fill="#253b58" stroke="#f0caa5"/>
-              <path d="M26 0v111m15-86h87m-87 17h68m-68 17h77m-77 17h52" stroke="#f0caa5" stroke-opacity=".8"/>
-              <path d="M112 0h21v40l-10-7-11 7z" fill="#e4b486"/>
-            </g>
-            <path d="M316 54v22m-11-11h22M88 174v16m-8-8h16" stroke="#f0caa5" stroke-width="1.2"/>
-          </svg>
-          <div class="hero-content">
-            <div class="eyebrow">3. sınıf</div>
-            <h1 id="page-title">Dersleri Öğren</h1>
-          </div>
-        </section>
-        <div class="section-line"><h2>Dersler</h2><span class="meta">${courses.length} ders</span></div>
+        <div class="section-line"><h1>Dersler</h1><span class="meta">${courses.length} ders</span></div>
         <section class="grid course-grid" aria-label="Ders listesi">${cards}${extras}</section>`;
     }
 
