@@ -162,7 +162,8 @@ test('Arayüz kontrolü: ana sayfa sahte puan içermez ve bütün temel ekranlar
   assert.equal(h.node('nav').innerHTML,'');
   h.nav('sorular');
   assert.match(h.html(),/Din-Bilim İlişkisi/);
-  assert.match(h.html(),/href="#academy"[^>]*>\s*<strong>Din-Bilim İlişkisi/);
+  const dinBilimLink = h.html().match(/<a\b[^>]*href="#academy"[^>]*>[\s\S]*?<\/a>/)?.[0];
+  assert.match(dinBilimLink ?? '', /Din-Bilim İlişkisi/);
   assert.match(h.html(),/Ek Dersler/);
   assert.equal(h.node('nav').innerHTML,'');
   h.nav('sorular/ek-dersler');

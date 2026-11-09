@@ -274,14 +274,16 @@
       return;
     }
     const cards=courses.filter(([id])=>extraCourseIds.has(id)===inExtras).map(([id,name])=>{
-      return `<a class="week-card course-choice" href="#${coursePath(id)}">
-        <strong>${esc(name)}</strong><span>${courseCount(id)} ${icon('arrow')}</span></a>`;
+      return `<a class="course-card" href="#${coursePath(id)}">
+        <div><h2>${esc(name)}</h2><span class="course-card-meta">${courseCount(id)}</span></div>
+        <span class="course-card-arrow">${icon('arrow')}</span></a>`;
     }).join('');
-    const extras=`<a class="week-card course-choice extra-choice" href="#sorular/ek-dersler">
-      <strong>Ek Dersler</strong><span><strong>HADİS · KELAM · TEFSİR</strong>${icon('arrow')}</span></a>`;
+    const extras=`<a class="course-card extras-card" href="#sorular/ek-dersler">
+      <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
+      <span class="course-card-arrow">${icon('arrow')}</span></a>`;
     main.innerHTML=backLink(inExtras?'#sorular':'#home',inExtras?'Ders listesine dön':'Ana sayfaya dön')+
       heading('DERS SEÇİMİ',inExtras?'Ek Dersler':'Çalışma Soruları')+
-      `<div class="week-grid course-choices">${cards}${inExtras?'':extras}</div>`;
+      `<section class="course-grid" aria-label="Ders listesi">${cards}${inExtras?'':extras}</section>`;
   }
 
   function openCoursePicker(currentCourse=catalogId()){

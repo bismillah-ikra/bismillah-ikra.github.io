@@ -6,6 +6,7 @@
   <title>Dersler · Paylaşım</title>
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/brand.css?v=menu-3">
+  <link rel="stylesheet" href="../assets/course-cards.css">
   <style>
     :root {
       color-scheme: light;
@@ -50,65 +51,9 @@
     .section-line h2 { font-size: 20px; letter-spacing: -.35px; }
     .meta { color: var(--muted); font-size: 13px; }
     .grid { display: grid; gap: 13px; }
-    .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .folder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .card { display: grid; align-content: space-between; gap: 12px; position: relative; min-width: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 17px 19px; box-shadow: 0 4px 11px #342c1910; transition: border-color .15s, background .15s; }
     .card:hover { border-color: #a4b2c1; background: #fff; }
-    .course-grid .card {
-      --course-paper: #fffdf9;
-      --course-tint: #e9eef6;
-      --course-line: #ddd6c8;
-      --course-edge: #d7d9dd;
-      --course-stripe: #546c8a;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      align-content: stretch;
-      min-height: 102px;
-      gap: 9px;
-      padding: 14px 12px 14px 17px;
-      border-color: var(--course-line);
-      border-radius: 14px;
-      background: linear-gradient(120deg, var(--course-paper) 62%, var(--course-tint));
-      box-shadow: 0 3px 0 var(--course-edge), 0 8px 15px #30384218;
-    }
-    .course-grid .card::before {
-      content: "";
-      position: absolute;
-      inset: 14px auto 14px 0;
-      width: 3px;
-      border-radius: 0 3px 3px 0;
-      background: var(--course-stripe);
-    }
-    .course-grid .card:hover { border-color: var(--course-stripe); }
-    .course-grid .card h2 {
-      color: var(--navy);
-      font-size: 15px;
-      font-weight: 670;
-      line-height: 1.32;
-      letter-spacing: -.012em;
-      text-wrap: pretty;
-    }
-    .course-grid .card .arrow {
-      width: 31px;
-      height: 31px;
-      border: 1px solid var(--course-line);
-      border-radius: 9px;
-      background: var(--course-paper);
-      box-shadow: 0 1px 2px #30384218;
-    }
-    .course-grid .card:hover .arrow, .course-grid .card:focus-visible .arrow {
-      border-color: var(--course-stripe);
-    }
-    .course-grid .extras-card {
-      --course-paper: #fff9ed;
-      --course-tint: #f3e5d1;
-      --course-line: #d8c4a8;
-      --course-edge: #d9c9b4;
-      --course-stripe: #a4764e;
-      grid-column: 1 / -1;
-      min-height: 74px;
-    }
-    .extras-card .meta { display: block; margin-top: 4px; font-size: 11px; letter-spacing: .055em; }
     .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .card-icon { display: grid; place-items: center; color: #355474; background: var(--blue-soft); width: 39px; height: 39px; border-radius: 11px; flex: none; }
     .tone-sand { color: #815737; background: var(--gold-soft); }
@@ -145,9 +90,6 @@
     @media (max-width: 800px) {
       .shell { padding-inline: 20px; }
     }
-    @media (max-width: 620px) {
-      .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
     @media (max-width: 700px) {
       .file { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: start; gap: 8px 12px; }
       .file-icon { grid-column: 1; }
@@ -163,10 +105,6 @@
       .card h3 { font-size: 14px; }
       .folder-grid { grid-template-columns: 1fr; }
       .folder-card { min-height: 132px; }
-    }
-    @media (max-width: 432px) {
-      .course-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-      .course-grid .card { min-height: 63px; padding-block: 10px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
   </style>
@@ -248,21 +186,21 @@
 
     function courseCard([id, name]) {
       return `
-        <a class="card course-card" href="${courseUrl(id)}">
+        <a class="course-card" href="${courseUrl(id)}">
           <h2>${esc(name)}</h2>
-          ${arrow()}
+          <span class="course-card-arrow">${icon('arrow')}</span>
         </a>`;
     }
 
     function showCourses() {
       const cards = courses.filter(([id]) => !extraCourseIds.has(id)).map(courseCard).join('');
-      const extras = `<a class="card extras-card" href="${extrasUrl}">
-        <div><h2>Ek Dersler</h2><strong class="meta">HADİS · KELAM · TEFSİR</strong></div>
-        ${arrow()}
+      const extras = `<a class="course-card extras-card" href="${extrasUrl}">
+        <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
+        <span class="course-card-arrow">${icon('arrow')}</span>
       </a>`;
       main.innerHTML = archiveNav() + `
         <div class="section-line"><h1>Dersler</h1><span class="meta">${courses.length} ders</span></div>
-        <section class="grid course-grid" aria-label="Ders listesi">${cards}${extras}</section>`;
+        <section class="course-grid" aria-label="Ders listesi">${cards}${extras}</section>`;
     }
 
     function showExtraCourses() {
@@ -271,7 +209,7 @@
         <div class="page-head">
           <h1>Ek Dersler</h1>
         </div>
-        <section class="grid course-grid" aria-label="Ek ders listesi">${cards}</section>`;
+        <section class="course-grid" aria-label="Ek ders listesi">${cards}</section>`;
     }
 
     function showCourse(course) {
