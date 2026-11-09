@@ -94,6 +94,23 @@
   text-underline-offset: 3px;
 }
 
+@media (max-width: 480px) {
+  .site-header .site-nav { min-width: 0; }
+  .site-header .site-nav a {
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
+    padding-inline: 5px;
+    text-align: center;
+    white-space: normal;
+  }
+  .site-header .site-nav a span { text-wrap: balance; }
+}
+
+@media (max-width: 350px) {
+  .site-header .site-nav a svg { display: none; }
+}
+
 .back-link {
   display: inline-flex;
   align-items: center;

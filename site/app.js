@@ -244,13 +244,11 @@
       <a class="entry-card" href="./dersler/">
         <h2>Ders <span>Dosyaları</span></h2>
         <ul class="entry-details"><li>Ders notları</li><li>Çalışma dosyaları</li></ul>
-        <span class="entry-emblem" aria-hidden="true"><span>${icon('book')}</span></span>
         <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
       </a>
       <a class="entry-card entry-card-questions" href="#sorular">
         <h2>Çalışma <span>Soruları</span></h2>
         <ul class="entry-details"><li>Haftalık sorular</li><li>Denemeler</li><li>Tekrar</li></ul>
-        <span class="entry-emblem" aria-hidden="true"><span>${icon('exam')}</span></span>
         <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
       </a>
     </div>
