@@ -193,21 +193,6 @@ main > .back-link { margin-bottom: 16px; }
 .week-filter-option:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
 .exam-setup .week-filter { margin-top: 0; }
 
-.section-guide {
-  max-width: 760px;
-  margin-bottom: 18px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: linear-gradient(155deg, var(--paper), var(--accent-soft));
-  box-shadow: var(--shadow);
-}
-
-.section-guide p { margin-top: 4px; color: var(--muted); font-size: 13px; }
-.guide-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 10px; }
-.guide-actions button { min-height: 44px; }
-.guide-actions .secondary { background: var(--paper); }
-
 .exam-setup h2 { margin-bottom: 14px; }
 .exam-setup .exam-field { color: var(--ink); font-size: 13px; font-weight: 650; }
 .exam-field input, .exam-field select { font-size: 16px; }

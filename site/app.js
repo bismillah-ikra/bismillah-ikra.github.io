@@ -26,13 +26,6 @@
   const rememberLabel = 'İlerlememi bu cihazda kaydet';
   const letters='ABCDE';
   let storage;try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw Error()},removeItem:()=>{}};}
-  const guideKey='paylasim-hidden-guides';
-  const hiddenGuides=new Set();
-  const dismissedGuides=new Set();
-  try {
-    const savedGuides=JSON.parse(storage.getItem(guideKey)||'[]');
-    if(Array.isArray(savedGuides))for(const key of savedGuides)hiddenGuides.add(key);
-  } catch {}
   const restored=M.load(storage,D.version);
   let state=restored.state,consent=restored.consent,theme=state.theme;
   const courseProgress=new Map([[defaultCourse,state]]);
@@ -134,23 +127,6 @@
     ['bank','grid','Tüm sorular'],['wrong','wrong','Yanlışlarım'],
     ['saved','save','Tekrar defterim'],['analysis','chart','Başarı analizi']
   ];
-  const guideCopy={
-    quick:['Tek tek soru çöz','Şıkkını seçince doğru cevabı ve varsa açıklamasını görürsün. Sonraki düğmesiyle ilerlersin.'],
-    academy:['Haftalara göre sorular','Bir hafta seçip o haftanın sorularını aç. Her soruyu sayfada yanıtlayabilir veya haftayı sırayla çözebilirsin.'],
-    exam:['Deneme nasıl çalışır?','Haftaları, soru sayısını ve süreyi seç. Sorular seçtiğin haftalardan rastgele gelir. Deneme bitince cevaplarını inceleyebilirsin.'],
-    bank:['Tüm sorular','Soruları listeden yanıtlayabilirsin. İstersen hafta seç ve listeyi çözüm durumuna göre daralt.']
-  };
-  function guide(id){
-    if(hiddenGuides.has(id)||dismissedGuides.has(id))return '';
-    const [title,description]=guideCopy[id];
-    return `<aside class="section-guide" aria-label="Kısa bilgi">
-      <div><strong>${title}</strong><p>${description}</p></div>
-      <div class="guide-actions">
-        ${btn('Anladım','dismiss-guide',id,'secondary')}
-        ${btn('Bir daha gösterme','hide-guide',id,'text-button')}
-      </div>
-    </aside>`;
-  }
   let menuOpen=false;
   function setCourseMenu(open,restoreFocus=false){
     menuOpen=open;
@@ -282,7 +258,7 @@
       <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
       <span class="course-card-arrow">${icon('arrow')}</span></a>`;
     main.innerHTML=(inExtras?backLink('#sorular','Ders listesine dön'):'')+
-      heading('DERS SEÇİMİ',inExtras?'Ek Dersler':'Çalışma Soruları')+
+      heading('',inExtras?'Ek Dersler':'Çalışma Soruları')+
       `<section class="course-grid" aria-label="Ders listesi">${cards}${inExtras?'':extras}</section>`;
   }
 
@@ -328,7 +304,7 @@
       const pdfCourse=catalogId();
       const pdfName=courseById.get(pdfCourse);
       const pdfDownload=`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Haftalık soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(pdfName)} - Tüm Sorular.pdf">PDF indir ↓</a></section>`;
-      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} hafta`)+studyControls()+pdfDownload+extraActions+guide('academy')+weekCards();
+      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} hafta`)+studyControls()+pdfDownload+extraActions+weekCards();
       return;
     }
     main.innerHTML=heading('AKADEMİ','Konu anlatımları','Ders anlatımlarını oku ve pekiştirme sorularıyla çalış.')+studyControls()+`<div class="lesson-grid">${D.topics.map((t,i)=>`<section class="lesson-card"><div class="meta-line"><span class="eyebrow lesson-number">${lessonLabel(i)}</span><span class="tag">${D.questions.filter(q=>q.topic===t.id).length} soru</span></div><h2>${t.name}</h2><small>${t.subtitle}</small><p>${rich(t.summary)}</p><a class="secondary" href="${practiceHref('lesson/'+t.id)}">Konuyu öğren ${icon('arrow')}</a></section>`).join('')}</div>`;
@@ -391,7 +367,7 @@
     document.getElementById('clear-'+scope+'-weeks').disabled=!weeks.size;
   }
   function bankResults(){const list=filtered();const results=document.getElementById('bank-results');if(!results)return;results.innerHTML=`<div class="list-summary"><span>${list.length} soru listeleniyor</span>${list.length?btn('Listelenen soruları çöz','filtered','','secondary'):''}</div><div class="bank-list">${list.length?list.map(q=>card(q)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;}
-  function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}main.innerHTML=heading(courseTitle(),'Tüm sorular')+guide('bank')+`
+  function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}main.innerHTML=heading(courseTitle(),'Tüm sorular')+`
     <label class="form-field bank-filter">Çözüm durumu
       <select id="bank-status">${[['','Tüm sorular'],['new','Henüz çözülmeyen'],['wrong','Son cevabı yanlış'],['saved','Kaydedilen']].map(([v,l])=>`<option value="${v}"${bankStatus===v?' selected':''}>${l}</option>`).join('')}</select>
     </label>
@@ -441,7 +417,7 @@
     ${reveal?answerReview(q,chosen):''}${!readonly&&answered?`<div class="actions">${btn('Cevabı kaldır','clear-answer','','text-button')}<span class="small-copy">Cevabını başka bir seçenekle değiştirebilirsin.</span></div>`:''}</div>`;
   }
   function runView(review=false){if(!run)return navigate('academy');const q=lookup[run.ids[run.index]],isExam=run.type==='exam',reveal=review||(!isExam&&Object.hasOwn(run.answers,q.id));
-    main.innerHTML=`${!review&&run.type==='quick'&&run.index===0?guide('quick'):''}<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'TEK TEK SORU ÇÖZ'} · ${run.index+1}/${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
+    main.innerHTML=`<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'TEK TEK SORU ÇÖZ'} · ${run.index+1}/${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
     <div class="question-layout"><section>${question(q,run.answers,`${run.index+1}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?btn(run.flags.includes(q.id)?'İşareti kaldır':'İşaretle','flag','','secondary'):''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
     <aside class="panel palette-panel"><h3>Soru paleti</h3><p class="small-copy">${Object.keys(run.answers).length} cevap · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette">${run.ids.map((id,i)=>`<button data-action="jump" data-id="${i}" class="${i===run.index?'current ':''}${Object.hasOwn(run.answers,id)?'answered ':''}${run.flags.includes(id)?'flagged':''}" aria-label="${i+1}. soru${Object.hasOwn(run.answers,id)?', cevaplandı':', boş'}${run.flags.includes(id)?', işaretli':''}"${i===run.index?' aria-current="step"':''}>${i+1}</button>`).join('')}</div><p class="palette-legend">Dolgulu: cevaplandı<br>Alt çizgi: işaretlendi</p>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
   }
@@ -469,7 +445,7 @@
   function exam(){
     if(!D.questions.length){main.innerHTML=emptyContent('DENEME SINAVI','Henüz soru eklenmedi','Sorular eklendiğinde deneme oluşturabilirsin.');return;}
     const count=examPool().length;
-    main.innerHTML=heading(courseTitle(),'Deneme sınavı')+guide('exam')+
+    main.innerHTML=heading(courseTitle(),'Deneme sınavı')+
       `<form class="panel exam-setup" id="exam-form">
         <h2>Denemeni oluştur</h2>
         ${D.weekly?weekPicker('exam',examWeeks,'Tüm haftaları dahil et'):`<label class="form-field exam-field">${weekOrTopic}<select id="exam-topic">${topicOptions(examConfig.topic)}</select></label>`}
@@ -677,17 +653,6 @@
       if(!Number.isSafeInteger(count)||count<1||count>pool.length)return toast(`Soru sayısı 1 ile ${pool.length} arasında olmalı.`);
       if(!Number.isSafeInteger(minutes)||minutes<0||!Number.isSafeInteger(Date.now()+minutes*60000))return toast('Süreyi dakika olarak tam sayı gir.');
       start('exam',M.shuffle(pool).slice(0,count).map(q=>q.id),minutes);
-    },
-    'dismiss-guide':(id,target)=>{
-      dismissedGuides.add(id);
-      target.closest('.section-guide').remove();
-      main.focus({preventScroll:true});
-    },
-    'hide-guide':(id,target)=>{
-      hiddenGuides.add(id);
-      actions['dismiss-guide'](id,target);
-      try{storage.setItem(guideKey,JSON.stringify([...hiddenGuides]));}
-      catch{toast('Bu açıklama yalnızca bu oturumda gizlendi.');}
     },
     theme:()=>{theme=theme==='dark'?'light':'dark';save(true);if(route==='settings')settings();},
     clear:()=>confirm('Tüm çalışma kayıtlarını temizle?','Tüm derslerdeki cevapların, yer imlerin ve sonuç geçmişin bu oturumdan ve bu tarayıcıdan kaldırılacak.',()=>{

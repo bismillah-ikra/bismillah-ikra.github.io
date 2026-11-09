@@ -161,6 +161,7 @@ test('Arayüz kontrolü: ana sayfa sahte puan içermez ve bütün temel ekranlar
   assert.match(homeText,/Çalışma\s+Soruları/);
   assert.equal(h.node('nav').innerHTML,'');
   h.nav('sorular');
+  assert.doesNotMatch(h.html(), /DERS SEÇİMİ/);
   assert.match(h.html(),/Din-Bilim İlişkisi/);
   const dinBilimLink = h.html().match(/<a\b[^>]*href="#academy"[^>]*>[\s\S]*?<\/a>/)?.[0];
   assert.match(dinBilimLink ?? '', /Din-Bilim İlişkisi/);
@@ -225,17 +226,12 @@ test('Arayüz kontrolü: yer imi, tema, izin, temizleme ve pekiştirme kayıtlar
   h.events.change({target:{id:'remember',checked:true,dataset:{}}});assert.equal(h.app.getConsent(),true);assert.equal(h.window.localStorage.getItem('muskam-consent'),'yes');
   h.app.actions.clear();h.node('confirm-ok').click();assert.equal(h.app.getState().bookmarks.length,0);assert.equal(h.window.localStorage.map.size,0);
 });
-test('Bir daha gösterme tercihi yalnız seçilen açıklamayı sonraki açılışta gizler',()=>{
-  const first=harness(published);
-  first.nav('exam');
-  assert.match(first.html(),/Deneme nasıl çalışır/);
-  first.app.actions['hide-guide']('exam',{closest:()=>({remove(){}})});
-  const reopened=harness(published,first.window.localStorage);
-  reopened.nav('exam');
-  assert.doesNotMatch(reopened.html(),/Deneme nasıl çalışır/);
-  reopened.nav('bank');
-  assert.match(reopened.html(),/Bir daha gösterme/);
-  assert.equal(reopened.app.getConsent(),false);
+test('Çalışma ekranları tanıtım kutusu olmadan açılır',()=>{
+  const h = harness(published);
+  for (const route of ['academy', 'exam', 'bank', 'quick']) {
+    h.nav(route);
+    assert.doesNotMatch(h.html(), /class="section-guide"|Bir daha gösterme/, route);
+  }
 });
 test('Arayüz kontrolü: üç anlatım seviyesi ve iki soruluk pekiştirme',()=>{
   const h=harness();h.nav('lesson/sayilar');h.app.actions.level('0');assert.ok(!h.html().includes('Toplamın sırası sonucu değiştirmez.'));
