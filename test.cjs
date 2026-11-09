@@ -257,7 +257,7 @@ test('On haftanın soruları beş seçenek ve geçerli cevap anahtarı içeriyor
   for(const q of published.questions){
     assert.equal(q.options.length,5);
     assert.ok(q.options[q.correct].text);
-    assert.ok(q.explanation || q.topic === 'hafta-10');
+    assert.ok(q.explanation?.trim(), q.id);
   }
   const h=harness(published);
   h.nav('sorular/din-bilim-iliskisi');
@@ -278,7 +278,7 @@ test('On haftanın soruları beş seçenek ve geçerli cevap anahtarı içeriyor
   assert.match(h.node('bank-results').innerHTML,/155 soru listeleniyor/);
 });
 test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
-  const h=harness(published),q=published.questions.find(q=>q.correct===4);
+  const h=harness(published),q=published.questions.find(q=>q.id==='Q10-12');
   h.app.actions.single(q.id);h.flush();
   assert.match(h.html(),/class="letter">E</);assert.doesNotMatch(h.html(),/Cevap açıklaması/);
   h.events.keydown({target:{matches:()=>false},key:'5',preventDefault(){}});
@@ -325,6 +325,13 @@ test('10. hafta üç derste çözülebilir',()=>{
 });
 test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);
+  const data=h.window.PAYLASIM_COURSE_DATA;
+  const extraQuestions=data['din-bilim-iliskisi-4-sikli'].questions;
+  for(const q of [...published.questions,...data['din-bilim-iliskisi'].questions,...extraQuestions]){
+    assert.ok(q.explanation?.trim(),q.id);
+    assert.equal(new Set(q.options.map(option=>option.text.trim())).size,q.options.length,q.id);
+  }
+  assert.ok(extraQuestions.every(q=>q.options.length===4&&Number.isInteger(q.correct)&&q.options[q.correct]?.text));
   const four='ders/din-bilim-iliskisi-4-sikli/';
   h.nav('academy');
   assert.match(h.html(),/174 soru · 10 hafta/);
