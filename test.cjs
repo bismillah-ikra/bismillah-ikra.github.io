@@ -285,8 +285,10 @@ test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
   assert.equal(h.app.getState().records[q.id].lastCorrect,true);
   assert.match(h.html(),/Cevap açıklaması/);assert.ok(h.html().includes(q.explanation));
   h.nav('exam');h.events.change({target:{name:'exam-week',value:q.topic,checked:true}});
-  h.app.actions['exam-count']('15');h.app.actions['start-exam']();assert.equal(h.node('confirm-dialog').open,true);h.node('confirm-ok').click();h.flush();
-  h.app.actions.jump(String(h.app.getRun().ids.indexOf(q.id)));
+  h.app.actions['exam-count']('20');h.app.actions['start-exam']();assert.equal(h.node('confirm-dialog').open,true);h.node('confirm-ok').click();h.flush();
+  const examQuestionIndex=h.app.getRun().ids.indexOf(q.id);
+  assert.ok(examQuestionIndex>=0);
+  h.app.actions.jump(String(examQuestionIndex));
   h.app.actions.answer('4');assert.doesNotMatch(h.html(),/Cevap açıklaması/);
   h.app.actions.finish();h.node('confirm-ok').click();h.flush();
   assert.equal(h.app.getState().history.at(-1).correct,1);
