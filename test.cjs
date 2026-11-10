@@ -457,6 +457,36 @@ test('Her derste ek sorular menüsü bulunur',()=>{
     assert.match(h.html(),/henüz ek soru eklenmedi/);
   }
 });
+test('Test PDF düğmeleri yalnız o testin sorularını kullanır',()=>{
+  const h=harness(published,fakeStorage(),true), captured=[];
+  h.window.QuestionPDF={download:(questions,title)=>{captured.push({questions,title});return Promise.resolve();}};
+  h.nav('ders/ornek-hadis-metinleri-ek/lesson/sayilar');
+  assert.match(h.html(),/data-action="pdf-topic"/);
+  h.app.actions['pdf-topic']('sayilar',{textContent:'PDF',disabled:false});
+  assert.equal(captured[0].questions.length,30);
+  assert.ok(captured[0].questions.every(q=>q.topic==='sayilar'));
+  h.app.actions.single('HAD-SAY-15');h.flush();
+  h.app.actions.finish();h.node('confirm-ok').click();h.flush();
+  assert.match(h.html(),/data-action="pdf-run"/);
+  h.app.actions['pdf-run']('',{textContent:'PDF',disabled:false});
+  assert.deepEqual(Array.from(captured[1].questions,q=>q.id),['HAD-SAY-15']);
+});
+test('Ders PDF verisi tüm ana ve ek soru kümelerini içerir',()=>{
+  const os=require('node:os'),path=require('node:path'),child=require('node:child_process');
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'question-export-test-'));
+  try{
+    child.execFileSync(process.execPath,['tools/export-question-data.cjs',dir]);
+    const exported=JSON.parse(fs.readFileSync(path.join(dir,'question-data.json'),'utf8'));
+    const ctx={window:{}};vm.runInNewContext(fs.readFileSync('site/course-data.js','utf8'),ctx);
+    for(const course of exported){
+      const extras=Object.values(ctx.window.PAYLASIM_COURSE_DATA).filter(set=>set.parentCourse===course.id);
+      assert.equal(course.sets.length,extras.length+1,course.id);
+      extras.forEach((set,i)=>assert.deepEqual(course.sets[i+1].questions.map(q=>q.id),Array.from(set.questions,q=>q.id)));
+    }
+    assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,160);
+    assert.equal(exported.find(c=>c.id==='ornek-hadis-metinleri').sets[1].questions.length,30);
+  }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});
 test('Dağıtılan varlıklarda izleyici, ağ çağrısı, belge veya kişisel kimlik yok',()=>{
   for(const file of ['app.js','model.js','index.html','style.css','data.js','course-data.js']){const text=fs.readFileSync('./dist/'+file,'utf8');
     assert.ok(!/fetch\s*\(|XMLHttpRequest|sendBeacon|gtag\s*\(|google-analytics|facebook\.net|MetaPixel/.test(text),file);

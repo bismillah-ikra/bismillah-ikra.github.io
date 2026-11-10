@@ -309,7 +309,7 @@
       </nav>`:'';
       const pdfCourse=catalogId();
       const pdfName=courseById.get(pdfCourse);
-      const pdfDownload=`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Haftalık soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(pdfName)} - Tüm Sorular.pdf">PDF indir ↓</a></section>`;
+      const pdfDownload=`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Ana soruları, varsa ek soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(pdfName)} - Tüm Sorular.pdf">PDF indir ↓</a></section>`;
       const groupLabel=D.topicLabel?'başlık':'hafta';
       main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} ${groupLabel}`)+studyControls()+pdfDownload+extraActions+weekCards();
       return;
@@ -322,7 +322,7 @@
       const questions=D.questions.filter(q=>q.topic===id);
       main.innerHTML=backLink(practiceHref('academy'),D.topicLabel?'Başlık listesine dön':'Hafta listesine dön')+
         heading(isExtraSet()?'EK SORULAR':'HAFTALIK SORU SETİ',esc(t.name),`${questions.length} soru`)+
-        `<div class="actions" style="margin-bottom:20px">${btn(D.topicLabel?'Soruları sırayla çöz':'Haftanın sorularını çöz','topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div>`;
+        `<div class="actions" style="margin-bottom:20px">${btn(D.topicLabel?'Soruları sırayla çöz':'Haftanın sorularını çöz','topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-topic',id,'secondary')}</div>`;
       return;
     }
     const context=lookup[teacherContext];const record=context&&state.records[context.id];
@@ -334,7 +334,7 @@
     ${lessonLevel===2?t.details.map(([title,text])=>`<section class="lesson-section"><h2>${title}</h2><p>${rich(text)}</p></section>`).join(''):''}
     ${lessonLevel>0?D.excerpts.filter(x=>x.topic===id).map(x=>`<details class="source-excerpt"><summary>Kaynak metni ve tam Türkçe anlamı aç</summary><h3 style="margin:20px 0 10px">${x.title}</h3><div class="arabic-block" lang="ar" dir="rtl">${esc(x.arabic)}</div><p>${esc(x.translation)}</p></details>`).join(''):''}
     <section class="lesson-section"><h2>Birlikte uygulayalım</h2><p>${rich(t.example)}</p></section><div class="notice"><strong>Sık karıştırılan nokta</strong><p>${rich(t.confusion)}</p></div>
-    <div class="actions">${btn('2 pekiştirme sorusunu çöz','reinforce',id)}${btn('Bu konunun ana soruları','topic-quick',id,'secondary')}</div>${sourceBox(t)}</article>
+    <div class="actions">${btn('2 pekiştirme sorusunu çöz','reinforce',id)}${btn('Bu konunun ana soruları','topic-quick',id,'secondary')}${btn('Bu testi PDF indir','pdf-topic',id,'secondary')}</div>${sourceBox(t)}</article>
     <aside class="lesson-aside"><div class="panel"><h3>Öğrenme hedefleri</h3><ul class="goals">${t.goals.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="concepts">${t.concepts.map(x=>`<span class="tag">${rich(x)}</span>`).join('')}</div></div>
     <div class="panel"><h3>Konuyu sınayalım</h3><p class="small-copy">Bu konuya bağlı ${D.questions.filter(q=>q.topic===id).length} ana soru var. Pekiştirme soruları ayrı bir grupta bulunur.</p><a href="${practiceHref('bank')}" class="text-button">Tüm sorulara git →</a></div></aside></div>`;
   }
@@ -502,7 +502,7 @@
     main.innerHTML=`<div class="result-heading"><div>${heading(courseTitle(),run.type==='exam'?'Deneme sonucu':'Çalışma sonucu',`${r.total} soruluk ${run.type==='exam'?'deneme':run.type==='reinforce'?'pekiştirme':'çalışma'} tamamlandı.`)}</div><div class="score-big">${r.percent}<small> / 100</small></div></div>`+
       stats([[r.correct,'Doğru'],[r.wrong,'Yanlış'],[r.blank,'Boş'],[time(r.time),'Toplam oturum süresi']])+`<div class="actions">${btn('Tüm cevapları incele','review','','secondary')}${wrongs.length?btn('Yanlışları yeniden çöz','run-wrongs'):''}<a href="${practiceHref('exam')}" class="secondary">Yeni deneme oluştur</a>${backLink('#home','Ana sayfaya dön')}</div>
       <section class="panel" style="margin-top:28px"><div class="section-head"><h2>${weekOrTopic} bazında sonuç</h2><span class="small-copy">Ortalama çözüm: ${time(r.average)}</span></div>${topicTable(r.byTopic)}</section>
-      <section style="margin-top:28px"><div class="section-head"><h2>Bir sonraki adım</h2></div>${wrongs.length?`<p class="small-copy" style="margin-bottom:18px">Yanlış cevapladığın soruların açıklamalarını oku ve soruları yeniden çöz.</p><div class="bank-list">${wrongs.map(id=>card(lookup[id])).join('')}</div>`:r.blank?'<div class="notice">Boş bıraktığın soruları cevap incelemesinden açarak çalışabilirsin.</div>':'<div class="notice">Bu çalışmada bütün soruları doğru cevapladın. Başka bir konuyu çalışabilir veya daha kapsamlı deneme oluşturabilirsin.</div>'}</section>`;
+      <section style="margin-top:28px"><div class="section-head"><h2>Bir sonraki adım</h2></div>${wrongs.length?`<p class="small-copy" style="margin-bottom:18px">Yanlış cevapladığın soruların açıklamalarını oku ve soruları yeniden çöz.</p><div class="bank-list">${wrongs.map(id=>card(lookup[id])).join('')}</div>`:r.blank?'<div class="notice">Boş bıraktığın soruları cevap incelemesinden açarak çalışabilirsin.</div>':'<div class="notice">Bu çalışmada bütün soruları doğru cevapladın. Başka bir konuyu çalışabilir veya daha kapsamlı deneme oluşturabilirsin.</div>'}</section><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-run','','secondary')}</div>`;
   }
   function inspect(id){const q=lookup[id];if(!q)return navigate('bank');const r=state.records[id];const ans=r?{[id]:r.lastAnswer}:{};main.innerHTML=heading('SORU İNCELEMESİ',`Soru ${q.number}`,q.topicName)+question(q,ans,'İnceleme',true,true)+`<div class="actions" style="margin-top:20px">${btn('Yeniden çöz','single',id)}${backLink(practiceHref('wrong'),'Yanlışlarıma dön')}</div>`;}
   function analysis(){const records=D.questions.filter(q=>state.records[q.id]);
@@ -575,7 +575,25 @@
     else if(page==='inspect')inspect(id);else if(page==='history')historyDetail(id);else home();
     if(scroll){window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true});}
   }
+  async function exportTest(questions,title,target){
+    const label=target.textContent;
+    if(target.pdfLink){target.pdfLink.remove();URL.revokeObjectURL(target.pdfUrl);target.pdfLink=null;}
+    target.disabled=true;target.textContent='PDF hazırlanıyor…';
+    try{
+      const file=await window.QuestionPDF.download(questions,title);
+      if(file){
+        const link=document.createElement('a');link.href=file.url;link.download=file.filename;link.className='secondary';link.textContent='PDF hazır · İndir';
+        target.insertAdjacentElement('afterend',link);target.pdfLink=link;target.pdfUrl=file.url;link.click();
+        setTimeout(()=>{link.remove();URL.revokeObjectURL(file.url);},600000);
+      }
+      toast('PDF hazır. İndirme başlamazsa PDF hazır · İndir bağlantısına dokun.');
+    }
+    catch{toast('PDF hazırlanamadı. Bağlantını kontrol edip tekrar dene.');}
+    finally{target.disabled=false;target.textContent=label;}
+  }
   const actions={
+    'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
+    'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},
     'switch-course':openCoursePicker,
     resume:()=>{
       if(!D.weekly)return navigate('run');
