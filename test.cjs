@@ -296,9 +296,9 @@ test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
 });
 test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeriyor',()=>{
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
-  assert.equal(Object.keys(data).length,10);
+  assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1579);
+  assert.equal(counts,1609);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -411,9 +411,45 @@ test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   reopened.nav('ders/din-bilim-iliskisi-4-sikli/academy');
   assert.equal(reopened.app.getState().records['S-01-02'].lastAnswer,0);
 });
+test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',()=>{
+  const storage=fakeStorage(),h=harness(published,storage,true);
+  const data=h.window.PAYLASIM_COURSE_DATA['ornek-hadis-metinleri-ek'];
+  assert.equal(data.parentCourse,'ornek-hadis-metinleri');
+  assert.equal(data.questions.length,30);
+  assert.equal(data.topics[0].name,'Sayılar');
+  assert.ok(data.questions.every(q=>q.topic==='sayilar'&&q.options.length===4&&q.explanation));
+  const thirty=data.questions.find(q=>q.id==='HAD-SAY-15');
+  assert.equal(thirty.options[thirty.correct].text,'30');
+  const twentyFifth=data.questions.find(q=>q.id==='HAD-SAY-29');
+  assert.equal(twentyFifth.options[twentyFifth.correct].text,'الْخَامِسُ وَالْعِشْرُونَ');
+  const extra='ders/ornek-hadis-metinleri-ek/';
+  h.nav('ders/ornek-hadis-metinleri/academy');
+  assert.match(h.node('nav').innerHTML,/href="#ders\/ornek-hadis-metinleri-ek\/academy"[^>]*>[^]*?Ek sorular/);
+  h.nav(extra+'academy');
+  assert.match(h.html(),/30 soru · 1 başlık/);
+  assert.match(h.html(),/Sayılar/);
+  h.nav(extra+'lesson/sayilar');
+  assert.equal((h.html().match(/class="bank-item"/g)||[]).length,30);
+  assert.match(h.html(),/Soruları sırayla çöz/);
+  h.events.change({target:{id:'remember',checked:true}});
+  h.app.actions.single(thirty.id);h.flush();
+  h.app.actions.answer(String(thirty.correct));
+  assert.match(h.html(),/Cevap açıklaması/);
+  assert.equal(h.app.getState().records[thirty.id].lastCorrect,true);
+  const reopened=harness(published,storage,true);
+  reopened.nav(extra+'academy');
+  assert.equal(reopened.app.getState().records[thirty.id].lastCorrect,true);
+  reopened.nav('ders/ornek-hadis-metinleri/bank');
+  reopened.events.change({target:{name:'bank-source',value:'extra',checked:true}});
+  assert.match(reopened.node('bank-results').innerHTML,/210 soru listeleniyor/);
+  reopened.events.change({target:{name:'bank-source',value:'main',checked:false}});
+  assert.match(reopened.node('bank-results').innerHTML,/30 soru listeleniyor/);
+  reopened.events.change({target:{name:'extra-bank-week',value:'sayilar',checked:true}});
+  assert.match(reopened.node('bank-results').innerHTML,/30 soru listeleniyor/);
+});
 test('Her derste ek sorular menüsü bulunur',()=>{
   const h=harness(published,fakeStorage(),true);
-  for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','ornek-hadis-metinleri','tefsir']){
+  for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','tefsir']){
     h.nav('ders/'+id+'/academy');
     assert.match(h.node('nav').innerHTML,new RegExp('href="#ders/'+id+'/extras"[^>]*>[^]*?<span>Ek sorular</span>'));
     h.nav('ders/'+id+'/extras');

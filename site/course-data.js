@@ -2063,3 +2063,684 @@ window.PAYLASIM_COURSE_DATA['guncel-fikhi-problemler'].questions.push(...[
   {"id":"S-10-19","number":19,"topic":"hafta-10","stem":"Etin helâlliği araştırılırken hangi bilgi doğrudan işe yarar?","options":[{"text":"Dükkânın konumu ve tabelası"},{"text":"Satıcının milliyeti ve konuştuğu dil"},{"text":"Ambalajın rengi ve tasarımı"},{"text":"Tedarikçinin kimliği ve kesim usulü"}],"correct":3,"explanation":"Tedarikçinin kimliği ve kesim usulü, ürünün kaynağı ve nasıl hazırlandığı konusunda bilgi sağlar. Varsa sertifikanın kapsamı ve düzenleyen kurum da incelenebilir."},
   {"id":"S-10-20","number":20,"topic":"hafta-10","stem":"Farz-ı kifâye kapsamındaki bir işi toplumdan yeterli sayıda kişi yaparsa ne olur?","options":[{"text":"Diğerlerinin aynı yükümlülüğü düşer."},{"text":"İşi üstlenenlerin görevi tekrar etmesi gerekir."},{"text":"Aynı işi herkesin ayrıca yapması gerekir."},{"text":"Görev yalnız işi yapanların ailesine geçer."}],"correct":0,"explanation":"Farz-ı kifâye toplumca yerine getirilmesi gereken bir yükümlülüktür. Yeterli sayıda kişi görevi yerine getirdiğinde diğerlerinin o yükümlülüğü düşer."}
 ]);
+
+// Örnek Hadis Metinleri için Arapça sayılar ek soru seti.
+window.PAYLASIM_COURSE_DATA['ornek-hadis-metinleri-ek'] = {
+  "parentCourse": "ornek-hadis-metinleri",
+  "version": "ornek-hadis-ek-sayilar-v1",
+  "weekly": true,
+  "topicLabel": "Başlık",
+  "topics": [
+    {
+      "id": "sayilar",
+      "name": "Sayılar"
+    }
+  ],
+  "reinforcement": [],
+  "source": {
+    "title": "Arapça Sayılar çalışma dosyası",
+    "url": "/materials/ornek-hadis-metinleri/calisma-dosyalari/Arap%C3%A7a%20Say%C4%B1lar.pdf"
+  },
+  "questions": [
+    {
+      "id": "HAD-SAY-01",
+      "number": 1,
+      "topic": "sayilar",
+      "stem": "Arapça sayı صِفْرٌ kaçtır?",
+      "options": [
+        {
+          "text": "0"
+        },
+        {
+          "text": "1"
+        },
+        {
+          "text": "3"
+        },
+        {
+          "text": "10"
+        }
+      ],
+      "correct": 0,
+      "explanation": "صِفْرٌ, 0 sayısını belirtir. Sıfır, bir şeyin sayısının bulunmadığını ifade eder."
+    },
+    {
+      "id": "HAD-SAY-02",
+      "number": 2,
+      "topic": "sayilar",
+      "stem": "1 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "اِثْنَانِ"
+        },
+        {
+          "text": "خَمْسَةٌ"
+        },
+        {
+          "text": "أَحَدَ عَشَرَ"
+        },
+        {
+          "text": "وَاحِدٌ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "وَاحِدٌ, 1 sayısını belirtir. Eril sıra sayısı ise الْأَوَّلُ biçimindedir ve 1. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-03",
+      "number": 3,
+      "topic": "sayilar",
+      "stem": "Arapça sayı اِثْنَانِ kaçtır?",
+      "options": [
+        {
+          "text": "7"
+        },
+        {
+          "text": "13"
+        },
+        {
+          "text": "2"
+        },
+        {
+          "text": "3"
+        }
+      ],
+      "correct": 2,
+      "explanation": "اِثْنَانِ, 2 sayısını belirtir. Eril sıra sayısı ise الثَّانِي biçimindedir ve 2. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-04",
+      "number": 4,
+      "topic": "sayilar",
+      "stem": "3 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "خَمْسَةَ عَشَرَ"
+        },
+        {
+          "text": "ثَلَاثَةٌ"
+        },
+        {
+          "text": "خَمْسَةٌ"
+        },
+        {
+          "text": "عَشَرَةٌ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "ثَلَاثَةٌ, 3 sayısını belirtir. Eril sıra sayısı ise الثَّالِثُ biçimindedir ve 3. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-05",
+      "number": 5,
+      "topic": "sayilar",
+      "stem": "Arapça sayı خَمْسَةٌ kaçtır?",
+      "options": [
+        {
+          "text": "5"
+        },
+        {
+          "text": "7"
+        },
+        {
+          "text": "11"
+        },
+        {
+          "text": "20"
+        }
+      ],
+      "correct": 0,
+      "explanation": "خَمْسَةٌ, 5 sayısını belirtir. Eril sıra sayısı ise الْخَامِسُ biçimindedir ve 5. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-06",
+      "number": 6,
+      "topic": "sayilar",
+      "stem": "7 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "عَشَرَةٌ"
+        },
+        {
+          "text": "ثَلَاثَةَ عَشَرَ"
+        },
+        {
+          "text": "وَاحِدٌ وَعِشْرُونَ"
+        },
+        {
+          "text": "سَبْعَةٌ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "سَبْعَةٌ, 7 sayısını belirtir. Eril sıra sayısı ise السَّابِعُ biçimindedir ve 7. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-07",
+      "number": 7,
+      "topic": "sayilar",
+      "stem": "Arapça sayı عَشَرَةٌ kaçtır?",
+      "options": [
+        {
+          "text": "15"
+        },
+        {
+          "text": "23"
+        },
+        {
+          "text": "10"
+        },
+        {
+          "text": "11"
+        }
+      ],
+      "correct": 2,
+      "explanation": "عَشَرَةٌ, 10 sayısını belirtir. Eril sıra sayısı ise الْعَاشِرُ biçimindedir ve 10. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-08",
+      "number": 8,
+      "topic": "sayilar",
+      "stem": "11 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "خَمْسَةٌ وَعِشْرُونَ"
+        },
+        {
+          "text": "أَحَدَ عَشَرَ"
+        },
+        {
+          "text": "ثَلَاثَةَ عَشَرَ"
+        },
+        {
+          "text": "عِشْرُونَ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "أَحَدَ عَشَرَ, 11 sayısını belirtir. Eril sıra sayısı ise الْحَادِيَ عَشَرَ biçimindedir ve 11. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-09",
+      "number": 9,
+      "topic": "sayilar",
+      "stem": "Arapça sayı ثَلَاثَةَ عَشَرَ kaçtır?",
+      "options": [
+        {
+          "text": "13"
+        },
+        {
+          "text": "15"
+        },
+        {
+          "text": "21"
+        },
+        {
+          "text": "30"
+        }
+      ],
+      "correct": 0,
+      "explanation": "ثَلَاثَةَ عَشَرَ, 13 sayısını belirtir. Sıfır, bir şeyin sayısının bulunmadığını ifade eder."
+    },
+    {
+      "id": "HAD-SAY-10",
+      "number": 10,
+      "topic": "sayilar",
+      "stem": "15 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "عِشْرُونَ"
+        },
+        {
+          "text": "ثَلَاثَةٌ وَعِشْرُونَ"
+        },
+        {
+          "text": "صِفْرٌ"
+        },
+        {
+          "text": "خَمْسَةَ عَشَرَ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "خَمْسَةَ عَشَرَ, 15 sayısını belirtir. Eril sıra sayısı ise الْخَامِسَ عَشَرَ biçimindedir ve 15. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-11",
+      "number": 11,
+      "topic": "sayilar",
+      "stem": "Arapça sayı عِشْرُونَ kaçtır?",
+      "options": [
+        {
+          "text": "25"
+        },
+        {
+          "text": "1"
+        },
+        {
+          "text": "20"
+        },
+        {
+          "text": "21"
+        }
+      ],
+      "correct": 2,
+      "explanation": "عِشْرُونَ, 20 sayısını belirtir. Eril sıra sayısı ise الْعِشْرُونَ biçimindedir ve 20. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-12",
+      "number": 12,
+      "topic": "sayilar",
+      "stem": "21 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "اِثْنَانِ"
+        },
+        {
+          "text": "وَاحِدٌ وَعِشْرُونَ"
+        },
+        {
+          "text": "ثَلَاثَةٌ وَعِشْرُونَ"
+        },
+        {
+          "text": "ثَلَاثُونَ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "وَاحِدٌ وَعِشْرُونَ, 21 sayısını belirtir. Eril sıra sayısı ise الْحَادِي وَالْعِشْرُونَ biçimindedir ve 21. anlamına gelir. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-13",
+      "number": 13,
+      "topic": "sayilar",
+      "stem": "Arapça sayı ثَلَاثَةٌ وَعِشْرُونَ kaçtır?",
+      "options": [
+        {
+          "text": "23"
+        },
+        {
+          "text": "25"
+        },
+        {
+          "text": "0"
+        },
+        {
+          "text": "3"
+        }
+      ],
+      "correct": 0,
+      "explanation": "ثَلَاثَةٌ وَعِشْرُونَ, 23 sayısını belirtir. Eril sıra sayısı ise الثَّالِثُ وَالْعِشْرُونَ biçimindedir ve 23. anlamına gelir. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-14",
+      "number": 14,
+      "topic": "sayilar",
+      "stem": "25 sayısının Arapça yazılışı hangisidir?",
+      "options": [
+        {
+          "text": "ثَلَاثُونَ"
+        },
+        {
+          "text": "وَاحِدٌ"
+        },
+        {
+          "text": "خَمْسَةٌ"
+        },
+        {
+          "text": "خَمْسَةٌ وَعِشْرُونَ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "خَمْسَةٌ وَعِشْرُونَ, 25 sayısını belirtir. Eril sıra sayısı ise الْخَامِسُ وَالْعِشْرُونَ biçimindedir ve 25. anlamına gelir. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-15",
+      "number": 15,
+      "topic": "sayilar",
+      "stem": "Arapça sayı ثَلَاثُونَ kaçtır?",
+      "options": [
+        {
+          "text": "2"
+        },
+        {
+          "text": "7"
+        },
+        {
+          "text": "30"
+        },
+        {
+          "text": "0"
+        }
+      ],
+      "correct": 2,
+      "explanation": "ثَلَاثُونَ, 30 sayısını belirtir. Eril sıra sayısı ise الثَّلَاثُونَ biçimindedir ve 30. anlamına gelir."
+    },
+    {
+      "id": "HAD-SAY-16",
+      "number": 16,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الْأَوَّلُ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "1."
+        },
+        {
+          "text": "2."
+        },
+        {
+          "text": "5."
+        },
+        {
+          "text": "11."
+        }
+      ],
+      "correct": 0,
+      "explanation": "الْأَوَّلُ, 1. sırayı belirtir. Aynı sayının sayma biçimi وَاحِدٌ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-17",
+      "number": 17,
+      "topic": "sayilar",
+      "stem": "2. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الثَّالِثُ"
+        },
+        {
+          "text": "السَّابِعُ"
+        },
+        {
+          "text": "الثَّانِيَ عَشَرَ"
+        },
+        {
+          "text": "الثَّانِي"
+        }
+      ],
+      "correct": 3,
+      "explanation": "الثَّانِي, 2. sırayı belirtir. Aynı sayının sayma biçimi اِثْنَانِ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-18",
+      "number": 18,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الثَّالِثُ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "10."
+        },
+        {
+          "text": "15."
+        },
+        {
+          "text": "3."
+        },
+        {
+          "text": "5."
+        }
+      ],
+      "correct": 2,
+      "explanation": "الثَّالِثُ, 3. sırayı belirtir. Aynı sayının sayma biçimi ثَلَاثَةٌ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-19",
+      "number": 19,
+      "topic": "sayilar",
+      "stem": "5. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "التَّاسِعَ عَشَرَ"
+        },
+        {
+          "text": "الْخَامِسُ"
+        },
+        {
+          "text": "السَّابِعُ"
+        },
+        {
+          "text": "الْحَادِيَ عَشَرَ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "الْخَامِسُ, 5. sırayı belirtir. Aynı sayının sayma biçimi خَمْسَةٌ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-20",
+      "number": 20,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı السَّابِعُ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "7."
+        },
+        {
+          "text": "10."
+        },
+        {
+          "text": "12."
+        },
+        {
+          "text": "20."
+        }
+      ],
+      "correct": 0,
+      "explanation": "السَّابِعُ, 7. sırayı belirtir. Aynı sayının sayma biçimi سَبْعَةٌ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-21",
+      "number": 21,
+      "topic": "sayilar",
+      "stem": "10. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الْحَادِيَ عَشَرَ"
+        },
+        {
+          "text": "الْخَامِسَ عَشَرَ"
+        },
+        {
+          "text": "الْحَادِي وَالْعِشْرُونَ"
+        },
+        {
+          "text": "الْعَاشِرُ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "الْعَاشِرُ, 10. sırayı belirtir. Aynı sayının sayma biçimi عَشَرَةٌ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-22",
+      "number": 22,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الْحَادِيَ عَشَرَ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "19."
+        },
+        {
+          "text": "23."
+        },
+        {
+          "text": "11."
+        },
+        {
+          "text": "12."
+        }
+      ],
+      "correct": 2,
+      "explanation": "الْحَادِيَ عَشَرَ, 11. sırayı belirtir. Aynı sayının sayma biçimi أَحَدَ عَشَرَ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-23",
+      "number": 23,
+      "topic": "sayilar",
+      "stem": "12. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الْخَامِسُ وَالْعِشْرُونَ"
+        },
+        {
+          "text": "الثَّانِيَ عَشَرَ"
+        },
+        {
+          "text": "الْخَامِسَ عَشَرَ"
+        },
+        {
+          "text": "الْعِشْرُونَ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "الثَّانِيَ عَشَرَ, 12. sırayı belirtir. Sıra sayısı “kaçıncı?” sorusuna cevap verir."
+    },
+    {
+      "id": "HAD-SAY-24",
+      "number": 24,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الْخَامِسَ عَشَرَ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "15."
+        },
+        {
+          "text": "19."
+        },
+        {
+          "text": "21."
+        },
+        {
+          "text": "30."
+        }
+      ],
+      "correct": 0,
+      "explanation": "الْخَامِسَ عَشَرَ, 15. sırayı belirtir. Aynı sayının sayma biçimi خَمْسَةَ عَشَرَ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-25",
+      "number": 25,
+      "topic": "sayilar",
+      "stem": "19. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الْعِشْرُونَ"
+        },
+        {
+          "text": "الثَّالِثُ وَالْعِشْرُونَ"
+        },
+        {
+          "text": "الْأَوَّلُ"
+        },
+        {
+          "text": "التَّاسِعَ عَشَرَ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "التَّاسِعَ عَشَرَ, 19. sırayı belirtir. Sıra sayısı “kaçıncı?” sorusuna cevap verir."
+    },
+    {
+      "id": "HAD-SAY-26",
+      "number": 26,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الْعِشْرُونَ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "25."
+        },
+        {
+          "text": "2."
+        },
+        {
+          "text": "20."
+        },
+        {
+          "text": "21."
+        }
+      ],
+      "correct": 2,
+      "explanation": "الْعِشْرُونَ, 20. sırayı belirtir. Aynı sayının sayma biçimi عِشْرُونَ olarak kullanılır."
+    },
+    {
+      "id": "HAD-SAY-27",
+      "number": 27,
+      "topic": "sayilar",
+      "stem": "21. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الثَّالِثُ"
+        },
+        {
+          "text": "الْحَادِي وَالْعِشْرُونَ"
+        },
+        {
+          "text": "الثَّالِثُ وَالْعِشْرُونَ"
+        },
+        {
+          "text": "الثَّلَاثُونَ"
+        }
+      ],
+      "correct": 1,
+      "explanation": "الْحَادِي وَالْعِشْرُونَ, 21. sırayı belirtir. Aynı sayının sayma biçimi وَاحِدٌ وَعِشْرُونَ olarak kullanılır. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-28",
+      "number": 28,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الثَّالِثُ وَالْعِشْرُونَ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "23."
+        },
+        {
+          "text": "25."
+        },
+        {
+          "text": "1."
+        },
+        {
+          "text": "5."
+        }
+      ],
+      "correct": 0,
+      "explanation": "الثَّالِثُ وَالْعِشْرُونَ, 23. sırayı belirtir. Aynı sayının sayma biçimi ثَلَاثَةٌ وَعِشْرُونَ olarak kullanılır. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-29",
+      "number": 29,
+      "topic": "sayilar",
+      "stem": "25. sırayı gösteren eril Arapça ifade hangisidir?",
+      "options": [
+        {
+          "text": "الثَّلَاثُونَ"
+        },
+        {
+          "text": "الثَّانِي"
+        },
+        {
+          "text": "السَّابِعُ"
+        },
+        {
+          "text": "الْخَامِسُ وَالْعِشْرُونَ"
+        }
+      ],
+      "correct": 3,
+      "explanation": "الْخَامِسُ وَالْعِشْرُونَ, 25. sırayı belirtir. Aynı sayının sayma biçimi خَمْسَةٌ وَعِشْرُونَ olarak kullanılır. Arapçada önce birler, ardından “ve yirmi” bölümü gelir."
+    },
+    {
+      "id": "HAD-SAY-30",
+      "number": 30,
+      "topic": "sayilar",
+      "stem": "Eril sıra sayısı الثَّلَاثُونَ kaçıncı sırayı ifade eder?",
+      "options": [
+        {
+          "text": "3."
+        },
+        {
+          "text": "10."
+        },
+        {
+          "text": "30."
+        },
+        {
+          "text": "1."
+        }
+      ],
+      "correct": 2,
+      "explanation": "الثَّلَاثُونَ, 30. sırayı belirtir. Aynı sayının sayma biçimi ثَلَاثُونَ olarak kullanılır."
+    }
+  ]
+};

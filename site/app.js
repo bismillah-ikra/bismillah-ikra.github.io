@@ -40,7 +40,7 @@
   let examConfig={topic:'',count:Math.min(20,D.questions.length),minutes:0};
   function loadQuestions(){
     topics=Object.fromEntries(D.topics.map(t=>[t.id,t]));
-    weekOrTopic=D.weekly?'Hafta':'Konu';
+    weekOrTopic=D.topicLabel|| (D.weekly?'Hafta':'Konu');
     const questions=[...D.questions,...D.reinforcement];
     for(const q of questions)q.topicName=topics[q.topic].name;
     lookup=Object.fromEntries(questions.map(q=>[q.id,q]));
@@ -310,7 +310,8 @@
       const pdfCourse=catalogId();
       const pdfName=courseById.get(pdfCourse);
       const pdfDownload=`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Haftalık soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(pdfName)} - Tüm Sorular.pdf">PDF indir ↓</a></section>`;
-      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} hafta`)+studyControls()+pdfDownload+extraActions+weekCards();
+      const groupLabel=D.topicLabel?'başlık':'hafta';
+      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} ${groupLabel}`)+studyControls()+pdfDownload+extraActions+weekCards();
       return;
     }
     main.innerHTML=heading('AKADEMİ','Konu anlatımları','Ders anlatımlarını oku ve pekiştirme sorularıyla çalış.')+studyControls()+`<div class="lesson-grid">${D.topics.map((t,i)=>`<section class="lesson-card"><div class="meta-line"><span class="eyebrow lesson-number">${lessonLabel(i)}</span><span class="tag">${D.questions.filter(q=>q.topic===t.id).length} soru</span></div><h2>${t.name}</h2><small>${t.subtitle}</small><p>${rich(t.summary)}</p><a class="secondary" href="${practiceHref('lesson/'+t.id)}">Konuyu öğren ${icon('arrow')}</a></section>`).join('')}</div>`;
@@ -319,9 +320,9 @@
   function lesson(id){const t=topics[id];if(!t)return academy();
     if(D.weekly){
       const questions=D.questions.filter(q=>q.topic===id);
-      main.innerHTML=backLink(practiceHref('academy'),'Hafta listesine dön')+
+      main.innerHTML=backLink(practiceHref('academy'),D.topicLabel?'Başlık listesine dön':'Hafta listesine dön')+
         heading(isExtraSet()?'EK SORULAR':'HAFTALIK SORU SETİ',esc(t.name),`${questions.length} soru`)+
-        `<div class="actions" style="margin-bottom:20px">${btn('Haftanın sorularını çöz','topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div>`;
+        `<div class="actions" style="margin-bottom:20px">${btn(D.topicLabel?'Soruları sırayla çöz':'Haftanın sorularını çöz','topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div>`;
       return;
     }
     const context=lookup[teacherContext];const record=context&&state.records[context.id];
@@ -380,7 +381,7 @@
   function changeWeek(scope,weeks,input){
     if(input.checked)weeks.add(input.value);
     else weeks.delete(input.value);
-    document.getElementById(scope+'-week-summary').textContent=scope==='extra-bank'
+    document.getElementById(scope+'-week-summary').textContent=scope==='extra-bank'||D.topicLabel
       ?(weeks.size?weeks.size+' başlık seçildi':'Tüm başlıklar'):weekSummary(weeks);
     document.getElementById('clear-'+scope+'-weeks').disabled=!weeks.size;
   }
@@ -397,7 +398,7 @@
     <label class="form-field bank-filter">Çözüm durumu
       <select id="bank-status">${[['','Tüm sorular'],['new','Henüz çözülmeyen'],['wrong','Son cevabı yanlış'],['saved','Kaydedilen']].map(([v,l])=>`<option value="${v}"${bankStatus===v?' selected':''}>${l}</option>`).join('')}</select>
     </label>
-    ${D.weekly&&D.topics.length&&(isExtraSet()||bankSources.has('main'))?weekPicker('bank',bankWeeks,'Tüm haftaları göster'):''}
+    ${D.weekly&&D.topics.length&&(isExtraSet()||bankSources.has('main'))?D.topicLabel?weekPicker('bank',bankWeeks,'Tüm başlıkları göster',D.topics,'Başlık seç'):weekPicker('bank',bankWeeks,'Tüm haftaları göster'):''}
     ${!isExtraSet()&&bankSources.has('extra')&&extraSetsByCourse.has(activeCourse)?weekPicker('extra-bank',extraBankTopics,'Tüm başlıkları göster',datasets[extraSetsByCourse.get(activeCourse)].topics,'Ek soru başlığı seç'):''}
     <div id="bank-results"></div>
     ${D.source.title?`<p class="source-box">Soru kaynağı · ${D.source.url?`<a href="${esc(D.source.url)}" target="_blank" rel="noopener noreferrer">${esc(D.source.title)}</a>`:esc(D.source.title)}</p>`:''}`;bankResults();}
@@ -412,7 +413,7 @@
     begin();
   }
   function explanation(q,inline=false){
-    if(q.explanation)return `<section class="explanations"><h3>Cevap açıklaması</h3><p>${rich(q.explanation)}</p>${inline?'':`<div class="actions">${backLink(practiceHref('lesson/'+q.topic),D.weekly?'Haftanın sorularına dön':'Konuya dön')}</div>`}</section>`;
+    if(q.explanation)return `<section class="explanations"><h3>Cevap açıklaması</h3><p>${rich(q.explanation)}</p>${inline?'':`<div class="actions">${backLink(practiceHref('lesson/'+q.topic),D.topicLabel?'Başlığın sorularına dön':D.weekly?'Haftanın sorularına dön':'Konuya dön')}</div>`}</section>`;
     if(!q.options.some(option=>option.explanation)){
       return `<section class="explanations"><h3>Doğru cevap</h3><p>${letters[q.correct]} · ${rich(q.options[q.correct].text)}</p><p class="small-copy">Kaynak testte bu soru için açıklama yok.</p></section>`;
     }
@@ -456,7 +457,7 @@
   function examPreset(action,value,label=value){
     return `<button type="button" data-action="${action}" data-id="${value}">${label}</button>`;
   }
-  const examCountNote=count=>count?'1 ile '+count+' arasında bir sayı yaz.':'Seçilen haftalarda soru yok.';
+  const examCountNote=count=>count?'1 ile '+count+' arasında bir sayı yaz.':D.topicLabel?'Seçilen başlıklarda soru yok.':'Seçilen haftalarda soru yok.';
   function examCountPresets(count){
     if(!count)return '';
     return examPresets.filter(n=>n<count).map(n=>examPreset('exam-count',n)).join('')+
@@ -475,7 +476,7 @@
     main.innerHTML=heading(courseTitle(),'Deneme sınavı')+
       `<form class="panel exam-setup" id="exam-form">
         <h2>Denemeni oluştur</h2>
-        ${D.weekly?weekPicker('exam',examWeeks,'Tüm haftaları dahil et'):`<label class="form-field exam-field">${weekOrTopic}<select id="exam-topic">${topicOptions(examConfig.topic)}</select></label>`}
+        ${D.weekly?D.topicLabel?weekPicker('exam',examWeeks,'Tüm başlıkları dahil et',D.topics,'Başlık seç'):weekPicker('exam',examWeeks,'Tüm haftaları dahil et'):`<label class="form-field exam-field">${weekOrTopic}<select id="exam-topic">${topicOptions(examConfig.topic)}</select></label>`}
         <div class="form-grid exam-fields">
           <div>
             <label class="form-field exam-field">Soru sayısı
