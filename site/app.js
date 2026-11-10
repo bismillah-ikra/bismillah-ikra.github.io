@@ -350,7 +350,7 @@
       <div class="bank-content">
         <div class="meta-line"><span class="badge">${esc(q.topicName)}</span>${extra?'<span class="tag">Ek sorular</span>':''}${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}${r?`<span class="tag">Son cevap: ${r.lastCorrect?'doğru':'yanlış'}</span>`:''}</div>
         <h3 id="question-${extra?'extra-':''}${q.id}">${rich(q.stem)}</h3>
-        ${optionList(q,chosen,{reveal:answered,disabled:answered,inline:true}).replaceAll('data-action="answer-card"',extra?'data-action="extra-answer-card"':'data-action="answer-card"').replaceAll('aria-labelledby="question-'+q.id+'"',extra?'aria-labelledby="question-extra-'+q.id+'"':'aria-labelledby="question-'+q.id+'"')}
+        ${optionList(q,chosen,{reveal:answered,disabled:answered,inline:true,extra})}
         ${answered?answerReview(q,chosen,true):''}
         ${r?`<div class="actions">${answered?btn('Yeniden çöz',extra?'extra-retry-card':'retry-card',q.id,'text-button'):extra?`<a class="text-button" href="${practiceHref('inspect/'+q.id,owner)}">Cevabımı incele</a>`:btn('Cevabımı incele','inspect',q.id,'text-button')}</div>`:''}
       </div>${saveButton(q.id,owner)}`;
@@ -418,10 +418,10 @@
     }
     return `<section class="explanations"><h3>Dört seçenekten öğren</h3>${q.options.map((o,i)=>`<details class="explanation" open><summary>${i===q.correct?'<span class="answer-tag">DOĞRU</span>':'<span class="tag">YANLIŞ</span>'} ${letters[i]} · ${rich(o.text)}</summary><p>${rich(o.explanation)}</p></details>`).join('')}<div class="notice"><strong>Konunun özeti</strong><p>${rich(topics[q.topic].summary)}</p></div><div class="actions">${btn('Konuyu öğren','learn',q.id,'secondary')}${btn('Pekiştirmeye geç','reinforce',q.topic,'secondary')}</div>${sourceBox(topics[q.topic])}</section>`;
   }
-  function optionList(q,chosen,{reveal,disabled,inline}){
-    const action=inline?'answer-card':'answer';
+  function optionList(q,chosen,{reveal,disabled,inline,extra=false}){
+    const action=inline?(extra?'extra-answer-card':'answer-card'):'answer';
     const prefix=inline?q.id+'/':'';
-    const label=inline?`aria-labelledby="question-${q.id}"`:'aria-label="Cevap seçenekleri"';
+    const label=inline?`aria-labelledby="question-${extra?'extra-':''}${q.id}"`:'aria-label="Cevap seçenekleri"';
     return `<div class="options" role="group" ${label}>${q.options.map((o,i)=>{
       let cls=chosen===i?' selected':'';
       if(reveal&&i===q.correct)cls+=' correct';
