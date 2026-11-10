@@ -298,7 +298,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1609);
+  assert.equal(counts,1629);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -314,12 +314,13 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
     }
   }
 });
-test('10. hafta üç derste çözülebilir',()=>{
+test('10. hafta dört derste çözülebilir',()=>{
   const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
   for(const [slug,questions] of [
     ['din-bilim-iliskisi',published.questions],
     ['batida-islam-arastirmalari',sets['batida-islam-arastirmalari'].questions],
-    ['guncel-fikhi-problemler',sets['guncel-fikhi-problemler'].questions]
+    ['guncel-fikhi-problemler',sets['guncel-fikhi-problemler'].questions],
+    ['ornek-hadis-metinleri',sets['ornek-hadis-metinleri'].questions]
   ]){
     const weekly=questions.filter(q=>q.topic==='hafta-10');
     assert.equal(weekly.length,20,slug);
@@ -330,6 +331,14 @@ test('10. hafta üç derste çözülebilir',()=>{
     h.app.actions.single(weekly[0].id);h.flush();
     h.events.keydown({target:{matches:()=>false},key:'1',preventDefault(){}});
     assert.match(h.html(),/Cevap açıklaması/,slug);
+  }
+});
+test('Örnek Hadis 10. hafta PDF ve Word dosyaları arşivde yer alır',()=>{
+  const files=JSON.parse(fs.readFileSync('dist/dersler/files.json','utf8')).files;
+  for(const folder of ['ders-notlari','calisma-dosyalari']){
+    const matches=files.filter(f=>f.course==='ornek-hadis-metinleri'&&f.folder===folder&&f.name.startsWith('10. '));
+    assert.equal(matches.length,1,folder);
+    assert.ok(matches[0].wordUrl,folder);
   }
 });
 test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır',()=>{
@@ -497,7 +506,7 @@ test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',
   assert.equal(reopened.app.getState().records[thirty.id].lastCorrect,true);
   reopened.nav('ders/ornek-hadis-metinleri/bank');
   reopened.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(reopened.node('bank-results').innerHTML,/210 soru listeleniyor/);
+  assert.match(reopened.node('bank-results').innerHTML,/230 soru listeleniyor/);
   reopened.events.change({target:{name:'bank-source',value:'main',checked:false}});
   assert.match(reopened.node('bank-results').innerHTML,/30 soru listeleniyor/);
   reopened.events.change({target:{name:'extra-bank-week',value:'sayilar',checked:true}});
