@@ -191,6 +191,32 @@ main > .back-link { margin-bottom: 16px; }
 }
 .week-filter-option input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
 .week-filter-option:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.bank-sources {
+  max-width: 760px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.bank-sources legend { padding: 0 5px; color: var(--ink); font-size: 13px; font-weight: 650; }
+.bank-sources label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.bank-sources label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.bank-sources label:has(input:disabled) { opacity: .65; cursor: default; }
+.bank-sources input { width: 16px; height: 16px; accent-color: var(--accent); }
+.bank-sources small { align-self: center; color: var(--muted); }
 .exam-setup .week-filter { margin-top: 0; }
 
 .exam-setup h2 { margin-bottom: 14px; }

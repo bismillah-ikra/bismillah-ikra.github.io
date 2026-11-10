@@ -34,6 +34,8 @@
   const cardAnswers=new Map();
   let bankStatus='';
   const bankWeeks=new Set();
+  const bankSources=new Set(['main']);
+  const extraBankTopics=new Set();
   const examWeeks=new Set();
   let examConfig={topic:'',count:Math.min(20,D.questions.length),minutes:0};
   function loadQuestions(){
@@ -78,6 +80,9 @@
     if(run&&!run.finished)run.tickAt=Date.now();
     bankStatus='';
     bankWeeks.clear();
+    extraBankTopics.clear();
+    bankSources.clear();
+    bankSources.add('main');
     examWeeks.clear();
     examConfig={topic:'',count:Math.min(20,D.questions.length),minutes:0};
     teacherContext=null;
@@ -133,7 +138,7 @@
     menuToggle.setAttribute('aria-expanded',String(open));
     if(restoreFocus)menuToggle.focus();
   }
-  const practicePages = new Set(['quick','academy','lesson','bank','exam','wrong','saved','analysis','settings','about','run','result','review','inspect','history']);
+  const practicePages = new Set(['quick','academy','lesson','bank','extras','exam','wrong','saved','analysis','settings','about','run','result','review','inspect','history']);
   function refreshChrome(){
     const page=route.split('/')[0];
     document.documentElement.dataset.page=page;
@@ -156,13 +161,14 @@
         const name=id==='academy'&&!mainSet.weekly?'Akademi':label;
         const current=parentId===activeCourse&&id===active?'page':'';
         const divider=id==='wrong'?'<div class="nav-divider" aria-hidden="true"></div>':'';
-        return divider+navLink([id,ic,name],parentId,count,current);
+        const extraId=extraSetsByCourse.get(parentId);
+        const extraCurrent=(extraId&&isExtraSet())||(!extraId&&active==='extras')?'page':'';
+        const extraLink=id==='bank'?navLink([extraId?'academy':'extras','grid','Ek sorular'],extraId||parentId,extraId?datasets[extraId].questions.length:0,extraCurrent):'';
+        return divider+navLink([id,ic,name],parentId,count,current)+extraLink;
       }).join('');
     }else navigation.innerHTML='';
-    const extraId=inPractice?extraSetsByCourse.get(parentId):undefined;
-    const extraCurrent=isExtraSet()?(active==='academy'?'page':'true'):'';
-    extraNavigation.hidden=!extraId;
-    extraNavigation.innerHTML=extraId?navLink(['academy','grid','Ek sorular'],extraId,datasets[extraId].questions.length,extraCurrent):'';
+    extraNavigation.hidden=true;
+    extraNavigation.innerHTML='';
     const courseName=courseById.get(parentId);
     document.getElementById('current-course-name').textContent=courseName;
     document.getElementById('course-switch').setAttribute('aria-label',courseName+', ders değiştir');
@@ -331,31 +337,42 @@
     <aside class="lesson-aside"><div class="panel"><h3>Öğrenme hedefleri</h3><ul class="goals">${t.goals.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="concepts">${t.concepts.map(x=>`<span class="tag">${rich(x)}</span>`).join('')}</div></div>
     <div class="panel"><h3>Konuyu sınayalım</h3><p class="small-copy">Bu konuya bağlı ${D.questions.filter(q=>q.topic===id).length} ana soru var. Pekiştirme soruları ayrı bir grupta bulunur.</p><a href="${practiceHref('bank')}" class="text-button">Tüm sorulara git →</a></div></aside></div>`;
   }
-  function saveButton(id){const saved=state.bookmarks.includes(id);return `<button class="icon-button ${saved?'save-active':''}" data-action="bookmark" data-id="${id}" aria-label="${saved?'Yer imini kaldır':'Soruyu tekrar defterine kaydet'}" aria-pressed="${saved}" title="${saved?'Kaydedildi':'Kaydet'}">${icon('save')}</button>`;}
-  function card(q){
-    return `<article class="bank-item">${cardContents(q)}</article>`;
+  function saveButton(id,owner=activeCourse){const saved=loadCourseProgress(owner).bookmarks.includes(id);return `<button class="icon-button ${saved?'save-active':''}" data-action="${owner===activeCourse?'bookmark':'extra-bookmark'}" data-id="${id}" aria-label="${saved?'Yer imini kaldır':'Soruyu tekrar defterine kaydet'}" aria-pressed="${saved}" title="${saved?'Kaydedildi':'Kaydet'}">${icon('save')}</button>`;}
+  function card(q,owner=activeCourse){
+    return `<article class="bank-item">${cardContents(q,owner)}</article>`;
   }
-  function cardContents(q){
-    const r=state.records[q.id];
-    const chosen=cardAnswers.get(q.id),answered=cardAnswers.has(q.id);
+  function cardContents(q,owner=activeCourse){
+    const extra=owner!==activeCourse;
+    const r=loadCourseProgress(owner).records[q.id];
+    const answerKey=extra?owner+'/'+q.id:q.id;
+    const chosen=cardAnswers.get(answerKey),answered=cardAnswers.has(answerKey);
     return `<span class="number">${q.number.toString().padStart(2,'0')}</span>
       <div class="bank-content">
-        <div class="meta-line"><span class="badge">${esc(q.topicName)}</span>${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}${r?`<span class="tag">Son cevap: ${r.lastCorrect?'doğru':'yanlış'}</span>`:''}</div>
-        <h3 id="question-${q.id}">${rich(q.stem)}</h3>
-        ${optionList(q,chosen,{reveal:answered,disabled:answered,inline:true})}
+        <div class="meta-line"><span class="badge">${esc(q.topicName)}</span>${extra?'<span class="tag">Ek sorular</span>':''}${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}${r?`<span class="tag">Son cevap: ${r.lastCorrect?'doğru':'yanlış'}</span>`:''}</div>
+        <h3 id="question-${extra?'extra-':''}${q.id}">${rich(q.stem)}</h3>
+        ${optionList(q,chosen,{reveal:answered,disabled:answered,inline:true}).replaceAll('data-action="answer-card"',extra?'data-action="extra-answer-card"':'data-action="answer-card"').replaceAll('aria-labelledby="question-'+q.id+'"',extra?'aria-labelledby="question-extra-'+q.id+'"':'aria-labelledby="question-'+q.id+'"')}
         ${answered?answerReview(q,chosen,true):''}
-        ${r?`<div class="actions">${answered?btn('Yeniden çöz','retry-card',q.id,'text-button'):btn('Cevabımı incele','inspect',q.id,'text-button')}</div>`:''}
-      </div>${saveButton(q.id)}`;
+        ${r?`<div class="actions">${answered?btn('Yeniden çöz',extra?'extra-retry-card':'retry-card',q.id,'text-button'):extra?`<a class="text-button" href="${practiceHref('inspect/'+q.id,owner)}">Cevabımı incele</a>`:btn('Cevabımı incele','inspect',q.id,'text-button')}</div>`:''}
+      </div>${saveButton(q.id,owner)}`;
   }
   function topicOptions(value){return `<option value="">${D.weekly?'Tüm haftalar':'Tüm konular'}</option>${D.topics.map(t=>`<option value="${t.id}"${value===t.id?' selected':''}>${esc(t.name)}</option>`).join('')}`;}
   const questionsForWeeks=weeks=>weeks.size?D.questions.filter(q=>weeks.has(q.topic)):D.questions;
-  function filtered(){return M.filter(questionsForWeeks(bankWeeks),state,{status:bankStatus});}
+  function filtered(){return !isExtraSet()&&!bankSources.has('main')?[]:M.filter(questionsForWeeks(bankWeeks),state,{status:bankStatus});}
+  function filteredExtras(){
+    const id=extraSetsByCourse.get(activeCourse);
+    if(isExtraSet()||!id||!bankSources.has('extra'))return [];
+    const set=datasets[id],progress=loadCourseProgress(id);
+    const names=Object.fromEntries(set.topics.map(topic=>[topic.id,topic.name]));
+    const questions=set.questions.filter(q=>!extraBankTopics.size||extraBankTopics.has(q.topic))
+      .map(q=>({...q,topicName:names[q.topic]}));
+    return M.filter(questions,progress,{status:bankStatus});
+  }
   const weekSummary=weeks=>weeks.size?weeks.size+' hafta seçildi':'Tüm haftalar';
-  function weekPicker(scope,weeks,resetLabel){
+  function weekPicker(scope,weeks,resetLabel,choices=D.topics,title='Hafta seç'){
     return `<details class="week-filter"${weeks.size?' open':''}>
-      <summary id="${scope}-week-toggle">Hafta seç <span class="week-filter-summary" id="${scope}-week-summary" aria-live="polite">${weekSummary(weeks)}</span></summary>
-      <p class="small-copy">Birden fazla hafta seçebilirsin. Seçim yapmazsan tüm haftalar dahil edilir.</p>
-      <div class="week-filter-options" role="group" aria-label="Haftalar">${D.topics.map(({id,name})=>`
+      <summary id="${scope}-week-toggle">${title} <span class="week-filter-summary" id="${scope}-week-summary" aria-live="polite">${title==='Hafta seç'?weekSummary(weeks):weeks.size?weeks.size+' başlık seçildi':'Tüm başlıklar'}</span></summary>
+      <p class="small-copy">${title==='Hafta seç'?'Birden fazla hafta seçebilirsin. Seçim yapmazsan tüm haftalar dahil edilir.':'Birden fazla başlık seçebilirsin. Seçim yapmazsan tüm başlıklar dahil edilir.'}</p>
+      <div class="week-filter-options" role="group" aria-label="${esc(title)}">${choices.map(({id,name})=>`
         <label class="week-filter-option"><input type="checkbox" name="${scope}-week" value="${esc(id)}"${weeks.has(id)?' checked':''}> ${esc(name)}</label>`).join('')}</div>
       <button class="text-button" type="button" id="clear-${scope}-weeks" data-action="clear-${scope}-weeks"${weeks.size?'':' disabled'}>${resetLabel}</button>
     </details>`;
@@ -363,15 +380,25 @@
   function changeWeek(scope,weeks,input){
     if(input.checked)weeks.add(input.value);
     else weeks.delete(input.value);
-    document.getElementById(scope+'-week-summary').textContent=weekSummary(weeks);
+    document.getElementById(scope+'-week-summary').textContent=scope==='extra-bank'
+      ?(weeks.size?weeks.size+' başlık seçildi':'Tüm başlıklar'):weekSummary(weeks);
     document.getElementById('clear-'+scope+'-weeks').disabled=!weeks.size;
   }
-  function bankResults(){const list=filtered();const results=document.getElementById('bank-results');if(!results)return;results.innerHTML=`<div class="list-summary"><span>${list.length} soru listeleniyor</span>${list.length?btn('Listelenen soruları çöz','filtered','','secondary'):''}</div><div class="bank-list">${list.length?list.map(q=>card(q)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;}
+  function bankResults(){
+    const list=filtered(),extras=filteredExtras(),extraId=extraSetsByCourse.get(activeCourse);
+    const results=document.getElementById('bank-results');if(!results)return;
+    const total=list.length+extras.length;
+    const solve=list.length?btn(extras.length?'Ana soruları sırayla çöz':'Listelenen soruları çöz','filtered','','secondary'):'';
+    const extraLink=extras.length?`<a class="secondary" href="${practiceHref('academy',extraId)}">Ek sorulara git</a>`:'';
+    results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}${extraLink}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
+  }
   function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}main.innerHTML=heading(courseTitle(),'Tüm sorular')+`
+    ${!isExtraSet()?`<fieldset class="bank-sources"><legend>Soru türü</legend><label><input type="checkbox" name="bank-source" value="main"${bankSources.has('main')?' checked':''}> Ana sorular</label><label><input type="checkbox" name="bank-source" value="extra"${bankSources.has('extra')?' checked':''}${extraSetsByCourse.has(activeCourse)?'':' disabled'}> Ek sorular</label>${extraSetsByCourse.has(activeCourse)?'':'<small>Bu derse henüz ek soru eklenmedi.</small>'}</fieldset>`:''}
     <label class="form-field bank-filter">Çözüm durumu
       <select id="bank-status">${[['','Tüm sorular'],['new','Henüz çözülmeyen'],['wrong','Son cevabı yanlış'],['saved','Kaydedilen']].map(([v,l])=>`<option value="${v}"${bankStatus===v?' selected':''}>${l}</option>`).join('')}</select>
     </label>
-    ${D.weekly&&D.topics.length?weekPicker('bank',bankWeeks,'Tüm haftaları göster'):''}
+    ${D.weekly&&D.topics.length&&(isExtraSet()||bankSources.has('main'))?weekPicker('bank',bankWeeks,'Tüm haftaları göster'):''}
+    ${!isExtraSet()&&bankSources.has('extra')&&extraSetsByCourse.has(activeCourse)?weekPicker('extra-bank',extraBankTopics,'Tüm başlıkları göster',datasets[extraSetsByCourse.get(activeCourse)].topics,'Ek soru başlığı seç'):''}
     <div id="bank-results"></div>
     ${D.source.title?`<p class="source-box">Soru kaynağı · ${D.source.url?`<a href="${esc(D.source.url)}" target="_blank" rel="noopener noreferrer">${esc(D.source.title)}</a>`:esc(D.source.title)}</p>`:''}`;bankResults();}
   function collection(kind){const isWrong=kind==='wrong',ids=isWrong?wrongIds():state.bookmarks;const list=ids.filter(id=>lookup[id]).map(id=>lookup[id]);
@@ -540,6 +567,7 @@
     else if(page==='sorular')chooseCourse(id);
     else if(page==='quick'){if(!D.questions.length)main.innerHTML=emptyContent('HIZLI ÇÖZÜM','Henüz soru eklenmedi','Yeni sorular eklendiğinde burada çözebilirsin.');else if(run&&!run.finished)navigate('run');else start('quick',D.questions.map(q=>q.id));}
     else if(page==='academy')academy();else if(page==='lesson')lesson(id);else if(page==='bank'||page==='about')bank();
+    else if(page==='extras')main.innerHTML=emptyContent(courseTitle(false),'Ek sorular','Bu ders için henüz ek soru eklenmedi.');
     else if(page==='wrong'||page==='saved')collection(page);else if(page==='exam')exam();else if(page==='analysis')analysis();
     else if(page==='settings')settings();else if(page==='run'){if(run?.finished)navigate('result');else runView();}
     else if(page==='result')result();else if(page==='review'){if(run?.finished)runView(true);else navigate('run');}
@@ -564,6 +592,11 @@
       bankWeeks.clear();
       bank();
       document.getElementById('bank-week-toggle').focus();
+    },
+    'clear-extra-bank-weeks':()=>{
+      extraBankTopics.clear();
+      bank();
+      document.getElementById('extra-bank-week-toggle').focus();
     },
     'clear-exam-weeks':()=>{
       examWeeks.clear();
@@ -590,6 +623,33 @@
       if(!item||!cardAnswers.delete(id))return;
       item.innerHTML=cardContents(lookup[id]);
       item.querySelector('.option').focus();
+    },
+    'extra-answer-card':(value,target)=>{
+      const [id,option]=value.split('/'),owner=extraSetsByCourse.get(activeCourse);
+      const set=datasets[owner],question=set?.questions.find(q=>q.id===id),choice=Number(option);
+      const item=target.closest('.bank-item'),key=owner+'/'+id;
+      if(!item||!question?.options[choice]||cardAnswers.has(key))return;
+      const q={...question,topicName:set.topics.find(topic=>topic.id===question.topic)?.name||''};
+      cardAnswers.set(key,choice);
+      M.record(loadCourseProgress(owner),q,choice);
+      save(true);
+      item.innerHTML=cardContents(q,owner);
+      item.querySelector('.feedback').focus();
+    },
+    'extra-retry-card':(id,target)=>{
+      const owner=extraSetsByCourse.get(activeCourse),set=datasets[owner],item=target.closest('.bank-item');
+      const question=set?.questions.find(q=>q.id===id);
+      if(!item||!question||!cardAnswers.delete(owner+'/'+id))return;
+      const q={...question,topicName:set.topics.find(topic=>topic.id===question.topic)?.name||''};
+      item.innerHTML=cardContents(q,owner);
+      item.querySelector('.option').focus();
+    },
+    'extra-bookmark':id=>{
+      const owner=extraSetsByCourse.get(activeCourse),set=datasets[owner];
+      if(!set?.questions.some(q=>q.id===id))return;
+      const progress=loadCourseProgress(owner),saved=progress.bookmarks.includes(id);
+      progress.bookmarks=saved?progress.bookmarks.filter(value=>value!==id):[...progress.bookmarks,id];
+      save(true);bankResults();toast(saved?'Yer imi kaldırıldı.':'Soru tekrar defterine kaydedildi.');
     },
     answer:id=>{
       if(!run||run.finished||route!=='run')return;
@@ -700,8 +760,15 @@
     if(el.id==='bank-status'){
       bankStatus=el.value;
       bankResults();
+    }else if(el.name==='bank-source'){
+      if(el.checked)bankSources.add(el.value);else bankSources.delete(el.value);
+      bank();
+      document.querySelector(`input[name="bank-source"][value="${el.value}"]`)?.focus();
     }else if(el.name==='bank-week'){
       changeWeek('bank',bankWeeks,el);
+      bankResults();
+    }else if(el.name==='extra-bank-week'){
+      changeWeek('extra-bank',extraBankTopics,el);
       bankResults();
     }else if(el.name==='exam-week'){
       changeWeek('exam',examWeeks,el);

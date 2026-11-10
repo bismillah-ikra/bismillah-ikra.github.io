@@ -81,7 +81,7 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
   const nodes={},events={},winEvents={},intervals=[];let hash='#home',now=1000000;
   const node=id=>nodes[id]||(nodes[id]={id,innerHTML:'',textContent:'',open:false,dataset:{},value:'',checked:false,attrs:{},
     classList:{add(){},remove(){}},setAttribute(k,v){this.attrs[k]=v},focus(){},addEventListener(k,fn){this[k]=fn},showModal(){this.open=true},close(){this.open=false}});
-  const document={hidden:false,getElementById:node,documentElement:{dataset:{}},addEventListener:(k,fn)=>events[k]=fn};
+  const document={hidden:false,getElementById:node,querySelector:()=>null,documentElement:{dataset:{}},addEventListener:(k,fn)=>events[k]=fn};
   const window={document,localStorage,scrollTo(){},addEventListener:(k,fn)=>winEvents[k]=fn};
   const location={get hash(){return hash},set hash(v){hash=v.startsWith('#')?v:'#'+v}};
   class Clock extends Date{static now(){return now;}}
@@ -344,7 +344,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   const four='ders/din-bilim-iliskisi-4-sikli/';
   h.nav('academy');
   assert.match(h.html(),/174 soru · 10 hafta/);
-  assert.match(h.node('extra-question-nav').innerHTML,/href="#ders\/din-bilim-iliskisi-4-sikli\/academy"[^>]*>[^]*?<span>Ek sorular<\/span>/);
+  assert.match(h.node('nav').innerHTML,/href="#ders\/din-bilim-iliskisi-4-sikli\/academy"[^>]*>[^]*?<span>Ek sorular<\/span>/);
   assert.doesNotMatch(h.node('nav').innerHTML,/4 şıklı|5 şıklı/);
   h.app.actions.bookmark(published.questions[0].id);
   h.events.change({target:{id:'remember',checked:true}});
@@ -355,7 +355,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   assert.match(h.html(),/din-bilim-iliskisi-4-sikli\/lesson\/hafta-1/);
   assert.equal(h.app.getState().bookmarks.length,0);
   const mainLinks=[...h.node('nav').innerHTML.matchAll(/href="#([^"]+)"/g)].map(match=>match[1]);
-  assert.deepEqual(mainLinks,['quick','academy','exam','bank','wrong','saved','analysis']);
+  assert.deepEqual(mainLinks,['quick','academy','exam','bank',four+'academy','wrong','saved','analysis']);
   assert.match(h.html(),/href="#ders\/din-bilim-iliskisi-4-sikli\/exam">Ek sorulardan deneme/);
   h.nav(mainLinks[3]);
   assert.match(h.node('bank-results').innerHTML,/174 soru listeleniyor/);
@@ -386,6 +386,40 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   assert.equal(reloaded.node('extra-question-nav').hidden,true);
   reloaded.events.change({target:{id:'remember',checked:false}});
   assert.equal(storage.map.size,0);
+});
+test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
+  const storage=fakeStorage(),h=harness(published,storage,true);
+  h.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi-4-sikli'].questions[0].id='S-01-02';
+  h.nav('bank');
+  h.events.change({target:{id:'remember',checked:true}});
+  h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
+  assert.match(h.node('bank-results').innerHTML,/334 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/id="question-S-01-02"/);
+  assert.match(h.node('bank-results').innerHTML,/id="question-extra-S-01-02"/);
+  h.events.change({target:{name:'bank-source',value:'main',checked:false}});
+  assert.match(h.node('bank-results').innerHTML,/160 soru listeleniyor/);
+  h.events.change({target:{name:'extra-bank-week',value:'hafta-1',checked:true}});
+  assert.match(h.node('bank-results').innerHTML,/18 soru listeleniyor/);
+  const item={innerHTML:'',querySelector:()=>({focus(){}})};
+  h.app.actions['extra-answer-card']('S-01-02/0',{closest:()=>item});
+  assert.equal(h.app.getState().records['S-01-02'],undefined);
+  assert.match(item.innerHTML,/Cevap açıklaması/);
+  h.nav('ders/din-bilim-iliskisi-4-sikli/academy');
+  assert.equal(h.app.getState().records['S-01-02'].lastAnswer,0);
+  const reopened=harness(published,storage,true);
+  reopened.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi-4-sikli'].questions[0].id='S-01-02';
+  reopened.nav('ders/din-bilim-iliskisi-4-sikli/academy');
+  assert.equal(reopened.app.getState().records['S-01-02'].lastAnswer,0);
+});
+test('Her derste ek sorular menüsü bulunur',()=>{
+  const h=harness(published,fakeStorage(),true);
+  for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','ornek-hadis-metinleri','tefsir']){
+    h.nav('ders/'+id+'/academy');
+    assert.match(h.node('nav').innerHTML,new RegExp('href="#ders/'+id+'/extras"[^>]*>[^]*?<span>Ek sorular</span>'));
+    h.nav('ders/'+id+'/extras');
+    assert.match(h.html(),/<h1>Ek sorular<\/h1>/);
+    assert.match(h.html(),/henüz ek soru eklenmedi/);
+  }
 });
 test('Dağıtılan varlıklarda izleyici, ağ çağrısı, belge veya kişisel kimlik yok',()=>{
   for(const file of ['app.js','model.js','index.html','style.css','data.js','course-data.js']){const text=fs.readFileSync('./dist/'+file,'utf8');
