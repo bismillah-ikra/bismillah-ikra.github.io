@@ -522,6 +522,25 @@ test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',
   reopened.events.change({target:{name:'extra-bank-week',value:'sayilar',checked:true}});
   assert.match(reopened.node('bank-results').innerHTML,/30 soru listeleniyor/);
 });
+test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
+  const h=harness(published,fakeStorage(),true);
+  const navCount=()=>Number(h.node('nav').innerHTML.match(/<span>Tüm sorular<\/span><span class="nav-count">(\d+)<\/span>/)?.[1]);
+  h.nav('ders/ornek-hadis-metinleri/academy');
+  assert.equal(navCount(),230);
+  h.nav('ders/ornek-hadis-metinleri/bank');
+  h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
+  assert.equal(navCount(),230);
+  assert.match(h.node('bank-results').innerHTML,/230 soru listeleniyor/);
+  h.nav('academy');
+  assert.equal(navCount(),334);
+  h.nav('bank');
+  h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
+  assert.match(h.node('bank-results').innerHTML,/334 soru listeleniyor/);
+  h.nav('ders/kelam/academy');
+  assert.equal(navCount(),160);
+  h.nav('ders/ornek-hadis-metinleri-ek/academy');
+  assert.equal(navCount(),230);
+});
 test('Ek sorular ayrı menü yerine tüm sorular filtresindedir',()=>{
   const h=harness(published,fakeStorage(),true);
   for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','tefsir']){

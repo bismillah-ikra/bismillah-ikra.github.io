@@ -165,7 +165,7 @@
       const mainSet=datasets[parentId],mainProgress=loadCourseProgress(parentId);
       const wrongCount=wrongIds(mainSet,mainProgress).length;
       navigation.innerHTML=navItems.map(([id,ic,label])=>{
-        const count=id==='bank'?mainSet.questions.length:id==='wrong'?wrongCount:0;
+        const count=id==='bank'?mainSet.questions.length+(datasets[extraSetsByCourse.get(parentId)]?.questions.length||0):id==='wrong'?wrongCount:0;
         const name=id==='academy'&&!mainSet.weekly?'Akademi':label;
         const current=parentId===activeCourse&&id===active?'page':'';
         const divider=id==='wrong'?'<div class="nav-divider" aria-hidden="true"></div>':'';
