@@ -333,6 +333,16 @@ test('10. hafta dört derste çözülebilir',()=>{
     assert.match(h.html(),/Cevap açıklaması/,slug);
   }
 });
+test('Örnek Hadis 10. hafta yorum ve rivayet bağlamı korunur',()=>{
+  const h=harness(published,fakeStorage(),true);
+  const questions=h.window.PAYLASIM_COURSE_DATA['ornek-hadis-metinleri'].questions.filter(q=>q.topic==='hafta-10');
+  const interpretation=questions.find(q=>q.number===9),silence=questions.find(q=>q.number===16);
+  assert.match(interpretation.stem,/Ders notundaki yoruma göre/);
+  assert.match(interpretation.explanation,/mizacı hakkında kesin bilgi vermez/);
+  assert.equal(interpretation.correct,1);
+  assert.match(silence.stem,/Hadiste.*sükût/);
+  assert.equal(silence.correct,1);
+});
 test('Örnek Hadis 10. hafta PDF ve Word dosyaları arşivde yer alır',()=>{
   const files=JSON.parse(fs.readFileSync('dist/dersler/files.json','utf8')).files;
   for(const folder of ['ders-notlari','calisma-dosyalari']){
