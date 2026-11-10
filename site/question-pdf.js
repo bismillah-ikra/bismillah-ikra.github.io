@@ -9,9 +9,26 @@
     });
     if (!library) library=Promise.all([
       load('./assets/pdf-lib/pdf-lib.min.js',()=>!!window.PDFLib),
-      load('./assets/pdf-lib/fontkit.umd.min.js',()=>!!window.fontkit)
+      load('./assets/pdf-lib/fontkit.umd.min.js',()=>!!window.fontkit),
+      load('./assets/pdf-lib/bidi.min.js',()=>!!window.bidi_js)
     ]).catch(error=>{library=null;throw error;});
     return library;
+  }
+  // PDFium reverses RTL segments while extracting ActualText. Arrange those
+  // segments so combining marks survive that pass in their original order.
+  function pdfiumVisual(text){
+    const bidi=window.bidi_js(),segments=[];
+    for(const char of text){
+      const type=bidi.getBidiCharTypeName(char);
+      const direction=type==='L'?'L':['AN','EN','NSM','CS','ES','ET','BN'].includes(type)?'W':['R','AL'].includes(type)?'R':'N';
+      const last=segments[segments.length-1];
+      if(last?.direction===direction){last.text+=char;if(type==='EN'||type==='AN')last.number=true;}
+      else segments.push({direction,text:char,number:type==='EN'||type==='AN'});
+    }
+    const rights=segments.filter(s=>s.direction==='R').length,lefts=segments.filter(s=>s.direction==='L'||s.number).length;
+    const rtl=!!rights&&rights>=lefts;
+    if(rtl)segments.reverse();
+    return segments.map(s=>s.text).join('');
   }
   async function loadFonts() {
     if (!window.FontFace || !document.fonts) return;
@@ -35,6 +52,9 @@
     pdf.setTitle(title); pdf.setAuthor(''); pdf.setCreator('Ders ve Soru Arşivi');
     pdf.registerFontkit(window.fontkit);
     const [latin,bold,arabic]=await Promise.all(fontBytes.map(bytes=>pdf.embedFont(bytes)));
+    const anchorFont=await pdf.embedFont(fontBytes[0]);
+    const anchorGlyph=window.fontkit.create(new Uint8Array(fontBytes[0])).glyphForCodePoint(0x78).id.toString(16).padStart(4,'0');
+    const anchorCmap=`/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n/CMapName /Anchor def\n/CMapType 2 def\n1 begincodespacerange\n<0000> <FFFF>\nendcodespacerange\n1 beginbfchar\n<${anchorGlyph}> <0020>\nendbfchar\nendcmap\nCMapName currentdict /CMap defineresource pop\nend\nend`;
     const arabicFont=window.fontkit.create(new Uint8Array(fontBytes[2]));
     // Text is drawn over the image invisibly. Encoding unshaped codepoints avoids
     // losing the original Unicode when Arabic glyphs are joined for display.
@@ -52,6 +72,13 @@
       pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
       for(const line of textLines){
         ctx.font=`${line.bold?28:26}px ${line.bold?'TestLatinBold':'TestLatin'}, TestArabic, sans-serif`;
+        const properties=pdf.context.obj({ActualText:PDFLib.PDFHexString.fromText(pdfiumVisual(line.text))});
+        pdfPage.pushOperators(PDFLib.PDFOperator.of('BDC',[PDFLib.PDFName.of('Span'),properties]));
+        // Give the replacement text a box spanning the printed line, so that
+        // selection is not confined to the tiny width of one space.
+        const fontSize=(line.bold?28:26)/2;
+        const count=Math.max(1,Math.round(ctx.measureText(line.text).width/2/anchorFont.widthOfTextAtSize('x',fontSize)));
+        pdfPage.drawText('x'.repeat(count),{x:(margin+line.indent)/2-1,y:(height-line.y)/2,size:fontSize,font:anchorFont,opacity:0});
         const pieces=line.text.split(/([\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+(?:\s+[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+)*)/u);
         let prefix='';
         for(const piece of pieces){
@@ -59,12 +86,26 @@
           const rtl=/^[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]/u.test(piece);
           const x=(margin+line.indent+ctx.measureText(prefix).width)/2, y=(height-line.y)/2, size=(line.bold?28:26)/2;
           if(rtl){
-            // The source characters are kept in the text layer separately from
-            // the joined glyphs in the visible image.
-            pdfPage.drawText(Array.from(piece).reverse().join(''),{x,y,size,font:arabic,opacity:0});
+            // Preserve the logical text for PDFium/Acrobat. Some readers ignore
+            // ActualText, so their fallback keeps each word's marks together.
+            let offset=0;
+            for(const word of piece.match(/\S+|\s+/gu)||[]){
+              const wordX=x+offset;
+              if(/^\s+$/u.test(word)){
+                pdfPage.drawText(word,{x:wordX,y,size,font:latin,opacity:0});
+                offset+=latin.widthOfTextAtSize(word,size);continue;
+              }
+              const marks=word.match(/[\u064b-\u065f\u0670\u06d6-\u06ed]+$/u)?.[0]||'';
+              const encoded=Array.from(word.slice(0,word.length-marks.length)).reverse().join('');
+              if(encoded)pdfPage.drawText(encoded,{x:wordX,y,size,font:arabic,opacity:0});
+              const advance=Array.from(encoded).reduce((n,ch)=>n+arabicFont.glyphForCodePoint(ch.codePointAt(0)).advanceWidth,0)*size/arabicFont.unitsPerEm;
+              if(marks)pdfPage.drawText(marks,{x:wordX+advance,y,size,font:arabic,opacity:0});
+              offset+=advance;
+            }
           }else pdfPage.drawText(piece,{x,y,size,font:line.bold?bold:latin,opacity:0});
           prefix+=piece;
         }
+        pdfPage.pushOperators(PDFLib.endMarkedContent());
       }
     }
     async function space(n) { if (y+n>bottom) { await flush(); blank(); } }
@@ -103,6 +144,8 @@
     await flush(); blank(); await write('Cevap anahtarı',true); y+=20;
     for(let i=0;i<questions.length;i+=8) await write(questions.slice(i,i+8).map((q,j)=>`${i+j+1}. ${'ABCDE'[q.correct]}`).join('  ·  '));
     await flush();
+    await anchorFont.embed();
+    pdf.context.lookup(anchorFont.ref,PDFLib.PDFDict).set(PDFLib.PDFName.of('ToUnicode'),pdf.context.register(pdf.context.flateStream(anchorCmap)));
     const bytes=await pdf.save();
     const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
     return {url,filename:title.replace(/[\\/:*?"<>|]/g,'-')+'.pdf'};
