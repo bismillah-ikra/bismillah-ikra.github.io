@@ -344,7 +344,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   const four='ders/din-bilim-iliskisi-4-sikli/';
   h.nav('academy');
   assert.match(h.html(),/174 soru · 10 hafta/);
-  assert.match(h.node('nav').innerHTML,/href="#ders\/din-bilim-iliskisi-4-sikli\/academy"[^>]*>[^]*?<span>Ek sorular<\/span>/);
+  assert.doesNotMatch(h.node('nav').innerHTML,/<span>Ek sorular<\/span>/);
   assert.doesNotMatch(h.node('nav').innerHTML,/4 şıklı|5 şıklı/);
   h.app.actions.bookmark(published.questions[0].id);
   h.events.change({target:{id:'remember',checked:true}});
@@ -355,8 +355,8 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   assert.match(h.html(),/din-bilim-iliskisi-4-sikli\/lesson\/hafta-1/);
   assert.equal(h.app.getState().bookmarks.length,0);
   const mainLinks=[...h.node('nav').innerHTML.matchAll(/href="#([^"]+)"/g)].map(match=>match[1]);
-  assert.deepEqual(mainLinks,['quick','academy','exam','bank',four+'academy','wrong','saved','analysis']);
-  assert.match(h.html(),/href="#ders\/din-bilim-iliskisi-4-sikli\/exam">Ek sorulardan deneme/);
+  assert.deepEqual(mainLinks,['quick','academy','exam','bank','wrong','saved','analysis']);
+  assert.doesNotMatch(h.html(),/Ek sorulardan deneme|Tüm sorular bir arada/);
   h.nav(mainLinks[3]);
   assert.match(h.node('bank-results').innerHTML,/174 soru listeleniyor/);
   assert.equal((h.node('bank-results').innerHTML.match(/class="letter">E</g)||[]).length,174);
@@ -411,6 +411,62 @@ test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   reopened.nav('ders/din-bilim-iliskisi-4-sikli/academy');
   assert.equal(reopened.app.getState().records['S-01-02'].lastAnswer,0);
 });
+test('Denemede ana ve ek başlıklar seçilir; kayıtlar yenilemede korunur',()=>{
+  const storage=fakeStorage(),h=harness(published,storage,true);
+  h.nav('academy');h.events.change({target:{id:'remember',checked:true}});
+  assert.doesNotMatch(h.html(),/class="device-save"/);
+  h.nav('exam');h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
+  h.events.change({target:{name:'exam-source',value:'main',checked:false}});
+  h.events.change({target:{name:'exam-extra-week',value:'hafta-1',checked:true}});
+  assert.equal(h.node('exam-count').max,'18');
+  h.app.actions['exam-count']('4');h.app.actions['start-exam']();h.flush();
+  const ids=Array.from(h.app.getRun().ids);
+  assert.ok(ids.every(id=>id.startsWith('extra:S-01-')));
+  h.app.actions.answer('0');h.app.actions.next();
+  const reopened=harness(published,storage,true);reopened.nav('run');
+  assert.deepEqual(Array.from(reopened.app.getRun().ids),ids);
+  assert.equal(reopened.app.getRun().index,1);
+  reopened.app.actions.finish();reopened.node('confirm-ok').click();reopened.flush();
+  assert.equal(reopened.app.getState().records[ids[0]],undefined);
+  reopened.nav('ders/din-bilim-iliskisi-4-sikli/academy');
+  assert.equal(reopened.app.getState().records[ids[0].slice(6)].lastAnswer,0);
+  reopened.nav('settings');assert.match(reopened.html(),/id="remember"[^>]* checked/);
+  reopened.events.change({target:{id:'remember',checked:false}});
+  assert.equal(storage.map.size,0);
+});
+test('Karma denemede seçilen haftalar ve ek başlıklar birlikte kullanılır',()=>{
+  const h=harness(published,fakeStorage(),true);
+  h.nav('exam');h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
+  h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
+  h.events.change({target:{name:'exam-extra-week',value:'hafta-2',checked:true}});
+  const total=Number(h.node('exam-count').max);assert.ok(total>=23);
+  h.app.actions['exam-count'](String(total));h.app.actions['start-exam']();h.flush();
+  const ids=Array.from(h.app.getRun().ids);
+  assert.ok(ids.some(id=>id.startsWith('extra:S-02-')));
+  assert.ok(ids.some(id=>!id.startsWith('extra:')));
+  assert.ok(ids.filter(id=>id.startsWith('extra:')).every(id=>id.startsWith('extra:S-02-')));
+  h.app.actions.finish();h.node('confirm-ok').click();h.flush();
+  assert.match(h.html(),/Ek sorular/);
+  h.nav('bank');assert.match(h.html(),/Tüm sorular bir arada/);
+});
+test('Aynı kimlikli ana ve ek sorular denemede ayrı kaydedilir',()=>{
+  const h=harness(published,fakeStorage(),true);
+  const set=h.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi-4-sikli'];
+  set.questions[0].id=published.questions[0].id;
+  h.nav('ders/kelam/academy');h.nav('exam');
+  h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
+  h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
+  h.events.change({target:{name:'exam-extra-week',value:'hafta-1',checked:true}});
+  h.app.actions['exam-count'](String(h.node('exam-count').max));h.app.actions['start-exam']();h.flush();
+  const ids=Array.from(h.app.getRun().ids),plain=published.questions[0].id,extra='extra:'+plain;
+  assert.ok(ids.includes(plain)&&ids.includes(extra));
+  h.app.actions.jump(String(ids.indexOf(plain)));h.app.actions.answer('0');
+  h.app.actions.jump(String(ids.indexOf(extra)));h.app.actions.answer('1');
+  h.app.actions.finish();h.node('confirm-ok').click();h.flush();
+  assert.equal(h.app.getState().records[plain].lastAnswer,0);
+  h.nav('ders/din-bilim-iliskisi-4-sikli/academy');
+  assert.equal(h.app.getState().records[plain].lastAnswer,1);
+});
 test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);
   const data=h.window.PAYLASIM_COURSE_DATA['ornek-hadis-metinleri-ek'];
@@ -424,7 +480,7 @@ test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',
   assert.equal(twentyFifth.options[twentyFifth.correct].text,'الْخَامِسُ وَالْعِشْرُونَ');
   const extra='ders/ornek-hadis-metinleri-ek/';
   h.nav('ders/ornek-hadis-metinleri/academy');
-  assert.match(h.node('nav').innerHTML,/href="#ders\/ornek-hadis-metinleri-ek\/academy"[^>]*>[^]*?Ek sorular/);
+  assert.doesNotMatch(h.node('nav').innerHTML,/<span>Ek sorular<\/span>/);
   h.nav(extra+'academy');
   assert.match(h.html(),/30 soru · 1 başlık/);
   assert.match(h.html(),/Sayılar/);
@@ -447,14 +503,13 @@ test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',
   reopened.events.change({target:{name:'extra-bank-week',value:'sayilar',checked:true}});
   assert.match(reopened.node('bank-results').innerHTML,/30 soru listeleniyor/);
 });
-test('Her derste ek sorular menüsü bulunur',()=>{
+test('Ek sorular ayrı menü yerine tüm sorular filtresindedir',()=>{
   const h=harness(published,fakeStorage(),true);
   for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','tefsir']){
     h.nav('ders/'+id+'/academy');
-    assert.match(h.node('nav').innerHTML,new RegExp('href="#ders/'+id+'/extras"[^>]*>[^]*?<span>Ek sorular</span>'));
-    h.nav('ders/'+id+'/extras');
-    assert.match(h.html(),/<h1>Ek sorular<\/h1>/);
-    assert.match(h.html(),/henüz ek soru eklenmedi/);
+    assert.doesNotMatch(h.node('nav').innerHTML,/<span>Ek sorular<\/span>/);
+    h.nav('ders/'+id+'/bank');
+    assert.match(h.html(),/Ek sorular/);
   }
 });
 test('Test PDF düğmeleri yalnız o testin sorularını kullanır',()=>{

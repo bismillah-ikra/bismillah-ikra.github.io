@@ -37,6 +37,8 @@
   const bankSources=new Set(['main']);
   const extraBankTopics=new Set();
   const examWeeks=new Set();
+  const examExtraTopics=new Set();
+  const examSources=new Set(['main']);
   let examConfig={topic:'',count:Math.min(20,D.questions.length),minutes:0};
   function loadQuestions(){
     topics=Object.fromEntries(D.topics.map(t=>[t.id,t]));
@@ -44,6 +46,11 @@
     const questions=[...D.questions,...D.reinforcement];
     for(const q of questions)q.topicName=topics[q.topic].name;
     lookup=Object.fromEntries(questions.map(q=>[q.id,q]));
+    const extraId=extraSetsByCourse.get(activeCourse),extra= datasets[extraId];
+    if(extra){
+      for(const t of extra.topics)topics['extra:'+t.id]={...t,id:'extra:'+t.id,name:'Ek sorular · '+t.name};
+      for(const q of extra.questions)lookup['extra:'+q.id]={...q,id:'extra:'+q.id,originalId:q.id,owner:extraId,topic:'extra:'+q.topic,topicName:'Ek sorular · '+(extra.topics.find(t=>t.id===q.topic)?.name||'')};
+    }
     // Kayıtlar, soru kümesi geçici olarak değişse bile saklanır.
   }
   function restoreRun(saved){
@@ -84,6 +91,7 @@
     bankSources.clear();
     bankSources.add('main');
     examWeeks.clear();
+    examExtraTopics.clear();examSources.clear();examSources.add('main');
     examConfig={topic:'',count:Math.min(20,D.questions.length),minutes:0};
     teacherContext=null;
     lessonLevel=1;
@@ -161,10 +169,7 @@
         const name=id==='academy'&&!mainSet.weekly?'Akademi':label;
         const current=parentId===activeCourse&&id===active?'page':'';
         const divider=id==='wrong'?'<div class="nav-divider" aria-hidden="true"></div>':'';
-        const extraId=extraSetsByCourse.get(parentId);
-        const extraCurrent=(extraId&&isExtraSet())||(!extraId&&active==='extras')?'page':'';
-        const extraLink=id==='bank'?navLink([extraId?'academy':'extras','grid','Ek sorular'],extraId||parentId,extraId?datasets[extraId].questions.length:0,extraCurrent):'';
-        return divider+navLink([id,ic,name],parentId,count,current)+extraLink;
+        return divider+navLink([id,ic,name],parentId,count,current);
       }).join('');
     }else navigation.innerHTML='';
     extraNavigation.hidden=true;
@@ -290,10 +295,10 @@
   function studyControls(){
     const canResume=D.weekly?continuation():run&&!run.finished;
     return `<div class="study-controls">
-      <label class="device-save" for="remember">
-        <span><strong>${rememberLabel}</strong><small id="remember-location">Açarsan cevapların ve sonuçların yalnızca bu cihazda ve tarayıcıda saklanır.</small></span>
+      ${!consent?`<label class="device-save" for="remember">
+        <span><strong>${rememberLabel}</strong><small id="remember-location">Cevapların ve devam eden çalışmaların bu cihazın tarayıcısında saklanır. Sayfayı kapatıp açtığında kaldığın yerden devam edebilirsin. Gizlilik ve tercihlerden kapatabilirsin.</small></span>
         <input class="toggle" id="remember" type="checkbox" aria-label="${rememberLabel}" aria-describedby="remember-location"${consent?' checked':''}>
-      </label>
+      </label>`:''}
       ${canResume?btn(`Kaldığın yerden devam et ${icon('arrow')}`,'resume'):''}
     </div>`;
   }
@@ -302,16 +307,8 @@
     if(D.weekly){
       const title=isExtraSet()?'Ek sorular':'Haftalara göre sorular';
       const back=isExtraSet()?backLink(practiceHref('academy',catalogId()),'Ana sorulara dön'):'';
-      const extraActions=isExtraSet()?`<nav class="actions extra-study-links" aria-label="Ek soru seçenekleri">
-        <a class="secondary" href="${practiceHref('bank')}">Tüm ek sorular</a>
-        <a class="secondary" href="${practiceHref('exam')}">Ek sorulardan deneme</a>
-        <a class="secondary" href="${practiceHref('analysis')}">Ek soru ilerlemem</a>
-      </nav>`:'';
-      const pdfCourse=catalogId();
-      const pdfName=courseById.get(pdfCourse);
-      const pdfDownload=`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Ana soruları, varsa ek soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(pdfName)} - Tüm Sorular.pdf">PDF indir ↓</a></section>`;
       const groupLabel=D.topicLabel?'başlık':'hafta';
-      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} ${groupLabel}`)+studyControls()+pdfDownload+extraActions+weekCards();
+      main.innerHTML=back+heading(courseTitle(false),title,`${D.questions.length} soru · ${D.topics.length} ${groupLabel}`)+studyControls()+weekCards();
       return;
     }
     main.innerHTML=heading('AKADEMİ','Konu anlatımları','Ders anlatımlarını oku ve pekiştirme sorularıyla çalış.')+studyControls()+`<div class="lesson-grid">${D.topics.map((t,i)=>`<section class="lesson-card"><div class="meta-line"><span class="eyebrow lesson-number">${lessonLabel(i)}</span><span class="tag">${D.questions.filter(q=>q.topic===t.id).length} soru</span></div><h2>${t.name}</h2><small>${t.subtitle}</small><p>${rich(t.summary)}</p><a class="secondary" href="${practiceHref('lesson/'+t.id)}">Konuyu öğren ${icon('arrow')}</a></section>`).join('')}</div>`;
@@ -381,7 +378,7 @@
   function changeWeek(scope,weeks,input){
     if(input.checked)weeks.add(input.value);
     else weeks.delete(input.value);
-    document.getElementById(scope+'-week-summary').textContent=scope==='extra-bank'||D.topicLabel
+    document.getElementById(scope+'-week-summary').textContent=scope==='extra-bank'||scope==='exam-extra'||D.topicLabel
       ?(weeks.size?weeks.size+' başlık seçildi':'Tüm başlıklar'):weekSummary(weeks);
     document.getElementById('clear-'+scope+'-weeks').disabled=!weeks.size;
   }
@@ -390,10 +387,9 @@
     const results=document.getElementById('bank-results');if(!results)return;
     const total=list.length+extras.length;
     const solve=list.length?btn(extras.length?'Ana soruları sırayla çöz':'Listelenen soruları çöz','filtered','','secondary'):'';
-    const extraLink=extras.length?`<a class="secondary" href="${practiceHref('academy',extraId)}">Ek sorulara git</a>`:'';
-    results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}${extraLink}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
+    results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
   }
-  function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}main.innerHTML=heading(courseTitle(),'Tüm sorular')+`
+  function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}const pdfCourse=catalogId();main.innerHTML=heading(courseTitle(),'Tüm sorular')+`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Ana soruları, varsa ek soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(courseById.get(pdfCourse))} - Tüm Sorular.pdf">PDF indir ↓</a></section>
     ${!isExtraSet()?`<fieldset class="bank-sources"><legend>Soru türü</legend><label><input type="checkbox" name="bank-source" value="main"${bankSources.has('main')?' checked':''}> Ana sorular</label><label><input type="checkbox" name="bank-source" value="extra"${bankSources.has('extra')?' checked':''}${extraSetsByCourse.has(activeCourse)?'':' disabled'}> Ek sorular</label>${extraSetsByCourse.has(activeCourse)?'':'<small>Bu derse henüz ek soru eklenmedi.</small>'}</fieldset>`:''}
     <label class="form-field bank-filter">Çözüm durumu
       <select id="bank-status">${[['','Tüm sorular'],['new','Henüz çözülmeyen'],['wrong','Son cevabı yanlış'],['saved','Kaydedilen']].map(([v,l])=>`<option value="${v}"${bankStatus===v?' selected':''}>${l}</option>`).join('')}</select>
@@ -441,7 +437,7 @@
   }
   function question(q,answers,indexLabel,reveal=false,readonly=false){
     const chosen=answers[q.id],answered=Object.hasOwn(answers,q.id);
-    return `<div class="question-panel"><div class="question-top"><span class="badge">${esc(q.topicName)}</span>${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}<span class="tag">${indexLabel}</span>${saveButton(q.id)}</div><h2 class="question-stem">${rich(q.stem)}</h2>${optionList(q,chosen,{reveal,disabled:readonly})}
+    return `<div class="question-panel"><div class="question-top"><span class="badge">${esc(q.topicName)}</span>${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}<span class="tag">${indexLabel}</span>${saveButton(q.originalId||q.id,q.owner||activeCourse)}</div><h2 class="question-stem">${rich(q.stem)}</h2>${optionList(q,chosen,{reveal,disabled:readonly})}
     ${reveal?answerReview(q,chosen):''}${!readonly&&answered?`<div class="actions">${btn('Cevabı kaldır','clear-answer','','text-button')}<span class="small-copy">Cevabını başka bir seçenekle değiştirebilirsin.</span></div>`:''}</div>`;
   }
   function runView(review=false){if(!run)return navigate('academy');const q=lookup[run.ids[run.index]],isExam=run.type==='exam',reveal=review||(!isExam&&Object.hasOwn(run.answers,q.id));
@@ -450,9 +446,12 @@
     <aside class="panel palette-panel"><h3>Soru paleti</h3><p class="small-copy">${Object.keys(run.answers).length} cevap · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette">${run.ids.map((id,i)=>`<button data-action="jump" data-id="${i}" class="${i===run.index?'current ':''}${Object.hasOwn(run.answers,id)?'answered ':''}${run.flags.includes(id)?'flagged':''}" aria-label="${i+1}. soru${Object.hasOwn(run.answers,id)?', cevaplandı':', boş'}${run.flags.includes(id)?', işaretli':''}"${i===run.index?' aria-current="step"':''}>${i+1}</button>`).join('')}</div><p class="palette-legend">Dolgulu: cevaplandı<br>Alt çizgi: işaretlendi</p>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
   }
   function clock(){if(!run)return '';if(run.finished)return time(run.elapsed);if(run.deadline)return 'Kalan '+time(Math.max(0,Math.ceil((run.deadline-Date.now())/1000)));return time(run.elapsed);}
-  const examPool=()=>D.weekly
-    ?questionsForWeeks(examWeeks)
-    :D.questions.filter(q=>!examConfig.topic||q.topic===examConfig.topic);
+  const examPool=()=>{
+    const main=examSources.has('main')?(D.weekly?questionsForWeeks(examWeeks):D.questions.filter(q=>!examConfig.topic||q.topic===examConfig.topic)):[];
+    const extraId=extraSetsByCourse.get(activeCourse),extra=datasets[extraId];
+    const extras=examSources.has('extra')&&extra?extra.questions.filter(q=>!examExtraTopics.size||examExtraTopics.has(q.topic)).map(q=>lookup['extra:'+q.id]):[];
+    return [...main,...extras];
+  };
   const examPresets=[10,20,30,40];
   function examPreset(action,value,label=value){
     return `<button type="button" data-action="${action}" data-id="${value}">${label}</button>`;
@@ -465,6 +464,7 @@
   }
   function updateExamCountLimit(){
     const count=examPool().length;
+    if(count&&examConfig.count>count){examConfig.count=count;document.getElementById('exam-count').value=String(count);}
     document.getElementById('exam-count').max=String(count);
     document.getElementById('exam-count-note').textContent=examCountNote(count);
     document.getElementById('exam-count-presets').innerHTML=examCountPresets(count);
@@ -476,7 +476,9 @@
     main.innerHTML=heading(courseTitle(),'Deneme sınavı')+
       `<form class="panel exam-setup" id="exam-form">
         <h2>Denemeni oluştur</h2>
-        ${D.weekly?D.topicLabel?weekPicker('exam',examWeeks,'Tüm başlıkları dahil et',D.topics,'Başlık seç'):weekPicker('exam',examWeeks,'Tüm haftaları dahil et'):`<label class="form-field exam-field">${weekOrTopic}<select id="exam-topic">${topicOptions(examConfig.topic)}</select></label>`}
+        <fieldset class="bank-sources"><legend>Soru türü</legend><label><input type="checkbox" name="exam-source" value="main"${examSources.has('main')?' checked':''}> Ana sorular</label><label><input type="checkbox" name="exam-source" value="extra"${examSources.has('extra')?' checked':''}${extraSetsByCourse.has(activeCourse)?'':' disabled'}> Ek sorular</label></fieldset>
+        ${examSources.has('main')?(D.weekly?D.topicLabel?weekPicker('exam',examWeeks,'Tüm başlıkları dahil et',D.topics,'Başlık seç'):weekPicker('exam',examWeeks,'Tüm haftaları dahil et'):`<label class="form-field exam-field">${weekOrTopic}<select id="exam-topic">${topicOptions(examConfig.topic)}</select></label>`):''}
+        ${examSources.has('extra')&&extraSetsByCourse.has(activeCourse)?weekPicker('exam-extra',examExtraTopics,'Tüm ek başlıkları dahil et',datasets[extraSetsByCourse.get(activeCourse)].topics,'Ek soru başlığı seç'):''}
         <div class="form-grid exam-fields">
           <div>
             <label class="form-field exam-field">Soru sayısı
@@ -497,12 +499,12 @@
         <button class="primary" id="exam-start" type="submit"${count?'':' disabled'}>Denemeyi başlat</button>
       </form>`;
   }
-  function topicTable(byTopic){return `<div class="table-scroll"><table><thead><tr><th scope="col">${weekOrTopic}</th><th scope="col">Doğru</th><th scope="col">Yanlış</th><th scope="col">Boş</th><th scope="col">Başarı</th></tr></thead><tbody>${Object.entries(byTopic).map(([id,g])=>`<tr><td><a href="${practiceHref('lesson/'+id)}">${topics[id].name}</a></td><td>${g.correct}</td><td>${g.wrong}</td><td>${g.blank}</td><td>${Math.round(g.correct/g.total*100)}%<div class="bar-track"><div class="bar-fill" style="width:${g.correct/g.total*100}%"></div></div></td></tr>`).join('')}</tbody></table></div>`;}
+  function topicTable(byTopic){return `<div class="table-scroll"><table><thead><tr><th scope="col">${weekOrTopic}</th><th scope="col">Doğru</th><th scope="col">Yanlış</th><th scope="col">Boş</th><th scope="col">Başarı</th></tr></thead><tbody>${Object.entries(byTopic).map(([id,g])=>`<tr><td><a href="${practiceHref(id.startsWith('extra:')?'bank':'lesson/'+id)}">${esc(topics[id]?.name||id)}</a></td><td>${g.correct}</td><td>${g.wrong}</td><td>${g.blank}</td><td>${Math.round(g.correct/g.total*100)}%<div class="bar-track"><div class="bar-fill" style="width:${g.correct/g.total*100}%"></div></div></td></tr>`).join('')}</tbody></table></div>`;}
   function result(){if(!run?.finished)return navigate(run?'run':'academy');const r=M.score(run,lookup),wrongs=run.ids.filter(id=>Object.hasOwn(run.answers,id)&&run.answers[id]!==lookup[id].correct);
     main.innerHTML=`<div class="result-heading"><div>${heading(courseTitle(),run.type==='exam'?'Deneme sonucu':'Çalışma sonucu',`${r.total} soruluk ${run.type==='exam'?'deneme':run.type==='reinforce'?'pekiştirme':'çalışma'} tamamlandı.`)}</div><div class="score-big">${r.percent}<small> / 100</small></div></div>`+
       stats([[r.correct,'Doğru'],[r.wrong,'Yanlış'],[r.blank,'Boş'],[time(r.time),'Toplam oturum süresi']])+`<div class="actions">${btn('Tüm cevapları incele','review','','secondary')}${wrongs.length?btn('Yanlışları yeniden çöz','run-wrongs'):''}<a href="${practiceHref('exam')}" class="secondary">Yeni deneme oluştur</a>${backLink('#home','Ana sayfaya dön')}</div>
       <section class="panel" style="margin-top:28px"><div class="section-head"><h2>${weekOrTopic} bazında sonuç</h2><span class="small-copy">Ortalama çözüm: ${time(r.average)}</span></div>${topicTable(r.byTopic)}</section>
-      <section style="margin-top:28px"><div class="section-head"><h2>Bir sonraki adım</h2></div>${wrongs.length?`<p class="small-copy" style="margin-bottom:18px">Yanlış cevapladığın soruların açıklamalarını oku ve soruları yeniden çöz.</p><div class="bank-list">${wrongs.map(id=>card(lookup[id])).join('')}</div>`:r.blank?'<div class="notice">Boş bıraktığın soruları cevap incelemesinden açarak çalışabilirsin.</div>':'<div class="notice">Bu çalışmada bütün soruları doğru cevapladın. Başka bir konuyu çalışabilir veya daha kapsamlı deneme oluşturabilirsin.</div>'}</section><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-run','','secondary')}</div>`;
+      <section style="margin-top:28px"><div class="section-head"><h2>Bir sonraki adım</h2></div>${wrongs.length?`<p class="small-copy" style="margin-bottom:18px">Yanlış cevapladığın soruların açıklamalarını oku ve soruları yeniden çöz.</p><div class="bank-list">${wrongs.map(id=>{const q=lookup[id];return q.owner?card({...q,id:q.originalId},q.owner):card(q);}).join('')}</div>`:r.blank?'<div class="notice">Boş bıraktığın soruları cevap incelemesinden açarak çalışabilirsin.</div>':'<div class="notice">Bu çalışmada bütün soruları doğru cevapladın. Başka bir konuyu çalışabilir veya daha kapsamlı deneme oluşturabilirsin.</div>'}</section><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-run','','secondary')}</div>`;
   }
   function inspect(id){const q=lookup[id];if(!q)return navigate('bank');const r=state.records[id];const ans=r?{[id]:r.lastAnswer}:{};main.innerHTML=heading('SORU İNCELEMESİ',`Soru ${q.number}`,q.topicName)+question(q,ans,'İnceleme',true,true)+`<div class="actions" style="margin-top:20px">${btn('Yeniden çöz','single',id)}${backLink(practiceHref('wrong'),'Yanlışlarıma dön')}</div>`;}
   function analysis(){const records=D.questions.filter(q=>state.records[q.id]);
@@ -533,7 +535,11 @@
     <div class="setting-row"><div><h3>${consent?'Bu cihazda saklama açık':'Yalnız bu oturumda çalışıyorsun'}</h3><p>Bu seçeneği kapatmak kalıcı kayıtları kaldırır; mevcut oturumdaki çalışman devam eder. Ortak cihazda yerel kayıtları başkaları görebilir. Uygulama diğer ziyaretçilere sonuçlarını göstermez.</p></div><span class="tag">${consent?'YEREL KAYIT':'OTURUM'}</span></div><div class="setting-row"><div><h3>Tema</h3><p>Okuma tercihine göre açık veya koyu temayı seç.</p></div>${btn(state.theme==='dark'?'Açık tema':'Koyu tema','theme','','secondary')}</div>
     <div class="setting-row"><div><h3>Kayıtları temizle</h3><p>Bu uygulamanın yerel kayıtları ve oturumdaki çözüm verileri silinir; yanlışlar, yer imleri ve sonuç geçmişi sıfırlanır.</p></div>${btn('Kayıtları temizle','clear','','secondary')}</div></section>
     <section class="lesson-section"><h2>Gizlilik bildirimi</h2><p>Uygulama cevaplarını, puanlarını veya yer imlerini herhangi bir merkezi API’ye göndermez. Uygulamada reklam, analiz pikseli, harici yazı tipi çağrısı ve canlı yapay zekâ bağlantısı yoktur.</p></section></div>`;}
-  function finishNow(){M.finish(run,state,lookup);save();navigate('result');}
+  function finishNow(){
+    const wasFinished=run.finished;M.finish(run,state,lookup);
+    if(!wasFinished&&run.type==='exam')for(const id of run.ids){const q=lookup[id];if(q.owner&&Object.hasOwn(run.answers,id)){M.record(loadCourseProgress(q.owner),{...q,id:q.originalId},run.answers[id],run.times[id]||0);delete state.records[id];}}
+    save(true);navigate('result');
+  }
   function render(scroll=true){
     const hash=location.hash.slice(1)||'home';
     if(run?.type==='exam'&&!run.finished&&hash!==practicePath('run')){
@@ -622,6 +628,7 @@
       exam();
       document.getElementById('exam-week-toggle').focus();
     },
+    'clear-exam-extra-weeks':()=>{examExtraTopics.clear();exam();document.getElementById('exam-extra-week-toggle').focus();},
     'retry-wrongs':()=>start('quick',wrongIds()),'retry-saved':()=>start('quick',state.bookmarks),
     bookmark:id=>{state.bookmarks=state.bookmarks.includes(id)?state.bookmarks.filter(x=>x!==id):[...state.bookmarks,id];save();render(false);toast(state.bookmarks.includes(id)?'Soru tekrar defterine kaydedildi.':'Yer imi kaldırıldı.');},
     level:id=>{lessonLevel=Number(id);lesson(route.split('/')[1]);},
@@ -668,42 +675,44 @@
       if(!set?.questions.some(q=>q.id===id))return;
       const progress=loadCourseProgress(owner),saved=progress.bookmarks.includes(id);
       progress.bookmarks=saved?progress.bookmarks.filter(value=>value!==id):[...progress.bookmarks,id];
-      save(true);bankResults();toast(saved?'Yer imi kaldırıldı.':'Soru tekrar defterine kaydedildi.');
+      save(true);if(route==='run'||route==='review')runView(route==='review');else bankResults();toast(saved?'Yer imi kaldırıldı.':'Soru tekrar defterine kaydedildi.');
     },
     answer:id=>{
       if(!run||run.finished||route!=='run')return;
       M.tick(run);
       const q=lookup[run.ids[run.index]],choice=Number(id);
+      const progress=q.owner?loadCourseProgress(q.owner):state,recordId=q.originalId||q.id;
       const previous=run.answers[q.id];
       const changed=M.answer(run,q,choice);
       const showFeedback=changed&&run.type!=='exam';
       if(showFeedback&&previous!==choice){
         const token=String(run.startedAt)+'/'+q.id;
         run.recordBaselines ||= {};
-        if(previous===undefined||state.records[q.id]?.runAnswerToken!==token){
-          run.recordBaselines[q.id]=state.records[q.id]?{...state.records[q.id]}:null;
-        } else if(run.recordBaselines[q.id])state.records[q.id]={...run.recordBaselines[q.id]};
-        else delete state.records[q.id];
-        M.record(state,q,choice,run.times[q.id]||0);
-        state.records[q.id].runAnswerToken=token;
+        if(previous===undefined||progress.records[recordId]?.runAnswerToken!==token){
+          run.recordBaselines[q.id]=progress.records[recordId]?{...progress.records[recordId]}:null;
+        } else if(run.recordBaselines[q.id])progress.records[recordId]={...run.recordBaselines[q.id]};
+        else delete progress.records[recordId];
+        M.record(progress,{...q,id:recordId},choice,run.times[q.id]||0);
+        progress.records[recordId].runAnswerToken=token;
       }
-      if(changed)save();
+      if(changed)save(!!q.owner);
       runView();
       if(showFeedback)document.getElementById('run-answer-feedback')?.focus();
     },
     'clear-answer':()=>{
       if(!run||run.finished||route!=='run')return;
       const id=run.ids[run.index];
+      const q=lookup[id],progress=q.owner?loadCourseProgress(q.owner):state,recordId=q.originalId||id;
       if(!Object.hasOwn(run.answers,id))return;
       if(run.type!=='exam'){
         const token=String(run.startedAt)+'/'+id;
-        if(state.records[id]?.runAnswerToken===token){
-          if(run.recordBaselines?.[id])state.records[id]={...run.recordBaselines[id]};
-          else delete state.records[id];
+        if(progress.records[recordId]?.runAnswerToken===token){
+          if(run.recordBaselines?.[id])progress.records[recordId]={...run.recordBaselines[id]};
+          else delete progress.records[recordId];
         }
         if(run.recordBaselines)delete run.recordBaselines[id];
       }
-      delete run.answers[id];save();runView();
+      delete run.answers[id];save(!!q.owner);runView();
       toast('Cevap kaldırıldı. İstersen yeniden seçebilirsin.');
     },
     next:()=>move(Math.min(run.ids.length-1,run.index+1)),previous:()=>move(Math.max(0,run.index-1)),jump:id=>move(Number(id)),
@@ -792,6 +801,13 @@
     }else if(el.name==='exam-week'){
       changeWeek('exam',examWeeks,el);
       updateExamCountLimit();
+    }else if(el.name==='exam-extra-week'){
+      changeWeek('exam-extra',examExtraTopics,el);
+      updateExamCountLimit();
+    }else if(el.name==='exam-source'){
+      if(el.checked)examSources.add(el.value);else examSources.delete(el.value);
+      const count=examPool().length;if(count&&examConfig.count>count)examConfig.count=count;
+      exam();document.querySelector(`input[name="exam-source"][value="${el.value}"]`)?.focus();
     }else if(el.id==='exam-topic'){
       examConfig.topic=el.value;
       if(examConfig.count>examPool().length)examConfig.count=examPool().length;
@@ -799,13 +815,15 @@
       document.getElementById('exam-topic').focus();
     }else if(el.id==='remember'){
       if(consent&&!el.checked)for(const id of Object.keys(datasets))loadCourseProgress(id);
+      const previousConsent=consent;
       consent=el.checked;
       const saved=save(true);
+      if(!saved){consent=previousConsent;el.checked=previousConsent;refreshChrome();return;}
       el.checked=consent;
       if(route==='settings'){
         settings();
         document.getElementById('remember').focus();
-      }
+      }else if(consent&&route==='academy')academy();
       if(saved)toast(consent?'İlerlemen bu cihazda ve tarayıcıda kaydedilecek.':'Kalıcı kayıt kapatıldı. Çalışman bu oturumda devam ediyor.');
     }else readExamInput(el);
   });
