@@ -58,6 +58,7 @@
 .answer-review .explanations > p { font-size: 16px; line-height: 1.65; }
 .answer-review .explanations .actions { margin-top: 12px; }
 .icon-button, .primary, .secondary, .text-button, .palette button { min-width: 44px; min-height: 44px; }
+.palette { grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); overflow-x: hidden; }
 .week-filter-option { min-height: 44px; }
 .course-picker-option { overflow-wrap: anywhere; }
 

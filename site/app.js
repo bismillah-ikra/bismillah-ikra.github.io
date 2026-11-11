@@ -223,6 +223,14 @@
     if(!run||run.finished)return null;
     return {question:lookup[run.ids[run.index]],index:run.index};
   }
+  function singleWeekRun(){
+    if(!D.weekly||run?.type!=='quick'||!run.ids.length)return false;
+    const first=lookup[run.ids[0]];
+    return !!first&&!first.owner&&run.ids.every(id=>lookup[id]&&!lookup[id].owner&&lookup[id].topic===first.topic);
+  }
+  function runQuestionNumber(index){
+    return singleWeekRun()?lookup[run.ids[index]].number:index+1;
+  }
   function weekContinuation(id){
     const questions=D.questions.filter(q=>q.topic===id);
     const fromList=state.studyPosition?.kind==='list'&&lookup[state.studyPosition.id]?.topic===id;
@@ -233,7 +241,7 @@
   function weekSolveLabel(id){
     const next=weekContinuation(id),questions=D.questions.filter(q=>q.topic===id);
     if(!next)return 'Soruları yeniden çöz';
-    if(next.index!==undefined)return `${next.index+1}. sorudan devam et`;
+    if(next.index!==undefined)return `${runQuestionNumber(next.index)}. sorudan devam et`;
     return next.ids.length===questions.length?'Soruları sırayla çöz':`Kalan ${next.ids.length} soruyu çöz`;
   }
   function continuation(){
@@ -350,7 +358,7 @@
     const canResume=D.weekly?continuation():run&&!run.finished;
     const resumeLabel=canResume&&D.weekly
       ?run?.type==='exam'&&!run.finished?'Denemeye devam et'
-        :`${esc(canResume.question.topicName)} · ${canResume.ids?`Kalan ${canResume.ids.length} soruyu çöz`:`${canResume.index+1}. sorudan devam et`}`
+        :`${esc(canResume.question.topicName)} · ${canResume.ids?`Kalan ${canResume.ids.length} soruyu çöz`:`${runQuestionNumber(canResume.index)}. sorudan devam et`}`
       :'Kaldığın yerden devam et';
     return `<div class="study-controls">
       ${!consent?`<label class="device-save" for="remember">
@@ -512,9 +520,9 @@
     ${reveal?answerReview(q,chosen):''}${!readonly&&answered?`<div class="actions">${btn('Cevabı kaldır','clear-answer','','text-button')}<span class="small-copy">Cevabını başka bir seçenekle değiştirebilirsin.</span></div>`:''}</div>`;
   }
   function runView(review=false){if(!run)return navigate('academy');const q=lookup[run.ids[run.index]],isExam=run.type==='exam',reveal=review||(!isExam&&Object.hasOwn(run.answers,q.id));
-    main.innerHTML=`<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'TEK TEK SORU ÇÖZ'} · ${run.index+1}/${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
-    <div class="question-layout"><section>${question(q,run.answers,`${run.index+1}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?btn(run.flags.includes(q.id)?'İşareti kaldır':'İşaretle','flag','','secondary'):''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
-    <aside class="panel palette-panel"><h3>Soru paleti</h3><p class="small-copy">${Object.keys(run.answers).length} cevap · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette">${run.ids.map((id,i)=>`<button data-action="jump" data-id="${i}" class="${i===run.index?'current ':''}${Object.hasOwn(run.answers,id)?'answered ':''}${run.flags.includes(id)?'flagged':''}" aria-label="${i+1}. soru${Object.hasOwn(run.answers,id)?', cevaplandı':', boş'}${run.flags.includes(id)?', işaretli':''}"${i===run.index?' aria-current="step"':''}>${i+1}</button>`).join('')}</div><p class="palette-legend">Dolgulu: cevaplandı<br>Alt çizgi: işaretlendi</p>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
+    main.innerHTML=`<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'Çalışmadaki sıra'} · ${run.index+1} / ${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
+    <div class="question-layout"><section>${question(q,run.answers,`${runQuestionNumber(run.index)}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?btn(run.flags.includes(q.id)?'İşareti kaldır':'İşaretle','flag','','secondary'):''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
+    <aside class="panel palette-panel"><h3>Sorular</h3><p class="small-copy">${Object.keys(run.answers).length} cevaplandı · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette">${run.ids.map((id,i)=>`<button data-action="jump" data-id="${i}" class="${i===run.index?'current ':''}${Object.hasOwn(run.answers,id)?'answered ':''}${run.flags.includes(id)?'flagged':''}" aria-label="${runQuestionNumber(i)}. soru${Object.hasOwn(run.answers,id)?', cevaplandı':', boş'}${run.flags.includes(id)?', işaretli':''}"${i===run.index?' aria-current="step"':''}>${runQuestionNumber(i)}</button>`).join('')}</div><p class="palette-legend">Açık renk: cevaplandı<br>Alt çizgi: işaretlendi</p>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
   }
   function clock(){if(!run)return '';if(run.finished)return time(run.elapsed);if(run.deadline)return 'Kalan '+time(Math.max(0,Math.ceil((run.deadline-Date.now())/1000)));return time(run.elapsed);}
   const examPool=()=>{

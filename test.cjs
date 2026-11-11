@@ -334,6 +334,20 @@ test('Listede çözülen sorular atlanır; hafta tamamen çözülünce yeniden �
   for(const q of qs.slice(1))h.app.actions['answer-card'](q.id+'/0',target);
   assert.match(h.node('week-study-action').innerHTML,/Soruları yeniden çöz/);
 });
+test('Kalan hafta sorularında soru numaraları listeyle aynı kalır',()=>{
+  const h=harness(published),qs=published.questions.filter(q=>q.topic==='hafta-1');
+  const item={innerHTML:'',querySelector:()=>({focus(){}})};
+  h.nav('lesson/hafta-1');
+  h.app.actions['answer-card'](qs[0].id+'/0',{closest:()=>item});
+  h.app.actions['topic-quick']('hafta-1');h.flush();
+  assert.equal(h.app.getRun().ids[0],qs[1].id);
+  assert.match(h.html(),new RegExp('>'+qs[1].number+'\\. soru</span>'));
+  assert.match(h.html(),new RegExp('aria-label="'+qs[1].number+'\\. soru, boş"'));
+  assert.match(h.html(),/Çalışmadaki sıra · 1 \/ 14/);
+  assert.match(h.html(),/<h3>Sorular<\/h3>/);
+  h.nav('lesson/hafta-1');
+  assert.match(h.html(),new RegExp(qs[1].number+'\\. sorudan devam et'));
+});
 test('Devam düğmesi son listede çözülen haftayı seçer ve yenilemede korur',()=>{
   const storage=fakeStorage(),h=harness(published,storage);
   h.events.change({target:{id:'remember',checked:true}});
