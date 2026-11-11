@@ -2,6 +2,7 @@
 
 - Besmele logosunun metnini, Noto Naskh Arabic yazı tipini, renklerini, gölgesini ve biçimini koru. Kullanıcı açıkça istemedikçe logoyu yeniden tasarlama.
 - Ders Dosyaları ve Çalışma Soruları bağlantıları üst menüde telefon, tablet ve bilgisayarda görünür olmalı. Bölümler arasında doğrudan geçiş sağla.
+- Açık/koyu tema düğmesi yalnız ilk ana sayfada görünmeli. Tema tercihi ilerleme kaydından bağımsız olarak aynı tarayıcıda korunmalı ve ders arşivi ile PDF görüntüleyicisi dahil bütün sayfalara uygulanmalı. Üst menüdeki Ders Dosyaları ve Çalışma Soruları metinlerinin yanında simge kullanma.
 - Menüye veya ders seçim sayfalarına ek bir Ana sayfa ya da Ana sayfaya dön bağlantısı ekleme.
 - Mobil soru metinleri 18 px, seçenekler en az 16 px olmalı. Satır aralıklarını rahat tut. Uzun ders adları ve Arapça metinler kesilmeden satıra geçmeli.
 - Mobil düğmelerin ve seçim alanlarının dokunma yüksekliği en az 44 px olmalı.

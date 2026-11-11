@@ -85,9 +85,9 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
   const window={document,localStorage,scrollTo(){},addEventListener:(k,fn)=>winEvents[k]=fn};
   const location={get hash(){return hash},set hash(v){hash=v.startsWith('#')?v:'#'+v}};
   class Clock extends Date{static now(){return now;}}
-  const ctx=vm.createContext({window,document,location,Date:Clock,console,setTimeout:()=>0,clearTimeout(){},setInterval:fn=>intervals.push(fn)});
+  const ctx=vm.createContext({window,document,localStorage,location,Date:Clock,console,setTimeout:()=>0,clearTimeout(){},setInterval:fn=>intervals.push(fn)});
   window.MUSKAM_DATA=JSON.parse(JSON.stringify(data));
-  const files=['dersler/courses.js','model.js','prayers.js','app.js'];
+  const files=['assets/theme.js','dersler/courses.js','model.js','prayers.js','app.js'];
   if(withImportedCourses)files.unshift('course-data.js');
   for(const file of files)vm.runInContext(fs.readFileSync('./dist/'+file,'utf8'),ctx);
   return {nodes,node,window,document,events,intervals,app:window.MuskamApp,html:()=>node('main').innerHTML,
@@ -264,7 +264,25 @@ test('Arayüz kontrolü: yer imi, tema, izin, temizleme ve pekiştirme kayıtlar
   const h=harness();h.app.actions.bookmark('P001');h.nav('saved');assert.ok(h.html().includes(lookup.P001.stem.slice(0,20)));
   h.app.actions.theme();assert.equal(h.document.documentElement.dataset.theme,'dark');
   h.events.change({target:{id:'remember',checked:true,dataset:{}}});assert.equal(h.app.getConsent(),true);assert.equal(h.window.localStorage.getItem('muskam-consent'),'yes');
-  h.app.actions.clear();h.node('confirm-ok').click();assert.equal(h.app.getState().bookmarks.length,0);assert.deepEqual([...h.window.localStorage.map.keys()].filter(k=>k!=='dua-card-index'),[]);
+  h.app.actions.clear();h.node('confirm-ok').click();assert.equal(h.app.getState().bookmarks.length,0);assert.deepEqual([...h.window.localStorage.map.keys()].filter(k=>k!=='dua-card-index'&&k!=='paylasim-theme'),[]);assert.equal(h.document.documentElement.dataset.theme,'dark');
+});
+test('Tema yalnız ana sayfada değiştirilir ve kayıt izninden bağımsız korunur',()=>{
+  const storage=fakeStorage(),h=harness(published,storage);
+  h.nav('home');assert.equal(h.node('theme').hidden,false);
+  h.app.actions.theme();assert.equal(storage.getItem('paylasim-theme'),'dark');
+  for(const route of ['sorular','academy','bank','exam','settings']){
+    h.nav(route);assert.equal(h.node('theme').hidden,true);assert.equal(h.document.documentElement.dataset.theme,'dark');
+    if(route==='settings')assert.doesNotMatch(h.html(),/data-action="theme"/);
+  }
+  const reloaded=harness(published,storage);reloaded.nav('academy');
+  assert.equal(reloaded.document.documentElement.dataset.theme,'dark');
+  assert.equal(reloaded.app.getConsent(),false);
+  reloaded.nav('home');reloaded.app.actions.theme();assert.equal(storage.getItem('paylasim-theme'),'light');
+  const light=harness(published,storage);light.nav('bank');assert.equal(light.document.documentElement.dataset.theme,'light');
+});
+test('Eski koyu tema tercihi korunur',()=>{
+  const storage=fakeStorage(),s=M.empty(D.version);s.theme='dark';M.persist(storage,s,true);
+  const h=harness(D,storage);assert.equal(h.document.documentElement.dataset.theme,'dark');
 });
 test('Çalışma ekranları tanıtım kutusu olmadan açılır',()=>{
   const h = harness(published);

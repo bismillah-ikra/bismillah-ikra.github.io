@@ -668,3 +668,5 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 .ayet-ipucu { margin-top:20px; color:var(--muted); font-size:12px; font-weight:600; }
 .dua-degistir:focus-visible { outline:3px solid var(--gold); outline-offset:-6px; border-radius:16px; }
 @media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 28px; } }
+
+.site-theme[hidden] { display: none !important; }

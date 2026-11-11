@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PDF Görüntüleyici · Paylaşım</title>
+  <script src="../assets/theme.js?v=1"></script>
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <style>
     *{box-sizing:border-box} body{margin:0;background:#e9e6df;color:#202a3b;font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
@@ -30,6 +31,15 @@
     .message{margin:0 auto 16px;text-align:center;color:#505c70;font-size:14px;min-height:22px} .message:empty{display:none}
     .browser-open{display:flex;width:max-content;margin:0 auto 16px}.download[hidden]{display:none}
     @media(max-width:560px){.top{padding:9px 12px;gap:8px}.back,.download,button{padding:7px 10px;font-size:12px}.name{font-size:12px}.controls{padding:0 12px 9px;gap:5px}.counter{min-width:65px;font-size:12px}.zoom{gap:5px}main{padding:16px 12px 36px}.view-switch{padding:0 12px 9px}.view-options{display:flex;flex:1}.view-options button{flex:1;padding:7px 8px}.view-switch select{font-size:12px}.reading{padding:20px 18px}}
+      :root[data-theme="dark"] { color-scheme:dark; }
+    :root[data-theme="dark"] body { background:#131b2a; color:#f4f0e9; }
+    :root[data-theme="dark"] .toolbar { background:#1d293d; border-color:#41516b; }
+    :root[data-theme="dark"] :is(.back,.download,button,.view-switch select) { background:#273851; border-color:#52637e; color:#f4f0e9; }
+    :root[data-theme="dark"] :is(.back:hover,.download:hover,button:hover:not(:disabled)) { background:#344a68; }
+    :root[data-theme="dark"] .view-options { background:#172133; border-color:#41516b; }
+    :root[data-theme="dark"] .view-options button[aria-pressed="true"] { background:#415b7c; color:#fff; }
+    :root[data-theme="dark"] .reading { background:#1d293d; color:#f4f0e9; border-color:#41516b; }
+    :root[data-theme="dark"] .message { color:#b8c4d6; }
   </style>
 </head>
 <body>

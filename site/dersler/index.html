@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dersler · Paylaşım</title>
+  <script src="../assets/theme.js?v=1"></script>
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/brand.css?v=menu-3">
   <link rel="stylesheet" href="../assets/course-cards.css">
@@ -107,6 +108,14 @@
       .folder-card { min-height: 132px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+      :root[data-theme="dark"] { color-scheme: dark; --ground:#131b2a; --paper:#1d293d; --ink:#f4f0e9; --muted:#b8c4d6; --line:#41516b; --navy:#c2d5f3; --blue-soft:#2a3d5a; --gold:#d9baa0; --gold-soft:#4b3c32; --green:#a6e0bd; --green-soft:#1b3b30; }
+    :root[data-theme="dark"] .card:hover { background:#273851; border-color:#91b0d8; }
+    :root[data-theme="dark"] .eyebrow { color:#d9baa0; }
+    :root[data-theme="dark"] .switcher a[aria-current] { color:#131b2a; }
+    :root[data-theme="dark"] .button { color:#131b2a; }
+    :root[data-theme="dark"] .button:hover { background:#e0ebfb; }
+    :root[data-theme="dark"] .file-icon { background:#4b3033; color:#ffd2c7; }
+    :root[data-theme="dark"] .site-nav a[aria-current="page"] { color:#131b2a; }
   </style>
 </head>
 <body>
@@ -115,11 +124,9 @@
       <a class="site-mark" href="../#home" aria-label="Ana sayfa"><span lang="ar" dir="rtl">بِسْمِ اللَّهِ</span></a>
       <nav class="site-nav" aria-label="Ana menü">
         <a href="#dersler" aria-current="page">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 5.5C8.3 4.2 5.7 3.7 3 4.5v10.8c2.7-.8 5.3-.3 7 1 1.7-1.3 4.3-1.8 7-1V4.5c-2.7-.8-5.3-.3-7 1Zm0 0v10.8"/></svg>
           <span>Ders Dosyaları</span>
         </a>
         <a href="../#sorular">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.5" y="4.5" width="11" height="13" rx="1.5"/><path d="M8 4.5V3h4v1.5M7.5 11l1.8 1.8 3.4-3.6"/></svg>
           <span>Çalışma Soruları</span>
         </a>
       </nav>

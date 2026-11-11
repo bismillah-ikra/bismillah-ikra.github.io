@@ -29,7 +29,7 @@
   const letters='ABCDE';
   let storage;try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw Error()},removeItem:()=>{}};}
   const restored=M.load(storage,D.version);
-  let state=restored.state,consent=restored.consent,theme=state.theme;
+  let state=restored.state,consent=restored.consent,theme=window.SiteTheme.get();
   const courseProgress=new Map([[defaultCourse,state]]);
   const courseRuns=new Map();
   let run=null,route='',renderedHash='',lessonLevel=1,teacherContext=null,confirmAction=null,toastTimer=null;
@@ -199,6 +199,7 @@
     storageStatus.dataset.saved=String(consent);
     document.documentElement.dataset.theme=theme;
     const themeButton=document.getElementById('theme');
+    themeButton.hidden=page!=='home';
     themeButton.innerHTML=icon(theme==='dark'?'sun':'moon');
     themeButton.setAttribute('aria-label',theme==='dark'?'Açık temayı aç':'Koyu temayı aç');
   }
@@ -611,7 +612,7 @@
     main.innerHTML=backLink(practiceHref('analysis'),'Başarı analizine dön')+heading('ÇALIŞMA GEÇMİŞİ','Cevapların',`${date(entry.at)} · ${entry.correct} doğru · ${entry.wrong} yanlış · ${entry.blank} boş`)+`<div class="bank-list">${rows}</div>`;
   }
   function settings(){main.innerHTML=heading('GİZLİLİK VE TERCİHLER','Çalışmanın kontrolü sende.','Uygulama öğrenci hesabı, kimlik bilgisi veya merkezi sonuç kaydı istemez.')+`<div class="settings"><section class="panel"><div class="setting-row"><div><h3>${rememberLabel}</h3><p>Etkinleştirirsen cevap kayıtların, yer imlerin, tüm çalışma sonuçların, devam eden çalışman ve tema tercihin yalnızca şu anda kullandığın cihaz ve tarayıcıda saklanır. Tarayıcı verilerini silersen kayıtlar kaybolabilir.</p></div><input class="toggle" id="remember" type="checkbox" aria-label="${rememberLabel}"${consent?' checked':''}></div>
-    <div class="setting-row"><div><h3>${consent?'Bu cihazda saklama açık':'Yalnız bu oturumda çalışıyorsun'}</h3><p>Bu seçeneği kapatmak kalıcı kayıtları kaldırır; mevcut oturumdaki çalışman devam eder. Ortak cihazda yerel kayıtları başkaları görebilir. Uygulama diğer ziyaretçilere sonuçlarını göstermez.</p></div><span class="tag">${consent?'YEREL KAYIT':'OTURUM'}</span></div><div class="setting-row"><div><h3>Tema</h3><p>Okuma tercihine göre açık veya koyu temayı seç.</p></div>${btn(state.theme==='dark'?'Açık tema':'Koyu tema','theme','','secondary')}</div>
+    <div class="setting-row"><div><h3>${consent?'Bu cihazda saklama açık':'Yalnız bu oturumda çalışıyorsun'}</h3><p>Bu seçeneği kapatmak kalıcı kayıtları kaldırır; mevcut oturumdaki çalışman devam eder. Ortak cihazda yerel kayıtları başkaları görebilir. Uygulama diğer ziyaretçilere sonuçlarını göstermez.</p></div><span class="tag">${consent?'YEREL KAYIT':'OTURUM'}</span></div>
     <div class="setting-row"><div><h3>Kayıtları temizle</h3><p>Bu uygulamanın yerel kayıtları ve oturumdaki çözüm verileri silinir; yanlışlar, yer imleri ve sonuç geçmişi sıfırlanır.</p></div>${btn('Kayıtları temizle','clear','','secondary')}</div></section>
     <section class="lesson-section"><h2>Gizlilik bildirimi</h2><p>Uygulama cevaplarını, puanlarını veya yer imlerini herhangi bir merkezi API’ye göndermez. Uygulamada reklam, analiz pikseli, harici yazı tipi çağrısı ve canlı yapay zekâ bağlantısı yoktur.</p></section></div>`;}
   function finishNow(){
@@ -826,14 +827,13 @@
       if(!Number.isSafeInteger(minutes)||minutes<0||!Number.isSafeInteger(Date.now()+minutes*60000))return toast('Süreyi dakika olarak tam sayı gir.');
       start('exam',M.shuffle(pool).slice(0,count).map(q=>q.id),minutes);
     },
-    theme:()=>{theme=theme==='dark'?'light':'dark';save(true);if(route==='settings')settings();},
+    theme:()=>{theme=theme==='dark'?'light':'dark';window.SiteTheme.set(theme);save(true);},
     clear:()=>confirm('Tüm çalışma kayıtlarını temizle?','Tüm derslerdeki cevapların, yer imlerin ve sonuç geçmişin bu oturumdan ve bu tarayıcıdan kaldırılacak.',()=>{
       courseProgress.clear();
       courseRuns.clear();
       cardAnswers.clear();
       state=M.empty(D.version);
       courseProgress.set(activeCourse,state);
-      theme=state.theme;
       consent=false;
       run=null;
       save(true);
@@ -929,6 +929,7 @@
   document.getElementById('confirm-cancel').addEventListener('click',()=>{document.getElementById('confirm-dialog').close();confirmAction=null;});
   document.getElementById('confirm-ok').addEventListener('click',()=>{document.getElementById('confirm-dialog').close();const fn=confirmAction;confirmAction=null;if(fn)fn();});
   document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea')||coursePicker.open||document.getElementById('confirm-dialog').open)return;if(route==='run'&&run&&!run.finished&&/^[1-5]$/.test(e.key)){e.preventDefault();actions.answer(String(Number(e.key)-1));}});
+  window.addEventListener('storage',event=>{if(event.key===window.SiteTheme.key){theme=window.SiteTheme.get();refreshChrome();}});
   window.addEventListener('hashchange',()=>render());
   window.addEventListener('pagehide',()=>{if(run&&!run.finished&&route==='run'&&!document.hidden)M.tick(run);save();});
   setInterval(()=>{if(!run||run.finished)return;if(run.type==='exam'||(route==='run'&&!document.hidden))M.tick(run);else run.tickAt=Date.now();if(run.deadline&&Date.now()>=run.deadline){document.getElementById('confirm-dialog').close();confirmAction=null;finishNow();toast('Süre doldu. Deneme mevcut cevaplarınla tamamlandı.');return;}const el=document.getElementById('run-timer');if(el)el.textContent=clock();},1000);
