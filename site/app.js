@@ -934,6 +934,14 @@
   window.addEventListener('pagehide',()=>{if(run&&!run.finished&&route==='run'&&!document.hidden)M.tick(run);save();});
   setInterval(()=>{if(!run||run.finished)return;if(run.type==='exam'||(route==='run'&&!document.hidden))M.tick(run);else run.tickAt=Date.now();if(run.deadline&&Date.now()>=run.deadline){document.getElementById('confirm-dialog').close();confirmAction=null;finishNow();toast('Süre doldu. Deneme mevcut cevaplarınla tamamlandı.');return;}const el=document.getElementById('run-timer');if(el)el.textContent=clock();},1000);
   render();
+  window.SiteRelease?.start(() => {
+    const page=route.split('/')[0];
+    if (['run','review','exam'].includes(page) || cardAnswers.size || coursePicker.open ||
+        document.getElementById('confirm-dialog').open) return false;
+    if (consent) return save(true);
+    return ![...courseProgress.values()].some(progress =>
+      progress.activeRun || Object.keys(progress.records).length || progress.bookmarks.length || progress.history.length);
+  });
   // QA hook exposes existing in-memory actions only, no personal identity or network access.
   window.MuskamApp={actions,render,getState:()=>state,getRun:()=>run,getConsent:()=>consent};
 })();

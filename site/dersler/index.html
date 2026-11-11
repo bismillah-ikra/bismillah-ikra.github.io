@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dersler · Paylaşım</title>
   <script src="../assets/theme.js?v=1"></script>
+  <script src="../assets/release.js" defer></script>
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/brand.css?v=menu-4">
   <link rel="stylesheet" href="../assets/course-cards.css">
@@ -288,6 +289,7 @@
     async function start() {
       render();
       window.addEventListener('hashchange', () => render(true));
+      window.SiteRelease?.start(() => true);
       try {
         const response = await fetch('./files.json');
         if (!response.ok) throw new Error();
