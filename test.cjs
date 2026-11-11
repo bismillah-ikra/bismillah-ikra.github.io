@@ -314,6 +314,13 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
     }
   }
 });
+test('Din-Bilim ana sorularının görünen numaraları sıralı ve tekildir',()=>{
+  const h=harness(published,fakeStorage(),true);
+  h.nav('bank');
+  const labels=[...h.node('bank-results').innerHTML.matchAll(/<span class="number">(\d+)\. soru<\/span>/g)].map(match=>Number(match[1]));
+  assert.equal(labels.length,174);
+  assert.deepEqual(labels,Array.from({length:174},(_,index)=>index+1));
+});
 test('10. hafta dört derste çözülebilir',()=>{
   const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
   for(const [slug,questions] of [

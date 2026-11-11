@@ -16,7 +16,8 @@
   if(original.weekly&&additions){
     const weeks=new Map(original.topics.map((topic,index)=>[topic.id,index]));
     const questions=[...original.questions,...additions.questions]
-      .sort((a,b)=>weeks.get(a.topic)-weeks.get(b.topic)||a.number-b.number);
+      .sort((a,b)=>weeks.get(a.topic)-weeks.get(b.topic)||a.number-b.number)
+      .map((question,index)=>({...question,number:index+1}));
     datasets[defaultCourse]={...original,questions,source:additions.source};
   }
   const extraSetsByCourse=new Map();
