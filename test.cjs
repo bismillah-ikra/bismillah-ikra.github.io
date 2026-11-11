@@ -97,6 +97,9 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
 test('Dua kartı elli duayı sırayla gösterir ve başa döner',()=>{
   const h=harness(), content={innerHTML:''}, button={querySelector:()=>content}, seen=[];
   assert.equal(h.window.PAYLASIM_PRAYERS.length,50);
+  assert.equal(h.window.PAYLASIM_PRAYERS[2].source, 'Buhârî · 143 (İbn Abbas için dua)');
+  assert.equal(h.window.PAYLASIM_PRAYERS[3].source, 'Müslim · 2722’den');
+  assert.match(h.window.PAYLASIM_PRAYERS[3].arabic, /عِلْمٍ لَا يَنْفَعُ/);
   assert.ok(h.window.PAYLASIM_PRAYERS.every(p=>p.arabic&&p.meaning&&p.source));
   h.nav('home'); assert.match(h.html(),/data-action="next-prayer"/);
   for(let i=0;i<51;i++){

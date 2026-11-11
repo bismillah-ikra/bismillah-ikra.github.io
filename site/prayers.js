@@ -10,14 +10,14 @@ window.PAYLASIM_PRAYERS = [
     "source": "Tâhâ Suresi · 25–28. ayetler"
   },
   {
-    "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
-    "meaning": "Allah’ım! Senden faydalı ilim, temiz rızık ve kabul edilen amel isterim.",
-    "source": "İbn Mâce · 925"
+    "arabic": "اللَّهُمَّ فَقِّهْهُ فِي الدِّينِ",
+    "meaning": "Allah’ım! Onu dinde anlayış sahibi kıl.",
+    "source": "Buhârî · 143 (İbn Abbas için dua)"
   },
   {
-    "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَأَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ",
-    "meaning": "Allah’ım! Senden faydalı ilim ister, fayda vermeyen ilimden sana sığınırım.",
-    "source": "İbn Hibbân · Sahîh, 82"
+    "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ، وَمِنْ قَلْبٍ لَا يَخْشَعُ، وَمِنْ نَفْسٍ لَا تَشْبَعُ، وَمِنْ دَعْوَةٍ لَا يُسْتَجَابُ لَهَا",
+    "meaning": "Allah’ım! Fayda vermeyen ilimden, huşu duymayan kalpten, doymayan nefisten ve kabul edilmeyen duadan sana sığınırım.",
+    "source": "Müslim · 2722’den"
   },
   {
     "arabic": "رَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
