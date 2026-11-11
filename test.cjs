@@ -298,7 +298,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1629);
+  assert.equal(counts,1709);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -338,6 +338,19 @@ test('10. hafta dört derste çözülebilir',()=>{
     h.app.actions.single(weekly[0].id);h.flush();
     h.events.keydown({target:{matches:()=>false},key:'1',preventDefault(){}});
     assert.match(h.html(),/Cevap açıklaması/,slug);
+  }
+});
+test('Eklenen dört haftanın soruları listelenir ve cevaplanır',()=>{
+  const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
+  for(const [slug,week] of [['hadis',8],['kelam',9],['islam-ticaret-hukuku',10],['klasik-ve-cagdas-islami-dini-akimlar',10]]){
+    const questions=sets[slug].questions.filter(q=>q.topic===`hafta-${week}`);
+    assert.equal(questions.length,20,slug);
+    assert.equal(questions.map(q=>q.number).join(','),Array.from({length:20},(_,i)=>i+1).join(','),slug);
+    h.nav(`ders/${slug}/lesson/hafta-${week}`);
+    assert.equal((h.html().match(/class="bank-item"/g)||[]).length,20,slug);
+    h.app.actions.single(questions[0].id);h.flush();
+    h.events.keydown({target:{matches:()=>false},key:String(questions[0].correct+1),preventDefault(){}});
+    assert.ok(h.html().includes(questions[0].explanation),slug);
   }
 });
 test('Örnek Hadis 10. hafta yorum ve rivayet bağlamı korunur',()=>{
@@ -407,7 +420,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   reloaded.nav(four+'analysis');
   assert.equal(reloaded.app.getState().history.length,1);
   reloaded.nav('sorular/kelam');
-  assert.match(reloaded.html(),/160 soru · 8 hafta/);
+  assert.match(reloaded.html(),/180 soru · 9 hafta/);
   assert.equal(reloaded.node('current-course-name').textContent,'Kelam');
   assert.equal(reloaded.node('extra-question-nav').hidden,true);
   reloaded.events.change({target:{id:'remember',checked:false}});
@@ -544,7 +557,7 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
   assert.match(h.node('bank-results').innerHTML,/334 soru listeleniyor/);
   h.nav('ders/kelam/academy');
-  assert.equal(navCount(),160);
+  assert.equal(navCount(),180);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
   assert.equal(navCount(),230);
 });
