@@ -10,5 +10,9 @@ globalThis.PaylasimCatalog = {
     ['ornek-hadis-metinleri', 'Örnek Hadis Metinleri'],
     ['tefsir', 'Tefsir']
   ],
-  extraCourseIds: new Set(['hadis', 'kelam', 'tefsir'])
+  extraCourseIds: new Set(['hadis', 'kelam', 'tefsir']),
+  folders: {
+    'ders-notlari': { title: 'Ders Notları', description: 'Ders sırasında veya sonrasında hazırlanan notlar.', icon: 'book' },
+    'calisma-dosyalari': { title: 'Çalışma Dosyaları', description: 'Tekrar, çalışma ve sınav hazırlığı için dosyalar.', icon: 'folder' }
+  }
 };

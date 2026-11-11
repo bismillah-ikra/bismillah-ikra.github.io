@@ -164,7 +164,9 @@
     document.documentElement.dataset.page=page;
     const inPractice=practicePages.has(page);
     document.documentElement.dataset.view=inPractice?'practice':'portal';
+    document.getElementById('archive-nav').setAttribute('aria-current',page==='dersler'?'page':'false');
     document.getElementById('practice-nav').setAttribute('aria-current',page==='sorular'||inPractice?'page':'false');
+    document.getElementById('home-nav').setAttribute('aria-current',page==='home'?'page':'false');
     let active=page;
     if(active==='lesson')active='academy';
     if(active==='history')active='analysis';
@@ -287,12 +289,29 @@
       <span class="ayet-kaynak">${esc(prayer.source)}</span>
       <span class="ayet-ipucu" aria-hidden="true">Başka bir dua için dokun <span>↻</span></span>`;
   }
+  const examSchedule = [
+    ['18.12.2026', 'Cuma', '18:00–19:00', 'İslam Ticaret Hukuku'],
+    ['19.12.2026', 'Cumartesi', '11:00–12:00', 'Batı’da İslam Araştırmaları'],
+    ['19.12.2026', 'Cumartesi', '12:15–13:15', 'Örnek Hadis Metinleri'],
+    ['25.12.2026', 'Cuma', '19:15–20:15', 'Din-Bilim İlişkisi'],
+    ['26.12.2026', 'Cumartesi', '12:15–13:15', 'Klasik ve Çağdaş İslami Dinî Akımlar'],
+    ['26.12.2026', 'Cumartesi', '13:30–14:30', 'Güncel Fıkhî Problemler']
+  ];
+  function examCalendar(){
+    return `<section class="exam-calendar" aria-labelledby="exam-calendar-title">
+      <h2 id="exam-calendar-title">3. Sınıf Sınav Takvimi</h2>
+      <table role="table" aria-labelledby="exam-calendar-title">
+        <thead role="rowgroup"><tr role="row">${['Tarih','Gün','Saat','Ders'].map(label=>`<th scope="col" role="columnheader">${label}</th>`).join('')}</tr></thead>
+        <tbody role="rowgroup">${examSchedule.map(row=>`<tr role="row">${row.map(value=>`<td role="cell">${esc(value)}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </section>`;
+  }
   function home(){
     main.innerHTML=`<section class="portal-intro">
       <h1><span class="portal-grade">3</span>. Sınıf <em>Dersleri</em></h1>
     </section>
     <div class="entry-grid">
-      <a class="entry-card" href="./dersler/">
+      <a class="entry-card" href="#dersler">
         <h2>Ders <span>Dosyaları</span></h2>
         <ul class="entry-details"><li>Ders notları</li><li>Çalışma dosyaları</li></ul>
         <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
@@ -307,7 +326,7 @@
       <button type="button" class="dua-degistir" data-action="next-prayer" aria-label="Başka bir dua göster">
         <span class="dua-icerik" aria-live="polite" aria-atomic="true">${prayerContent(nextPrayer())}</span>
       </button>
-    </section>`;
+    </section>${examCalendar()}`;
   }
 
   function chooseCourse(id){
@@ -320,7 +339,7 @@
       main.innerHTML=backLink(back,isExtra?'Ek derslere dön':'Ders listesine dön')+
         heading('ÇALIŞMA SORULARI',esc(course),'',`<button class="secondary" type="button" data-action="switch-course" data-id="${esc(id)}" aria-haspopup="dialog" aria-controls="course-picker">Ders değiştir</button>`)+
         `<div class="empty"><p>Bu dersin çalışma soruları henüz eklenmedi.</p>
-          <a class="secondary" href="./dersler/#dersler/${archive}${id}">Ders dosyalarını aç</a></div>`;
+          <a class="secondary" href="#dersler/${archive}${id}">Ders dosyalarını aç</a></div>`;
       return;
     }
     const cards=courses.filter(([id])=>extraCourseIds.has(id)===inExtras).map(([id,name])=>{
@@ -332,7 +351,7 @@
       <div><h2>Ek Dersler</h2><strong class="course-card-meta">HADİS · KELAM · TEFSİR</strong></div>
       <span class="course-card-arrow">${icon('arrow')}</span></a>`;
     main.innerHTML=(inExtras?backLink('#sorular','Ders listesine dön'):'')+
-      heading('',inExtras?'Ek Dersler':'Çalışma Soruları')+
+      `<h1 class="course-list-heading">${inExtras?'Ek Dersler':'Çalışma Soruları'}</h1>`+
       `<section class="course-grid" aria-label="Ders listesi">${cards}${inExtras?'':extras}</section>`;
   }
 
@@ -652,6 +671,7 @@
     refreshChrome();
     const [page,id]=route.split('/');
     if(page==='home')home();
+    else if(page==='dersler')window.LessonArchive.render();
     else if(page==='sorular')chooseCourse(id);
     else if(page==='quick'){if(!D.questions.length)main.innerHTML=emptyContent('HIZLI ÇÖZÜM','Henüz soru eklenmedi','Yeni sorular eklendiğinde burada çözebilirsin.');else if(run&&!run.finished)navigate('run');else start('quick',D.questions.map(q=>q.id));}
     else if(page==='academy')academy();else if(page==='lesson')lesson(id);else if(page==='bank'||page==='about')bank();
@@ -842,11 +862,6 @@
     })
   };
   function move(index){if(!run||index<0||index>=run.ids.length)return;M.tick(run);run.index=index;if(!run.finished)markRunPosition();save();runView(route==='review');window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true});}
-  document.getElementById('site-header').addEventListener('click',e=>{
-    if(!e.target.closest('a[href="./dersler/"]')||run?.type!=='exam'||run.finished)return;
-    e.preventDefault();
-    toast('Deneme sürüyor. Diğer ekranlar için önce denemeyi bitir.');
-  });
   menuToggle.addEventListener('click',()=>setCourseMenu(!menuOpen));
   filterToggle.addEventListener('click',()=>setBankFilters(!bankFiltersOpen));
   main.addEventListener('keydown',e=>{

@@ -13,7 +13,9 @@
   <link rel="stylesheet" href="assets/brand.css?v=menu-4">
   <link rel="stylesheet" href="assets/course-cards.css">
   <link rel="stylesheet" href="assets/study.css?v=sorular-2">
+  <link rel="stylesheet" href="dersler/archive.css">
   <script src="dersler/courses.js" defer></script>
+  <script src="dersler/archive.js" defer></script>
   <script src="data.js?v=din-bilim-inceleme-1" defer></script>
   <script src="course-data.js?v=dersler-icerik-inceleme-2" defer></script>
   <script src="model.js?v=kayit-3" defer></script>
@@ -26,16 +28,17 @@
   <a class="skip" href="#main">İçeriğe geç</a>
   <header class="site-header" id="site-header">
     <div class="site-header-inner">
-      <a class="site-mark" href="#home" aria-label="Ana sayfa"><span class="besmele-full" lang="ar" dir="rtl">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</span><span class="besmele-short" lang="ar" dir="rtl">بِسْمِ اللَّهِ</span></a>
+      <a class="site-mark" href="#home" aria-label="Ana sayfa"><span lang="ar" dir="rtl">بِسْمِ اللَّهِ</span></a>
       <nav class="site-nav" aria-label="Ana menü">
-        <a href="./dersler/">
-          <span>Ders Dosyaları</span>
+        <a id="archive-nav" href="#dersler" aria-label="Ders Dosyaları">
+          <span>Ders</span><span>Dosyaları</span>
         </a>
-        <a id="practice-nav" href="#sorular">
-          <span>Çalışma Soruları</span>
+        <a id="practice-nav" href="#sorular" aria-label="Çalışma Soruları">
+          <span>Çalışma</span><span>Soruları</span>
         </a>
+        <button id="theme" class="icon-button site-theme" aria-label="Koyu temayı aç" title="Temayı değiştir" hidden></button>
+        <a id="home-nav" href="#home" aria-label="Ana Sayfa"><span>Ana</span><span>Sayfa</span></a>
       </nav>
-      <button id="theme" class="icon-button site-theme" aria-label="Koyu temayı aç" title="Temayı değiştir"></button>
     </div>
   </header>
   <aside class="sidebar" id="course-sidebar" aria-label="Ders gezinmesi">

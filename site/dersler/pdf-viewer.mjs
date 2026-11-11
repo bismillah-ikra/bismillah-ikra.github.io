@@ -15,7 +15,7 @@ const out = document.getElementById('out');
 const zoomIn = document.getElementById('in');
 const zoomLabel = document.getElementById('zoom-label');
 const navigationMode = document.getElementById('navigation-mode');
-backLink.href = './' + (/^#dersler(?:\/|$)/.test(back) ? back : '#dersler');
+backLink.href = '../' + (/^#dersler(?:\/|$)/.test(back) ? back : '#dersler');
 
 let documentPdf, pageNumber = 1, zoom = 1;
 const readingMode = false;

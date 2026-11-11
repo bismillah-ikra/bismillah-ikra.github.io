@@ -21,7 +21,7 @@
   display: inline-grid;
   flex: none;
   place-items: center;
-  min-width: 65px;
+  width: 76px;
   min-height: 44px;
   padding: 0 7px;
   border: 1px solid #a9876b;
@@ -43,14 +43,17 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  flex: 1;
+  min-width: 0;
   gap: clamp(6px, 1vw, 10px);
 }
 
 .site-header .site-nav a {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(5px, 1vw, 8px);
+  gap: 0;
   min-height: 44px;
   padding: 5px clamp(8px, 1.6vw, 16px);
   border: 1px solid var(--line);
@@ -64,6 +67,8 @@
   white-space: nowrap;
   text-decoration: none;
 }
+.site-header #home-nav { margin-inline-start: auto; }
+.site-header .site-theme:not([hidden]) + #home-nav { margin-inline-start: 0; }
 
 .site-header .site-nav a svg {
   flex: none;
@@ -97,6 +102,7 @@
 @media (max-width: 800px) {
   .site-header .site-nav { flex: 1; min-width: 0; }
   .site-header .site-nav a { flex: 1; min-width: 0; font-size: 12px; }
+  .site-header #home-nav, .site-header .site-theme { margin-inline-start: 0; }
 }
 
 @media (max-width: 480px) {
@@ -104,12 +110,16 @@
   .site-header .site-nav a {
     flex: 1;
     min-width: 0;
-    gap: 4px;
-    padding-inline: 5px;
+    padding-inline: 3px;
     text-align: center;
     white-space: normal;
   }
   .site-header .site-nav a span { text-wrap: balance; }
+}
+
+@media (max-width: 360px) {
+  .site-header .site-nav { gap: 4px; }
+  .site-header .site-nav a { font-size: 11px; }
 }
 
 @media (max-width: 350px) {

@@ -527,24 +527,13 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 }
 
 /* Girişe özel besmele ve başlık */
-.besmele-short { display:none; }
-:root[data-page]:not([data-page="home"]) .besmele-full { display:none; }
-:root[data-page]:not([data-page="home"]) .besmele-short { display:inline; }
-:root[data-page="home"] .site-header .site-nav { display:none; }
-:root[data-page="home"] .site-mark { padding-inline:14px; }
-:root[data-page="home"] .site-mark span { font-size:clamp(19px,3.6vw,25px); }
 .portal-intro { position:relative; padding-block:clamp(24px,5vw,54px) 15px; }
 .portal-intro h1 { max-width:100%; text-wrap:balance; }
 .portal-intro h1 em { font-style:normal; color:var(--accent); }
 .portal-intro h1::after { content:""; display:block; width:74px; height:3px; margin-top:19px; border-radius:4px; background:linear-gradient(90deg,var(--gold),transparent); }
 @media (max-width:560px) { .portal-intro h1::after { margin-top:13px; } }
 
-/* Girişte besmeleyi başlık alanında ortala. */
-:root[data-page="home"] .site-header-inner { position:relative; justify-content:center; padding:10px 64px; min-height:76px; }
-:root[data-page="home"] .site-mark { max-width:100%; padding:2px 16px; }
-:root[data-page="home"] .site-mark span { font-size:clamp(19px,6vw,34px); line-height:1.45; }
-:root[data-page="home"] .site-theme { position:absolute; right:clamp(12px,3vw,32px); top:50%; transform:translateY(-50%); }
-@media (max-width:350px) { :root[data-page="home"] .site-header-inner { padding-inline:55px; } :root[data-page="home"] .site-mark { padding-inline:8px; } }
+
 
 /* Giriş başlığı ve kaynak kartları */
 .portal-intro { padding-block:clamp(28px,5vw,55px) 12px; }
@@ -670,3 +659,62 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 @media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 28px; } }
 
 .site-theme[hidden] { display: none !important; }
+
+.course-list-heading {
+  margin: 0 0 18px;
+  color: var(--accent);
+  font: 400 clamp(28px, 5vw, 33px)/1.08 Georgia, serif;
+  letter-spacing: -.035em;
+}
+
+.exam-calendar {
+  margin-top: 28px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.exam-calendar h2 {
+  padding: 20px clamp(14px, 3vw, 24px);
+  color: var(--accent);
+  font: 500 clamp(22px, 4vw, 29px)/1.2 Georgia, serif;
+}
+
+.exam-calendar table { width: 100%; }
+.exam-calendar :is(th, td) { padding: 13px clamp(10px, 2vw, 20px); }
+.exam-calendar th {
+  background: var(--feature-bg);
+  color: var(--feature-ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+.exam-calendar td { font-size: 14px; }
+.exam-calendar td:nth-child(-n+3) { white-space: nowrap; }
+.exam-calendar td:nth-child(3) { font-variant-numeric: tabular-nums; color: var(--accent); }
+.exam-calendar td:last-child { font-weight: 650; }
+.exam-calendar tbody tr:nth-child(even) { background: var(--accent-soft); }
+.exam-calendar tbody tr:last-child td { border-bottom: 0; }
+
+@media (max-width: 600px) {
+  .exam-calendar :is(table, tbody) { display: block; }
+  .exam-calendar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .exam-calendar tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 4px 8px;
+    padding: 11px 13px;
+    border-top: 1px solid var(--line);
+  }
+  .exam-calendar td { padding: 0; border: 0; }
+  .exam-calendar td:nth-child(-n+3) { font-size: clamp(11px, 3.5vw, 13px); }
+  .exam-calendar td:nth-child(2) { color: var(--muted); }
+  .exam-calendar td:last-child { grid-column: 1 / -1; }
+}
