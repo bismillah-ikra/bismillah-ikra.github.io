@@ -498,5 +498,25 @@ window.PAYLASIM_PRAYERS = [
     "arabic": "اللَّهُمَّ أَذْهِبِ الْبَأْسَ رَبَّ النَّاسِ وَاشْفِ فَأَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
     "meaning": "Allah’ım, ey insanların Rabbi! Hastalığı gider ve şifa ver. Şifa veren sensin. Senin şifandan başka şifa yoktur; hiçbir hastalık bırakmayan bir şifa ver.",
     "source": "Tirmizî, 3565"
+  },
+  {
+    "arabic": "أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾",
+    "meaning": "İnsanların Rabbine, insanların hükümdarına ve insanların ilahına; insanların kalplerine vesvese veren, cinlerden ve insanlardan olan sinsi vesvesecinin şerrinden sığınırım.",
+    "source": "Nâs suresi, 1–6. ayetlerden"
+  },
+  {
+    "arabic": "اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِمْ وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ",
+    "meaning": "Allah’ım! Onlara karşı seni siper eder, onların kötülüklerinden sana sığınırız.",
+    "source": "Ebû Dâvûd, 1537 (insanların kötülüğünden korunmak için)"
+  },
+  {
+    "arabic": "رَبِّ نَجِّنِي مِنَ الْقَوْمِ الظَّالِمِينَ",
+    "meaning": "Rabbim! Beni zalimler topluluğundan kurtar.",
+    "source": "Kasas suresi, 21. ayetten"
+  },
+  {
+    "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+    "meaning": "Kovulmuş şeytandan Allah’a sığınırım.",
+    "source": "Buhârî, 6115"
   }
 ];
