@@ -94,6 +94,11 @@
   text-underline-offset: 3px;
 }
 
+@media (max-width: 800px) {
+  .site-header .site-nav { flex: 1; min-width: 0; }
+  .site-header .site-nav a { flex: 1; min-width: 0; font-size: 12px; }
+}
+
 @media (max-width: 480px) {
   .site-header .site-nav { min-width: 0; }
   .site-header .site-nav a {
