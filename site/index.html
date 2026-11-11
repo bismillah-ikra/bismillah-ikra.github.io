@@ -6,6 +6,7 @@
   <meta name="description" content="3. sınıf ders dosyaları ve çalışma soruları.">
   <meta name="referrer" content="no-referrer">
   <meta name="color-scheme" content="light dark">
+  <script>if (!location.hash || location.hash === '#home') document.documentElement.dataset.page = 'home';</script>
   <title>Ders ve Soru Arşivi</title>
   <script src="assets/theme.js?v=1"></script>
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
@@ -28,7 +29,11 @@
   <a class="skip" href="#main">İçeriğe geç</a>
   <header class="site-header" id="site-header">
     <div class="site-header-inner">
-      <a class="site-mark" href="#home" aria-label="Ana sayfa"><span lang="ar" dir="rtl">بِسْمِ اللَّهِ</span></a>
+      <span class="site-mark iqra-mark" title="Oku"><span lang="ar" dir="rtl">اِقْرَأْ</span></span>
+      <a class="site-mark" href="#home" aria-label="Ana sayfa">
+        <span class="besmele-full" lang="ar" dir="rtl">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</span>
+        <span class="besmele-short" lang="ar" dir="rtl">بِسْمِ اللَّهِ</span>
+      </a>
       <nav class="site-nav" aria-label="Ana menü">
         <a id="archive-nav" href="#dersler" aria-label="Ders Dosyaları">
           <span>Ders</span><span>Dosyaları</span>
@@ -36,9 +41,9 @@
         <a id="practice-nav" href="#sorular" aria-label="Çalışma Soruları">
           <span>Çalışma</span><span>Soruları</span>
         </a>
-        <button id="theme" class="icon-button site-theme" aria-label="Koyu temayı aç" title="Temayı değiştir" hidden></button>
         <a id="home-nav" href="#home" aria-label="Ana Sayfa"><span>Ana</span><span>Sayfa</span></a>
       </nav>
+      <button id="theme" class="icon-button site-theme" aria-label="Koyu temayı aç" title="Temayı değiştir" hidden></button>
     </div>
   </header>
   <aside class="sidebar" id="course-sidebar" aria-label="Ders gezinmesi">

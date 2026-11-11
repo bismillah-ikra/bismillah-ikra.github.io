@@ -297,13 +297,19 @@
     ['26.12.2026', 'Cumartesi', '12:15–13:15', 'Klasik ve Çağdaş İslami Dinî Akımlar'],
     ['26.12.2026', 'Cumartesi', '13:30–14:30', 'Güncel Fıkhî Problemler']
   ];
+  function examTable(rows){
+    return `<div class="exam-table-card"><table aria-labelledby="exam-calendar-title">
+      <colgroup><col class="exam-date"><col class="exam-day"><col class="exam-time"><col></colgroup>
+      <thead><tr>${['Tarih','Gün','Saat','Ders'].map(label=>`<th scope="col">${label}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(row=>`<tr>${row.map(value=>`<td>${esc(value)}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+  }
   function examCalendar(){
     return `<section class="exam-calendar" aria-labelledby="exam-calendar-title">
-      <h2 id="exam-calendar-title">3. Sınıf Sınav Takvimi</h2>
-      <table role="table" aria-labelledby="exam-calendar-title">
-        <thead role="rowgroup"><tr role="row">${['Tarih','Gün','Saat','Ders'].map(label=>`<th scope="col" role="columnheader">${label}</th>`).join('')}</tr></thead>
-        <tbody role="rowgroup">${examSchedule.map(row=>`<tr role="row">${row.map(value=>`<td role="cell">${esc(value)}</td>`).join('')}</tr>`).join('')}</tbody>
-      </table>
+      <h2 id="exam-calendar-title"><span>3.</span> Sınıf Sınav Takvimi</h2>
+      ${examTable(examSchedule.slice(0,3))}
+      <div class="exam-calendar-divider" aria-hidden="true"><span></span></div>
+      ${examTable(examSchedule.slice(3))}
     </section>`;
   }
   function home(){

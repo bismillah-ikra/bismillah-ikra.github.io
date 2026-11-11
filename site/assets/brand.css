@@ -21,7 +21,7 @@
   display: inline-grid;
   flex: none;
   place-items: center;
-  width: 76px;
+  width: clamp(84px, 23vw, 100px);
   min-height: 44px;
   padding: 0 7px;
   border: 1px solid #a9876b;
@@ -68,7 +68,7 @@
   text-decoration: none;
 }
 .site-header #home-nav { margin-inline-start: auto; }
-.site-header .site-theme:not([hidden]) + #home-nav { margin-inline-start: 0; }
+.site-header .site-nav a { min-width: 80px; }
 
 .site-header .site-nav a svg {
   flex: none;
