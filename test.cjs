@@ -111,6 +111,15 @@ test('Dua kartı elli duayı sırayla gösterir ve başa döner',()=>{
   assert.equal(new Set(seen.slice(0,50)).size,50);
   assert.equal(seen[0],seen[50]);
 });
+test('Dua listesinde çok benzeyen veya tekrarlanan metinler yok',()=>{
+  const h=harness(), rows=h.window.PAYLASIM_PRAYERS;
+  const tokens=value=>new Set(value.normalize('NFKD').replace(/[\u064b-\u065f\u0670\u06d6-\u06ed]/gu,'').match(/[\u0621-\u064a]+/gu)||[]);
+  for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
+    const a=tokens(rows[i].arabic),b=tokens(rows[j].arabic);
+    const shared=[...a].filter(word=>b.has(word)).length;
+    assert.ok(shared<3||shared/Math.min(a.size,b.size)<.75,`Dua ${i+1} ve ${j+1} birbirine çok yakın`);
+  }
+});
 test('Dua kartı yeniden girişte değişir ve çalışma verisi kaydetmez',()=>{
   const storage=fakeStorage(), first=harness(D,storage);
   first.nav('home');

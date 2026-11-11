@@ -70,9 +70,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "İsrâ Suresi · 80. ayet"
   },
   {
-    "arabic": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ",
-    "meaning": "Rabbim! Bana ve anne babama verdiğin nimete şükretmeyi ve razı olacağın iyi işler yapmayı bana nasip et.",
-    "source": "Neml Suresi · 19. ayetten"
+    "arabic": "رَبِّ اجْعَلْ هَٰذَا الْبَلَدَ آمِنًا",
+    "meaning": "Rabbim! Bu beldeyi güvenli kıl.",
+    "source": "İbrâhîm Suresi · 35. ayetten"
   },
   {
     "arabic": "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا",
@@ -80,9 +80,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "Bakara Suresi · 250. ayetten"
   },
   {
-    "arabic": "رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا",
-    "meaning": "Rabbimiz! Günahlarımızı ve işlerimizdeki aşırılıklarımızı bağışla; ayaklarımızı sağlam bastır.",
-    "source": "Âl-i İmrân Suresi · 147. ayetten"
+    "arabic": "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ",
+    "meaning": "Rabbimiz! Bize gücümüzün yetmeyeceği yükleri yükleme.",
+    "source": "Bakara Suresi · 286. ayetten"
   },
   {
     "arabic": "رَبَّنَا وَاجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِنْ ذُرِّيَّتِنَا أُمَّةً مُسْلِمَةً لَكَ",
@@ -130,9 +130,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "İbrâhîm Suresi · 40. ayet"
   },
   {
-    "arabic": "رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ",
-    "meaning": "Rabbimiz! Hesap kurulacağı gün beni, anne babamı ve müminleri bağışla.",
-    "source": "İbrâhîm Suresi · 41. ayet"
+    "arabic": "اللَّهُمَّ بَارِكْ لَهُمْ فِي مَا رَزَقْتَهُمْ، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ",
+    "meaning": "Allah’ım! Onlara verdiğin rızkı bereketli kıl; onları bağışla ve onlara merhamet et.",
+    "source": "Müslim · 2042a"
   },
   {
     "arabic": "أَنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
@@ -175,9 +175,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "Kasas Suresi · 24. ayetten"
   },
   {
-    "arabic": "رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ",
-    "meaning": "Rabbim! Bana salihlerden olacak bir evlat bağışla.",
-    "source": "Sâffât Suresi · 100. ayet"
+    "arabic": "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَاسَ، اشْفِهِ وَأَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
+    "meaning": "Allah’ım! Ey insanların Rabbi! Hastalığı gider, ona şifa ver. Şifa veren sensin; senin şifandan başka şifa yoktur. Hiçbir hastalık bırakmayan bir şifa ver.",
+    "source": "Buhârî · 5743"
   },
   {
     "arabic": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي",
@@ -215,9 +215,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "Bakara Suresi · 286. ayetten"
   },
   {
-    "arabic": "رَبَّنَا آمَنَّا فَاغْفِرْ لَنَا وَارْحَمْنَا وَأَنْتَ خَيْرُ الرَّاحِمِينَ",
-    "meaning": "Rabbimiz! İman ettik; bizi bağışla ve bize merhamet et. Sen merhamet edenlerin en hayırlısısın.",
-    "source": "Mü’minûn Suresi · 109. ayetten"
+    "arabic": "رَبِّ نَجِّنِي وَأَهْلِي مِمَّا يَعْمَلُونَ",
+    "meaning": "Rabbim! Beni ve ailemi onların yaptıklarından kurtar.",
+    "source": "Şuarâ Suresi · 169. ayet"
   },
   {
     "arabic": "رَبَّنَا وَسِعْتَ كُلَّ شَيْءٍ رَحْمَةً وَعِلْمًا فَاغْفِرْ لِلَّذِينَ تَابُوا وَاتَّبَعُوا سَبِيلَكَ وَقِهِمْ عَذَابَ الْجَحِيمِ",
@@ -240,9 +240,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "Müslim · 2725a"
   },
   {
-    "arabic": "اللَّهُمَّ مُصَرِّفَ الْقُلُوبِ، صَرِّفْ قُلُوبَنَا عَلَى طَاعَتِكَ",
-    "meaning": "Ey kalpleri yönelten Allah’ım! Kalplerimizi sana itaate yönelt.",
-    "source": "Müslim · Kader, 2655"
+    "arabic": "رَبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ ﴿٩٧﴾ وَأَعُوذُ بِكَ رَبِّ أَنْ يَحْضُرُونِ ﴿٩٨﴾",
+    "meaning": "Rabbim! Şeytanların kışkırtmalarından sana sığınırım. Rabbim! Yanımda bulunmalarından da sana sığınırım.",
+    "source": "Mü’minûn Suresi · 97–98. ayetler"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",
