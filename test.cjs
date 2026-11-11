@@ -311,6 +311,58 @@ test('On haftanın soruları beş seçenek ve geçerli cevap anahtarı içeriyor
   h.app.actions['clear-bank-weeks']();
   assert.match(h.node('bank-results').innerHTML,/155 soru listeleniyor/);
 });
+test('Hafta düğmesi açık çalışmayı konumu ve cevaplarıyla sürdürür',()=>{
+  const h=harness(published);
+  h.nav('lesson/hafta-1');h.app.actions['topic-quick']('hafta-1');h.flush();
+  const original=h.app.getRun();
+  h.app.actions.answer('0');h.app.actions.next();
+  h.nav('lesson/hafta-1');assert.match(h.html(),/2\. sorudan devam et/);
+  h.app.actions['topic-quick']('hafta-1');h.flush();
+  assert.equal(h.app.getRun(),original);assert.equal(original.index,1);
+  assert.equal(Object.keys(original.answers).length,1);
+  assert.equal(h.node('confirm-dialog').open,false);
+});
+test('Listede çözülen sorular atlanır; hafta tamamen çözülünce yeniden çöz sunulur',()=>{
+  const h=harness(published),qs=published.questions.filter(q=>q.topic==='hafta-1');
+  const item={innerHTML:'',querySelector:()=>({focus(){}})},target={closest:()=>item};
+  h.nav('lesson/hafta-1');
+  h.app.actions['answer-card'](qs[0].id+'/0',target);
+  assert.match(h.node('week-study-action').innerHTML,/Kalan 14 soruyu çöz/);
+  h.app.actions['topic-quick']('hafta-1');h.flush();
+  assert.equal(h.app.getRun().ids.length,14);assert.equal(h.app.getRun().ids[0],qs[1].id);
+  h.nav('lesson/hafta-1');
+  for(const q of qs.slice(1))h.app.actions['answer-card'](q.id+'/0',target);
+  assert.match(h.node('week-study-action').innerHTML,/Soruları yeniden çöz/);
+});
+test('Devam düğmesi son listede çözülen haftayı seçer ve yenilemede korur',()=>{
+  const storage=fakeStorage(),h=harness(published,storage);
+  h.events.change({target:{id:'remember',checked:true}});
+  h.nav('lesson/hafta-1');h.app.actions['topic-quick']('hafta-1');h.flush();
+  const oldId=h.app.getRun().ids[0],qs=published.questions.filter(q=>q.topic==='hafta-2');
+  h.advance(1000);h.nav('lesson/hafta-2');
+  h.app.actions['answer-card'](qs[0].id+'/0',{closest:()=>({innerHTML:'',querySelector:()=>({focus(){}})})});
+  const restored=harness(published,storage);restored.nav('academy');
+  assert.match(restored.html(),/2\. Hafta · Kalan 14 soruyu çöz/i);
+  restored.app.actions.resume();
+  assert.equal(restored.node('confirm-dialog').open,true);
+  restored.node('confirm-ok').click();restored.flush();
+  assert.equal(restored.app.getRun().ids[0],qs[1].id);
+  assert.notEqual(restored.app.getRun().ids[0],oldId);
+  assert.ok(restored.app.getState().records[qs[0].id]);
+});
+test('Kaydedilen tek tek çözüm doğru konumda açılır, deneme devamı korunur',()=>{
+  const storage=fakeStorage(),h=harness(published,storage);
+  h.events.change({target:{id:'remember',checked:true}});
+  h.nav('lesson/hafta-1');h.app.actions['topic-quick']('hafta-1');h.flush();
+  h.app.actions.next();h.app.actions.next();
+  const restored=harness(published,storage);restored.nav('academy');
+  assert.match(restored.html(),/1\. Hafta · 3\. sorudan devam et/i);
+  restored.app.actions.resume();restored.flush();assert.equal(restored.app.getRun().index,2);
+  const exam=harness(published);exam.nav('exam');exam.app.actions['start-exam']();exam.flush();
+  const run=exam.app.getRun();exam.nav('academy');
+  exam.app.actions.resume();exam.flush();assert.equal(exam.app.getRun(),run);
+  assert.equal(run.type,'exam');assert.equal(run.finished,false);
+});
 test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
   const h=harness(published),q=published.questions.find(q=>q.id==='Q10-12');
   h.app.actions.single(q.id);h.flush();

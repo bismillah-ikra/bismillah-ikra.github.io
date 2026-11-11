@@ -70,6 +70,7 @@
       if(Array.isArray(parsed.bookmarks))state.bookmarks=parsed.bookmarks.filter(x=>typeof x==='string');
       if(Array.isArray(parsed.history))state.history=parsed.history;
       if(parsed.activeRun&&typeof parsed.activeRun==='object'&&!Array.isArray(parsed.activeRun))state.activeRun=parsed.activeRun;
+      if(['run','list'].includes(parsed.studyPosition?.kind)&&typeof parsed.studyPosition.id==='string')state.studyPosition={kind:parsed.studyPosition.kind,id:parsed.studyPosition.id};
       return {state,consent:true};
     }catch{return {state:empty(version),consent:false};}
   }

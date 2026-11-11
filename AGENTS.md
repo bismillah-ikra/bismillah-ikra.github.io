@@ -9,6 +9,7 @@
 - Soru filtrelerinde ana ve ek soru seçimini, çoklu hafta ve ek başlık seçimini, çözüm durumunu koru. Deneme sınavında aynı seçimler çalışmaya devam etmeli.
 - Doğru seçenek yeşil ve Doğru cevap yazısıyla, yanlış seçilen seçenek Yanlış seçimin yazısıyla belirtilmeli. Şıkların altında tek açıklama alanı kullan. Sonuç bilgisini ekran okuyuculara da bildir.
 - Kaydetme, yeniden çözme, kayıtları yenilemede geri yükleme, deneme süresi ve sonucu, PDF indirme ve ders dosyası görüntüleme özelliklerini koru. Devam eden denemede cevapları bitişten önce gösterme.
+- Arayüzü sade tut; aynı işi yapan ek kart ve seçenekler ekleme. Hafta düğmesi aynı açık çalışmayı sıfırlamadan sürdürmeli. Liste üzerinden verilen cevaplar da devam hedefini güncellemeli; devam düğmesi hedef haftayı ve yapılacak işi açıkça belirtmeli.
 - Tüm sorular sayacı ana ve ek soru toplamını göstermeli. Liste sayısı ise etkin filtrelere uymalı.
 - Arayüz değişikliklerini gerçek tarayıcıda 320 px, 390 px, tablet ve masaüstü genişliklerinde, açık ve koyu temada doğrula. Besmele ve mevcut kullanıcı kayıtlarını da kontrol et.
 - Yayından önce npm run build, npm test ve npm run test:pdf komutlarını çalıştır. GitHub Pages yayın sonucunu ve canlıdaki yeni sürümü doğrula.

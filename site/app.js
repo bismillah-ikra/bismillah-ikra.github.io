@@ -219,13 +219,34 @@
     });
     return `<div class="week-grid">${cards.join('')}</div>`;
   }
+  function runContinuation(){
+    if(!run||run.finished)return null;
+    return {question:lookup[run.ids[run.index]],index:run.index};
+  }
+  function weekContinuation(id){
+    const questions=D.questions.filter(q=>q.topic===id);
+    const fromList=state.studyPosition?.kind==='list'&&lookup[state.studyPosition.id]?.topic===id;
+    if(!fromList&&run?.type==='quick'&&!run.finished&&run.ids.every(qid=>lookup[qid]?.topic===id))return runContinuation();
+    const pending=questions.filter(q=>!state.records[q.id]);
+    return pending.length?{question:pending[0],ids:pending.map(q=>q.id)}:null;
+  }
+  function weekSolveLabel(id){
+    const next=weekContinuation(id),questions=D.questions.filter(q=>q.topic===id);
+    if(!next)return 'Soruları yeniden çöz';
+    if(next.index!==undefined)return `${next.index+1}. sorudan devam et`;
+    return next.ids.length===questions.length?'Soruları sırayla çöz':`Kalan ${next.ids.length} soruyu çöz`;
+  }
   function continuation(){
-    if(run&&!run.finished)return {question:lookup[run.ids[run.index]],index:run.index};
+    if(run?.type==='exam'&&!run.finished)return runContinuation();
+    if(state.studyPosition?.kind==='run'&&run&&!run.finished)return runContinuation();
     let latest=null;
     for(const q of D.questions){
       const record=state.records[q.id];
       if(record&&(!latest||(record.lastAt??0)>=(state.records[latest.id].lastAt??0)))latest=q;
     }
+    const listed=state.studyPosition?.kind==='list'&&D.questions.find(q=>q.id===state.studyPosition.id);
+    if(listed)latest=listed;
+    if(!listed&&run&&!run.finished&&(!latest||(state.records[latest.id].lastAt??0)<=(run.activityAt??run.startedAt)))return runContinuation();
     if(!latest)return null;
     const startWeek=D.topics.findIndex(t=>t.id===latest.topic);
     const weeks=[...D.topics.slice(startWeek),...D.topics.slice(0,startWeek)];
@@ -327,12 +348,16 @@
 
   function studyControls(){
     const canResume=D.weekly?continuation():run&&!run.finished;
+    const resumeLabel=canResume&&D.weekly
+      ?run?.type==='exam'&&!run.finished?'Denemeye devam et'
+        :`${esc(canResume.question.topicName)} · ${canResume.ids?`Kalan ${canResume.ids.length} soruyu çöz`:`${canResume.index+1}. sorudan devam et`}`
+      :'Kaldığın yerden devam et';
     return `<div class="study-controls">
       ${!consent?`<label class="device-save" for="remember">
         <span><strong>${rememberLabel}</strong><small id="remember-location">Cevapların ve devam eden çalışmaların bu cihazın tarayıcısında saklanır. Sayfayı kapatıp açtığında kaldığın yerden devam edebilirsin. Gizlilik ve tercihlerden kapatabilirsin.</small></span>
         <input class="toggle" id="remember" type="checkbox" aria-label="${rememberLabel}" aria-describedby="remember-location"${consent?' checked':''}>
       </label>`:''}
-      ${canResume?btn(`Kaldığın yerden devam et ${icon('arrow')}`,'resume'):''}
+      ${canResume?btn(`${resumeLabel} ${icon('arrow')}`,'resume'):''}
     </div>`;
   }
   function academy(){
@@ -352,7 +377,7 @@
       const questions=D.questions.filter(q=>q.topic===id);
       main.innerHTML=backLink(practiceHref('academy'),D.topicLabel?'Başlık listesine dön':'Hafta listesine dön')+
         heading(isExtraSet()?'EK SORULAR':'HAFTALIK SORU SETİ',esc(t.name),`${questions.length} soru`)+
-        `<div class="actions" style="margin-bottom:20px">${btn(D.topicLabel?'Soruları sırayla çöz':'Haftanın sorularını çöz','topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-topic',id,'secondary')}</div>`;
+        `<div class="actions week-study-action" id="week-study-action">${btn(weekSolveLabel(id),'topic-quick',id)}</div><div class="bank-list">${questions.map(q=>card(q)).join('')}</div><div class="actions" style="margin-top:24px">${btn('Bu testi PDF indir','pdf-topic',id,'secondary')}</div>`;
       return;
     }
     const context=lookup[teacherContext];const record=context&&state.records[context.id];
@@ -436,10 +461,22 @@
     main.innerHTML=heading(isWrong?'':'TEKRAR DEFTERİM',isWrong?'Yanlışlarım':'Yeniden dönmek istediklerin.',isWrong?'Son cevabı yanlış olan ana sorular burada. Yeniden doğru çözdüğün soru bu listeden çıkar.':'Kaydettiğin sorular burada görünür. Yer imleri, yanlışlar listesinden bağımsız tutulur.')+
     (list.length?`<div class="list-summary"><span>${list.length} soru</span>${btn(isWrong?'Yanlışları yeniden çöz':'Kaydedilenleri çöz',isWrong?'retry-wrongs':'retry-saved','','secondary')}</div><div class="bank-list">${list.map(q=>card(q)).join('')}</div>`:`<div class="empty">${icon(isWrong?'check':'save')}<h3>${isWrong?'Henüz yanlış soru yok':'Defterin henüz boş'}</h3><p>${isWrong?'Cevaplarından sonra gerek duyduğun sorular burada görünecek.':'Soru kartındaki yer imi simgesini kullanarak bir soruyu kaydedebilirsin.'}</p><a href="${practiceHref('bank')}" class="secondary">Tüm sorulara git</a></div>`);
   }
-  function start(type,ids,minutes=0){
+  function markRunPosition(){
+    state.studyPosition={kind:'run',id:run.ids[run.index]};
+    run.activityAt=Date.now();
+  }
+  function continueStudy(next){
+    if(!next)return;
+    if(next.ids){
+      const sameWeek=run?.type==='quick'&&!run.finished&&run.ids.every(id=>lookup[id]?.topic===next.question.topic);
+      return start('quick',next.ids,0,sameWeek);
+    }
+    run.index=next.index;run.tickAt=Date.now();markRunPosition();save();navigate('run');
+  }
+  function start(type,ids,minutes=0,replaceSameWeek=false){
     if(!ids.length)return toast('Bu seçimde çözülecek soru bulunmuyor.');
-    const begin=()=>{run=M.createRun(type,ids,Date.now(),minutes);teacherContext=null;save();navigate('run');if(route==='run')render(false);};
-    if(run&&!run.finished)return confirm('Yeni çalışma başlatılsın mı?', 'Devam eden çalışma kapanır; kaydedilmiş cevapların ve diğer sonuçların korunur.',begin);
+    const begin=()=>{run=M.createRun(type,ids,Date.now(),minutes);markRunPosition();teacherContext=null;save();navigate('run');if(route==='run')render(false);};
+    if(run&&!run.finished&&!replaceSameWeek)return confirm('Yeni çalışma başlatılsın mı?', 'Devam eden çalışma kapanır; kaydedilmiş cevapların ve diğer sonuçların korunur.',begin);
     begin();
   }
   function explanation(q,inline=false){
@@ -639,14 +676,13 @@
     'switch-course':openCoursePicker,
     resume:()=>{
       if(!D.weekly)return navigate('run');
-      const next=continuation();
-      if(!next)return;
-      if(next.ids)return start('quick',next.ids);
-      run.index=next.index;
-      run.tickAt=Date.now();
-      navigate('run');
+      continueStudy(continuation());
     },
-    single:id=>start('quick',[id]),'topic-quick':id=>start('quick',D.questions.filter(q=>q.topic===id).map(q=>q.id)),
+    single:id=>start('quick',[id]),'topic-quick':id=>{
+      const next=D.weekly&&weekContinuation(id);
+      if(next)return continueStudy(next);
+      start('quick',D.questions.filter(q=>q.topic===id).map(q=>q.id));
+    },
     reinforce:id=>start('reinforce',D.reinforcement.filter(q=>q.topic===id).map(q=>q.id)),
     filtered:()=>start('quick',filtered().map(q=>q.id)),
     'clear-bank-weeks':()=>{
@@ -677,8 +713,11 @@
       if(!item||!q?.options[choice]||cardAnswers.has(id))return;
       cardAnswers.set(id,choice);
       M.record(state,q,choice);
+      state.studyPosition={kind:'list',id:q.id};
       save();
       item.innerHTML=cardContents(q);
+      const weekAction=document.getElementById('week-study-action');
+      if(route==='lesson/'+q.topic&&weekAction)weekAction.innerHTML=btn(weekSolveLabel(q.topic),'topic-quick',q.topic);
       item.querySelector('.feedback').focus();
     },
     'retry-card':(id,target)=>{
@@ -732,7 +771,7 @@
         M.record(progress,{...q,id:recordId},choice,run.times[q.id]||0);
         progress.records[recordId].runAnswerToken=token;
       }
-      if(changed)save(!!q.owner);
+      if(changed){markRunPosition();save(!!q.owner);}
       runView();
       if(showFeedback)document.getElementById('run-answer-feedback')?.focus();
     },
@@ -794,7 +833,7 @@
       toast('Çalışma kayıtları temizlendi.');
     })
   };
-  function move(index){if(!run||index<0||index>=run.ids.length)return;M.tick(run);run.index=index;save();runView(route==='review');window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true});}
+  function move(index){if(!run||index<0||index>=run.ids.length)return;M.tick(run);run.index=index;if(!run.finished)markRunPosition();save();runView(route==='review');window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true});}
   document.getElementById('site-header').addEventListener('click',e=>{
     if(!e.target.closest('a[href="./dersler/"]')||run?.type!=='exam'||run.finished)return;
     e.preventDefault();

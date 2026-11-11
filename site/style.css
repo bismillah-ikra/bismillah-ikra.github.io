@@ -140,6 +140,16 @@ main > .back-link { margin-bottom: 16px; }
   gap: 10px;
   margin-bottom: 18px;
 }
+.week-study-action { margin-bottom: 20px; }
+.study-controls > button, .week-study-action > button {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 560px) {
+  .study-controls > button, .week-study-action > button { width: 100%; }
+}
 .device-save {
   display: flex;
   flex: 1 1 300px;
