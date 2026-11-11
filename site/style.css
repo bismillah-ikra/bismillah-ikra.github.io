@@ -647,3 +647,14 @@ a.course-picker-option:hover { background: var(--accent-soft); }
   .entry-go svg { width: 16px; height: 16px; }
   .entry-go { width: 33px; height: 30px; border-radius: 8px; }
 }
+
+/* Dua kartı: düz zemin ve tamamı dokunulabilir içerik. */
+.ayet-karti { padding:0; background:#fffdf9; }
+.ayet-karti::before,.ayet-karti::after { display:none; }
+:root[data-theme=dark] .ayet-karti { background:#202f46; }
+.dua-degistir { display:block; width:100%; padding:45px 28px 34px; border:0; background:transparent; color:inherit; text-align:center; cursor:pointer; }
+.dua-icerik,.ayet-arapca,.ayet-anlam,.ayet-kaynak,.ayet-ipucu { display:block; }
+.ayet-karti .ayet-arapca.uzun { font-size:clamp(29px,4.7vw,45px); line-height:1.95; }
+.ayet-ipucu { margin-top:20px; color:var(--muted); font-size:12px; font-weight:600; }
+.dua-degistir:focus-visible { outline:3px solid var(--gold); outline-offset:-6px; border-radius:16px; }
+@media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 28px; } }

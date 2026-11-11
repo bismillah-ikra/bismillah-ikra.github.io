@@ -235,6 +235,28 @@
     }
     return null;
   }
+  const prayers = window.PAYLASIM_PRAYERS;
+  let prayerIndex = -1;
+  function nextPrayer() {
+    if (prayerIndex < 0) {
+      try {
+        const saved = window.localStorage.getItem('dua-card-index');
+        const last = saved === null ? NaN : Number(saved);
+        prayerIndex = Number.isInteger(last) && last >= 0 && last < prayers.length
+          ? last : Math.floor(Math.random() * prayers.length);
+      } catch { prayerIndex = Math.floor(Math.random() * prayers.length); }
+    }
+    prayerIndex = (prayerIndex + 1) % prayers.length;
+    try { window.localStorage.setItem('dua-card-index', String(prayerIndex)); } catch {}
+    return prayers[prayerIndex];
+  }
+  function prayerContent(prayer) {
+    return `<span class="ayet-sus" aria-hidden="true"><span></span></span>
+      <span class="ayet-arapca${prayer.arabic.length > 70 ? ' uzun' : ''}" lang="ar" dir="rtl">${esc(prayer.arabic)}</span>
+      <span class="ayet-anlam">“${esc(prayer.meaning)}”</span>
+      <span class="ayet-kaynak">${esc(prayer.source)}</span>
+      <span class="ayet-ipucu" aria-hidden="true">Başka bir dua için dokun <span>↻</span></span>`;
+  }
   function home(){
     main.innerHTML=`<section class="portal-intro">
       <h1><span class="portal-grade">3</span>. Sınıf <em>Dersleri</em></h1>
@@ -251,11 +273,10 @@
         <span class="entry-go" aria-hidden="true">${icon('arrow')}</span>
       </a>
     </div>
-    <section class="ayet-karti" aria-label="Tâhâ suresi 114. ayet">
-      <div class="ayet-sus" aria-hidden="true"><span></span></div>
-      <p class="ayet-arapca" lang="ar" dir="rtl">رَبِّ زِدْنِي عِلْمًا</p>
-      <p class="ayet-anlam">“Rabbim! İlmimi artır.”</p>
-      <p class="ayet-kaynak">Tâhâ Suresi · 114. Ayet</p>
+    <section class="ayet-karti" aria-label="Dua kartı">
+      <button type="button" class="dua-degistir" data-action="next-prayer" aria-label="Başka bir dua göster">
+        <span class="dua-icerik" aria-live="polite" aria-atomic="true">${prayerContent(nextPrayer())}</span>
+      </button>
     </section>`;
   }
 
@@ -612,6 +633,7 @@
     finally{target.disabled=false;target.textContent=label;}
   }
   const actions={
+    'next-prayer':(_id,target)=>{target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},
     'switch-course':openCoursePicker,

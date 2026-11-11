@@ -87,13 +87,35 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
   class Clock extends Date{static now(){return now;}}
   const ctx=vm.createContext({window,document,location,Date:Clock,console,setTimeout:()=>0,clearTimeout(){},setInterval:fn=>intervals.push(fn)});
   window.MUSKAM_DATA=JSON.parse(JSON.stringify(data));
-  const files=['dersler/courses.js','model.js','app.js'];
+  const files=['dersler/courses.js','model.js','prayers.js','app.js'];
   if(withImportedCourses)files.unshift('course-data.js');
   for(const file of files)vm.runInContext(fs.readFileSync('./dist/'+file,'utf8'),ctx);
   return {nodes,node,window,document,events,intervals,app:window.MuskamApp,html:()=>node('main').innerHTML,
     nav(path){location.hash=path;winEvents.hashchange();},flush(){winEvents.hashchange();},advance(ms){now+=ms;intervals.forEach(fn=>fn());}};
 }
 
+test('Dua kartı elli duayı sırayla gösterir ve başa döner',()=>{
+  const h=harness(), content={innerHTML:''}, button={querySelector:()=>content}, seen=[];
+  assert.equal(h.window.PAYLASIM_PRAYERS.length,50);
+  assert.ok(h.window.PAYLASIM_PRAYERS.every(p=>p.arabic&&p.meaning&&p.source));
+  h.nav('home'); assert.match(h.html(),/data-action="next-prayer"/);
+  for(let i=0;i<51;i++){
+    h.app.actions['next-prayer']('',button);
+    assert.match(content.innerHTML,/lang="ar" dir="rtl"/);
+    assert.match(content.innerHTML,/ayet-kaynak/);
+    seen.push(content.innerHTML);
+  }
+  assert.equal(new Set(seen.slice(0,50)).size,50);
+  assert.equal(seen[0],seen[50]);
+});
+test('Dua kartı yeniden girişte değişir ve çalışma verisi kaydetmez',()=>{
+  const storage=fakeStorage(), first=harness(D,storage);
+  first.nav('home');
+  const previous=storage.getItem('dua-card-index');
+  const next=harness(D,storage); next.nav('home');
+  assert.notEqual(storage.getItem('dua-card-index'),previous);
+  assert.deepEqual([...storage.map.keys()],['dua-card-index']);
+});
 test('Elli çalışma sonucu kaydedilir ve yeniden yüklenir',()=>{
   const storage=fakeStorage(),s=M.empty(D.version);
   for(let i=0;i<55;i++){const run=M.createRun('exam',['Q001'],i*1000);M.answer(run,lookup.Q001,0);M.finish(run,s,lookup,i*1000+100);}
@@ -224,7 +246,7 @@ test('Arayüz kontrolü: yer imi, tema, izin, temizleme ve pekiştirme kayıtlar
   const h=harness();h.app.actions.bookmark('P001');h.nav('saved');assert.ok(h.html().includes(lookup.P001.stem.slice(0,20)));
   h.app.actions.theme();assert.equal(h.document.documentElement.dataset.theme,'dark');
   h.events.change({target:{id:'remember',checked:true,dataset:{}}});assert.equal(h.app.getConsent(),true);assert.equal(h.window.localStorage.getItem('muskam-consent'),'yes');
-  h.app.actions.clear();h.node('confirm-ok').click();assert.equal(h.app.getState().bookmarks.length,0);assert.equal(h.window.localStorage.map.size,0);
+  h.app.actions.clear();h.node('confirm-ok').click();assert.equal(h.app.getState().bookmarks.length,0);assert.deepEqual([...h.window.localStorage.map.keys()].filter(k=>k!=='dua-card-index'),[]);
 });
 test('Çalışma ekranları tanıtım kutusu olmadan açılır',()=>{
   const h = harness(published);
@@ -424,7 +446,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   assert.equal(reloaded.node('current-course-name').textContent,'Kelam');
   assert.equal(reloaded.node('extra-question-nav').hidden,true);
   reloaded.events.change({target:{id:'remember',checked:false}});
-  assert.equal(storage.map.size,0);
+  assert.deepEqual([...storage.map.keys()].filter(k=>k!=='dua-card-index'),[]);
 });
 test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);
@@ -471,7 +493,7 @@ test('Denemede ana ve ek başlıklar seçilir; kayıtlar yenilemede korunur',()=
   assert.equal(reopened.app.getState().records[ids[0].slice(6)].lastAnswer,0);
   reopened.nav('settings');assert.match(reopened.html(),/id="remember"[^>]* checked/);
   reopened.events.change({target:{id:'remember',checked:false}});
-  assert.equal(storage.map.size,0);
+  assert.deepEqual([...storage.map.keys()].filter(k=>k!=='dua-card-index'),[]);
 });
 test('Karma denemede seçilen haftalar ve ek başlıklar birlikte kullanılır',()=>{
   const h=harness(published,fakeStorage(),true);
