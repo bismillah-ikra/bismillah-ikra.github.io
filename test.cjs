@@ -541,6 +541,37 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
   assert.equal(navCount(),230);
 });
+test('Mobil menü ve filtreler kapanır, seçimler filtre yeniden çizilince korunur',()=>{
+  const h=harness(published,fakeStorage(),true);
+  h.nav('bank');
+  assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
+  h.node('course-filter-toggle').click();
+  assert.equal(h.document.documentElement.dataset.bankFilters,'open');
+  assert.equal(h.node('course-menu-toggle').attrs['aria-expanded'],'false');
+  h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
+  assert.equal(h.document.documentElement.dataset.bankFilters,'open');
+  assert.match(h.node('bank-results').innerHTML,/334 soru listeleniyor/);
+  h.node('course-menu-toggle').click();
+  assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
+  h.node('course-filter-toggle').click();
+  assert.equal(h.node('course-menu-toggle').attrs['aria-expanded'],'false');
+  h.app.actions['close-bank-filters']();
+  assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
+  h.nav('exam');
+  assert.equal(h.node('course-filter-toggle').hidden,true);
+});
+test('Yanlış cevapta doğru ve yanlış etiketleriyle tek açıklama alanı açılır',()=>{
+  const h=harness(published,fakeStorage(),true);
+  h.nav('ders/ornek-hadis-metinleri/bank');
+  const q=h.window.PAYLASIM_COURSE_DATA['ornek-hadis-metinleri'].questions[0];
+  const item={innerHTML:'',querySelector:()=>({focus(){}})};
+  h.app.actions['answer-card'](q.id+'/'+((q.correct+1)%q.options.length),{closest:()=>item});
+  assert.match(item.innerHTML,/✓ Doğru cevap/);
+  assert.match(item.innerHTML,/× Yanlış seçimin/);
+  assert.equal((item.innerHTML.match(/class="answer-review"/g)||[]).length,1);
+  assert.equal((item.innerHTML.match(/class="explanations"/g)||[]).length,1);
+  assert.match(item.innerHTML,/class="feedback sr-only"/);
+});
 test('Ek sorular ayrı menü yerine tüm sorular filtresindedir',()=>{
   const h=harness(published,fakeStorage(),true);
   for(const id of ['batida-islam-arastirmalari','guncel-fikhi-problemler','hadis','islam-ticaret-hukuku','kelam','klasik-ve-cagdas-islami-dini-akimlar','tefsir']){

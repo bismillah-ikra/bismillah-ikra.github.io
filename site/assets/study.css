@@ -1,0 +1,127 @@
+/* Ortak soru ve mobil çalışma düzeni. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.course-filter-toggle { display: none; }
+.course-filter-toggle[hidden] { display: none !important; }
+.close-bank-filters { display: none; }
+.bank-filters {
+  padding: 18px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.bank-filters .bank-sources { margin-top: 0; }
+.bank-filters .bank-filter { margin: 14px 0; }
+.bank-filters .week-filter:last-of-type { margin-bottom: 0; }
+.bank-item { position: relative; display: block; padding: 18px; border-radius: 14px; }
+.bank-item > .icon-button { position: absolute; top: 12px; right: 12px; }
+.bank-item .meta-line { padding-right: 46px; min-height: 32px; margin-bottom: 8px; }
+.bank-item .number { padding: 0; min-width: 0; }
+.bank-item h3, .question-stem { font-size: 18px; line-height: 1.55; font-weight: 650; }
+.bank-item .options { margin-top: 16px; }
+.option, .bank-item .option {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  min-height: 48px;
+  padding: 11px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.option .letter { width: 26px; height: 26px; font-size: 13px; }
+.option .status-text { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; white-space: normal; }
+.option.correct { color: var(--success); }
+.option.wrong { color: var(--error); }
+.answer-review {
+  position: relative;
+  padding: 13px;
+  border: 0;
+  border-inline-start: 3px solid var(--success);
+  background: var(--success-bg);
+  color: var(--success);
+}
+.answer-review[data-outcome] { border-inline-start-color: var(--success); }
+.answer-review .explanations { margin: 0; padding: 0; border: 0; }
+.answer-review .explanations h3 { font-size: 15px; margin-bottom: 6px; }
+.answer-review .explanations > p { font-size: 16px; line-height: 1.65; }
+.answer-review .explanations .actions { margin-top: 12px; }
+.icon-button, .primary, .secondary, .text-button, .palette button { min-width: 44px; min-height: 44px; }
+.week-filter-option { min-height: 44px; }
+.course-picker-option { overflow-wrap: anywhere; }
+
+@media (max-width: 800px) {
+  .site-header .site-nav { flex: 1; min-width: 0; }
+  .site-header .site-nav a { min-width: 0; flex: 1; font-size: 12px; }
+  .site-header .site-nav a svg { display: none; }
+  .sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    background: var(--bg);
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .sidebar .course-label {
+    grid-column: 1 / -1;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ink);
+  }
+  .course-label-copy strong { color: var(--ink); font-size: 20px; line-height: 1.35; overflow-wrap: anywhere; }
+  .course-label-copy small { color: var(--muted); }
+  .course-label svg { color: var(--accent); background: var(--paper); border-color: var(--line); }
+  .course-menu-toggle, .course-filter-toggle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 12px;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .sidebar:has(.course-filter-toggle[hidden]) .course-menu-toggle { grid-column: 1 / -1; }
+  .course-menu-toggle[aria-expanded="false"] ~ .course-menu { display: none; }
+  .course-filter-toggle[aria-expanded="true"] { background: var(--accent-soft); }
+  #nav { grid-template-columns: 1fr; }
+  #nav > a { min-height: 44px; padding: 10px; font-size: 14px; }
+  main { padding: 18px clamp(12px, 4vw, 24px) 32px; }
+  :root[data-view="practice"] .page-head .eyebrow { display: none; }
+  :root[data-view="practice"] .page-head { margin-bottom: 16px; }
+  :root[data-view="practice"] .page-head h1 { font-size: 24px; line-height: 1.35; letter-spacing: -.5px; }
+  :root[data-bank-filters="closed"] .bank-filters { display: none; }
+  .bank-filters { padding: 14px; }
+  .close-bank-filters { display: inline-flex; margin-top: 14px; width: 100%; }
+  .form-field select, .form-field input { font-size: 16px; }
+  .question-pdf { flex-direction: row; align-items: center; gap: 10px; padding: 12px; margin-bottom: 14px; }
+  .question-pdf strong { font-size: 14px; }
+  .question-pdf p { display: none; }
+  .question-pdf a { padding-inline: 10px; }
+  .bank-item { padding: 14px; }
+  .question-panel { padding: 18px 14px; }
+  .question-bottom { flex-wrap: wrap; }
+  .question-bottom .actions { flex-wrap: wrap; }
+  .question-bottom :is(.primary,.secondary) { font-size: 14px; }
+}
+
+@media print {
+  .course-filter-toggle, .close-bank-filters { display: none !important; }
+}
