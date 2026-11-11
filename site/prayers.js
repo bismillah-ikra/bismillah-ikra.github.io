@@ -518,5 +518,35 @@ window.PAYLASIM_PRAYERS = [
     "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
     "meaning": "Kovulmuş şeytandan Allah’a sığınırım.",
     "source": "Buhârî, 6115"
+  },
+  {
+    "arabic": "إِنِّي عُذْتُ بِرَبِّي وَرَبِّكُمْ مِنْ كُلِّ مُتَكَبِّرٍ لَا يُؤْمِنُ بِيَوْمِ الْحِسَابِ",
+    "meaning": "Ben, hesap gününe inanmayan her kibirliden benim de sizin de Rabbiniz olan Allah’a sığınırım.",
+    "source": "Mü’min suresi, 27. ayetten (Hz. Mûsâ’nın sözü)"
+  },
+  {
+    "arabic": "اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",
+    "meaning": "Allah’ım! Kusurlarımı ört, korkularımı gider. Allah’ım! Beni önümden, arkamdan, sağımdan, solumdan ve üstümden koru. Altımdan gelecek bir felakete uğramaktan da senin azametine sığınırım.",
+    "source": "Ebû Dâvûd, 5074’teki duadan (sabah ve akşam)"
+  },
+  {
+    "arabic": "رَبِّ انْصُرْنِي عَلَى الْقَوْمِ الْمُفْسِدِينَ",
+    "meaning": "Rabbim! Bozgunculuk yapan topluluğa karşı bana yardım et.",
+    "source": "Ankebût suresi, 30. ayetten (Hz. Lût’un duası)"
+  },
+  {
+    "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أَضِلَّ أَوْ أُضَلَّ أَوْ أَزِلَّ أَوْ أُزَلَّ أَوْ أَظْلِمَ أَوْ أُظْلَمَ أَوْ أَجْهَلَ أَوْ يُجْهَلَ عَلَيَّ",
+    "meaning": "Allah’ım! Sapmaktan veya saptırılmaktan, yanılmaktan veya yanıltılmaktan, zulmetmekten veya zulme uğramaktan, cahillik etmekten veya cahilce bir davranışa uğramaktan sana sığınırım.",
+    "source": "Ebû Dâvûd, 5094 (evden çıkarken)"
+  },
+  {
+    "arabic": "وَاجْنُبْنِي وَبَنِيَّ أَنْ نَعْبُدَ الْأَصْنَامَ",
+    "meaning": "Beni ve çocuklarımı putlara tapmaktan uzak tut.",
+    "source": "İbrâhîm suresi, 35. ayetten (Hz. İbrâhîm’in duası)"
+  },
+  {
+    "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",
+    "meaning": "Allah’ım! Erkek ve dişi şeytanlardan sana sığınırım.",
+    "source": "Buhârî, 142 (tuvalete girerken)"
   }
 ];
