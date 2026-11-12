@@ -422,7 +422,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1709);
+  assert.equal(counts,1729);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
