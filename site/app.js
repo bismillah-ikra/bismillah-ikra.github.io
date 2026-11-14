@@ -332,6 +332,7 @@
       <button type="button" class="dua-degistir" data-action="next-prayer" aria-label="Başka bir dua göster">
         <span class="dua-icerik" aria-live="polite" aria-atomic="true">${prayerContent(nextPrayer())}</span>
       </button>
+      <div class="dua-islemler"><button type="button" class="dua-kopyala" data-action="copy-prayer" aria-label="Duanın Arapçasını ve anlamını kopyala"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg><span>Kopyala</span></button></div>
     </section>${examCalendar()}`;
   }
 
@@ -704,7 +705,29 @@
     catch{toast('PDF hazırlanamadı. Bağlantını kontrol edip tekrar dene.');}
     finally{target.disabled=false;target.textContent=label;}
   }
+  async function copyPrayer(){
+    const prayer=prayers[prayerIndex];
+    if(!prayer)return;
+    const text=`${prayer.arabic}\n\n${prayer.meaning}`;
+    try {
+      if(!window.navigator?.clipboard?.writeText)throw new Error('Clipboard unavailable');
+      await window.navigator.clipboard.writeText(text);
+      toast('Dua ve anlamı kopyalandı.');
+    } catch {
+      let field;
+      try {
+        field=document.createElement('textarea');
+        field.value=text;field.setAttribute('readonly','');
+        field.style.cssText='position:fixed;left:-9999px;top:0';
+        document.body.appendChild(field);field.focus();field.select();field.setSelectionRange(0,field.value.length);
+        if(!document.execCommand('copy'))throw new Error('Copy failed');
+        toast('Dua ve anlamı kopyalandı.');
+      } catch { toast('Kopyalanamadı. Tarayıcının kopyalama iznini kontrol et.'); }
+      finally {field?.remove();}
+    }
+  }
   const actions={
+    'copy-prayer':copyPrayer,
     'next-prayer':(_id,target)=>{target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},

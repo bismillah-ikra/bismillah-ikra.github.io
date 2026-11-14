@@ -651,12 +651,17 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 .ayet-karti { padding:0; background:#fffdf9; }
 .ayet-karti::before,.ayet-karti::after { display:none; }
 :root[data-theme=dark] .ayet-karti { background:#202f46; }
-.dua-degistir { display:block; width:100%; padding:45px 28px 34px; border:0; background:transparent; color:inherit; text-align:center; cursor:pointer; }
+.dua-degistir { display:block; width:100%; padding:45px 28px 20px; border:0; background:transparent; color:inherit; text-align:center; cursor:pointer; }
 .dua-icerik,.ayet-arapca,.ayet-anlam,.ayet-kaynak,.ayet-ipucu { display:block; }
 .ayet-karti .ayet-arapca.uzun { font-size:clamp(29px,4.7vw,45px); line-height:1.95; }
 .ayet-ipucu { margin-top:20px; color:var(--muted); font-size:12px; font-weight:600; }
 .dua-degistir:focus-visible { outline:3px solid var(--gold); outline-offset:-6px; border-radius:16px; }
-@media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 28px; } }
+.dua-islemler { display:flex; justify-content:center; padding:0 18px 26px; }
+.dua-kopyala { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 17px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); font:inherit; font-size:13px; font-weight:600; line-height:1; cursor:pointer; }
+.dua-kopyala svg { width:17px; height:17px; }
+.dua-kopyala:hover { border-color:var(--accent); color:var(--accent); }
+.dua-kopyala:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+@media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 18px; } }
 
 .site-theme[hidden] { display: none !important; }
 
