@@ -387,7 +387,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "اللَّهُمَّ رَحْمَتَكَ أَرْجُو فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ وَأَصْلِحْ لِي شَأْنِي كُلَّهُ لَا إِلَهَ إِلَّا أَنْتَ",
     "meaning": "Allah’ım! Rahmetini umuyorum. Beni göz açıp kapayıncaya kadar bile kendime bırakma; bütün işlerimi düzelt. Senden başka ilah yoktur.",
-    "source": "Sahîh İbn Hibbân, 970"
+    "source": "Sahîh İbn Hibbân, 970 (Elbânî: hasen)"
   },
   {
     "arabic": "اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ",
