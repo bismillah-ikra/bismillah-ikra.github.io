@@ -2,7 +2,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ زِدْنِي عِلْمًا",
     "meaning": "Rabbim! İlmimi artır.",
-    "source": "Tâhâ suresi, 114. ayetten"
+    "source": "Tâhâ suresi, 114. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
@@ -22,7 +22,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
     "meaning": "Rabbimiz! Bize katından rahmet ver ve içinde bulunduğumuz durumda doğru yolu bulmamızı kolaylaştır.",
-    "source": "Kehf suresi, 10. ayetten"
+    "source": "Kehf suresi, 10. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ، وَمِنْ قَلْبٍ لَا يَخْشَعُ، وَمِنْ نَفْسٍ لَا تَشْبَعُ، وَمِنْ دَعْوَةٍ لَا يُسْتَجَابُ لَهَا",
@@ -42,7 +42,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
     "meaning": "Rabbimiz! Bize dünyada da ahirette de iyilik ver ve bizi ateş azabından koru.",
-    "source": "Bakara suresi, 201. ayetten"
+    "source": "Bakara suresi, 201. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى",
@@ -62,7 +62,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
     "meaning": "Rabbim! Onlar beni küçükken nasıl merhametle yetiştirdilerse sen de onlara merhamet et.",
-    "source": "İsrâ suresi, 24. ayetten"
+    "source": "İsrâ suresi, 24. ayet"
   },
   {
     "arabic": "اللَّهُمَّ مُصَرِّفَ الْقُلُوبِ صَرِّفْ قُلُوبَنَا عَلَى طَاعَتِكَ",
@@ -92,7 +92,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا",
     "meaning": "Rabbimiz! Üzerimize sabır yağdır ve ayaklarımızı sağlam bastır.",
-    "source": "Bakara suresi, 250. ayetten"
+    "source": "Bakara suresi, 250. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْفَقْرِ وَالْقِلَّةِ وَالذِّلَّةِ، وَأَعُوذُ بِكَ مِنْ أَنْ أَظْلِمَ أَوْ أُظْلَمَ",
@@ -102,7 +102,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ",
     "meaning": "Rabbim! Bana katından hayırlı bir nesil bağışla. Şüphesiz sen duayı işitensin.",
-    "source": "Âl-i İmrân suresi, 38. ayetten"
+    "source": "Âl-i İmrân suresi, 38. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ",
@@ -112,7 +112,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
     "meaning": "Rabbimiz! Kendimize zulmettik. Bizi bağışlamaz ve bize merhamet etmezsen kaybedenlerden oluruz.",
-    "source": "A‘râf suresi, 23. ayetten"
+    "source": "A‘râf suresi, 23. ayet"
   },
   {
     "arabic": "اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ دِقَّهُ وَجِلَّهُ وَأَوَّلَهُ وَآخِرَهُ وَعَلَانِيَتَهُ وَسِرَّهُ",
@@ -122,7 +122,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ",
     "meaning": "Rabbimiz! Bizden kabul buyur. Şüphesiz sen işitensin, bilensin.",
-    "source": "Bakara suresi, 127. ayetten"
+    "source": "Bakara suresi, 127. ayet"
   },
   {
     "arabic": "اللَّهُمَّ اسْقِنَا غَيْثًا مُغِيثًا مَرِيئًا مَرِيعًا نَافِعًا غَيْرَ ضَارٍّ عَاجِلًا غَيْرَ آجِلٍ",
@@ -142,7 +142,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "أَنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
     "meaning": "Bana sıkıntı dokundu; sen merhametlilerin en merhametlisisin.",
-    "source": "Enbiyâ suresi, 83. ayetten"
+    "source": "Enbiyâ suresi, 83. ayet"
   },
   {
     "arabic": "اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا",
@@ -152,7 +152,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "لَا إِلَٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
     "meaning": "Senden başka ilah yoktur. Seni noksanlıklardan tenzih ederim. Gerçekten ben kendime haksızlık edenlerden oldum.",
-    "source": "Enbiyâ suresi, 87. ayetten"
+    "source": "Enbiyâ suresi, 87. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ فِتْنَةِ النَّارِ وَعَذَابِ النَّارِ وَمِنْ شَرِّ الْغِنَى وَالْفَقْرِ",
@@ -162,7 +162,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",
     "meaning": "Rabbim! Bana göndereceğin her hayra muhtacım.",
-    "source": "Kasas suresi, 24. ayetten"
+    "source": "Kasas suresi, 24. ayet"
   },
   {
     "arabic": "اللَّهُمَّ أَصْلِحْ لِي دِينِيَ الَّذِي هُوَ عِصْمَةُ أَمْرِي وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي وَأَصْلِحْ لِي آخِرَتِي الَّتِي فِيهَا مَعَادِي",
@@ -172,7 +172,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي",
     "meaning": "Rabbim! Bana ve anne babama verdiğin nimete şükretmeyi, razı olacağın iyi işler yapmayı bana nasip et; neslimi de hayırlı kıl.",
-    "source": "Ahkāf suresi, 15. ayetten"
+    "source": "Ahkāf suresi, 15. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ مَا عَمِلْتُ وَمِنْ شَرِّ مَا لَمْ أَعْمَلْ",
@@ -182,7 +182,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِلَّذِينَ آمَنُوا",
     "meaning": "Rabbimiz! Bizi ve bizden önce iman etmiş kardeşlerimizi bağışla. Kalplerimizde iman edenlere karşı bir kin bırakma.",
-    "source": "Haşr suresi, 10. ayetten"
+    "source": "Haşr suresi, 10. ayet"
   },
   {
     "arabic": "اللَّهُمَّ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ",
@@ -192,7 +192,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا ۖ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
     "meaning": "Rabbimiz! Nurumuzu tamamla ve bizi bağışla. Şüphesiz sen her şeye gücü yetensin.",
-    "source": "Tahrîm suresi, 8. ayetten"
+    "source": "Tahrîm suresi, 8. ayet"
   },
   {
     "arabic": "اللَّهُمَّ أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ وَأَعُوذُ بِكَ مِنْكَ لَا أُحْصِي ثَنَاءً عَلَيْكَ أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ",
@@ -202,7 +202,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٦﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ",
     "meaning": "Bizi dosdoğru yola, kendilerine nimet verdiklerinin yoluna ilet.",
-    "source": "Fâtiha suresi, 6–7. ayetlerden"
+    "source": "Fâtiha suresi, 6–7. ayetler"
   },
   {
     "arabic": "اللَّهُمَّ اجْعَلْ فِي قَلْبِي نُورًا، وَفِي بَصَرِي نُورًا، وَفِي سَمْعِي نُورًا، وَعَنْ يَمِينِي نُورًا، وَعَنْ يَسَارِي نُورًا، وَفَوْقِي نُورًا، وَتَحْتِي نُورًا، وَأَمَامِي نُورًا، وَخَلْفِي نُورًا، وَاجْعَلْ لِي نُورًا",
@@ -212,7 +212,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا",
     "meaning": "Rabbimiz! Unutur veya hata edersek bizi sorumlu tutma.",
-    "source": "Bakara suresi, 286. ayetten"
+    "source": "Bakara suresi, 286. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ مُنْكَرَاتِ الْأَخْلَاقِ وَالْأَعْمَالِ وَالْأَهْوَاءِ",
@@ -232,7 +232,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا مَا خَلَقْتَ هَٰذَا بَاطِلًا سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ",
     "meaning": "Rabbimiz! Sen bunları boşuna yaratmadın. Seni noksanlıklardan tenzih ederiz; bizi ateş azabından koru.",
-    "source": "Âl-i İmrân suresi, 191. ayetten"
+    "source": "Âl-i İmrân suresi, 191. ayet"
   },
   {
     "arabic": "رَبِّ تَقَبَّلْ تَوْبَتِي وَاغْسِلْ حَوْبَتِي وَأَجِبْ دَعْوَتِي وَثَبِّتْ حُجَّتِي وَاهْدِ قَلْبِي وَسَدِّدْ لِسَانِي وَاسْلُلْ سَخِيمَةَ قَلْبِي",
@@ -252,7 +252,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا افْتَحْ بَيْنَنَا وَبَيْنَ قَوْمِنَا بِالْحَقِّ وَأَنْتَ خَيْرُ الْفَاتِحِينَ",
     "meaning": "Rabbimiz! Bizimle kavmimiz arasında adaletle hüküm ver. Sen hüküm verenlerin en hayırlısısın.",
-    "source": "A‘râf suresi, 89. ayetten"
+    "source": "A‘râf suresi, 89. ayet"
   },
   {
     "arabic": "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ وَعَافِنِي فِيمَنْ عَافَيْتَ وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ وَبَارِكْ لِي فِيمَا أَعْطَيْتَ",
@@ -262,7 +262,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ اغْفِرْ لِي وَلِأَخِي وَأَدْخِلْنَا فِي رَحْمَتِكَ ۖ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
     "meaning": "Rabbim! Beni ve kardeşimi bağışla, bizi rahmetine dâhil et. Sen merhametlilerin en merhametlisisin.",
-    "source": "A‘râf suresi, 151. ayetten"
+    "source": "A‘râf suresi, 151. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا وَخَيْرَ مَا فِيهَا وَخَيْرَ مَا أُرْسِلَتْ بِهِ وَأَعُوذُ بِكَ مِنْ شَرِّهَا وَشَرِّ مَا فِيهَا وَشَرِّ مَا أُرْسِلَتْ بِهِ",
@@ -272,7 +272,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "عَلَى اللَّهِ تَوَكَّلْنَا رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِلْقَوْمِ الظَّالِمِينَ",
     "meaning": "Allah’a güvendik. Rabbimiz! Bizi zalim topluluğun baskısı altında bir imtihan konusu yapma.",
-    "source": "Yûnus suresi, 85. ayetten"
+    "source": "Yûnus suresi, 85. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْلَمْتُ وَجْهِي إِلَيْكَ وَفَوَّضْتُ أَمْرِي إِلَيْكَ وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ",
@@ -282,7 +282,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "تَوَفَّنِي مُسْلِمًا وَأَلْحِقْنِي بِالصَّالِحِينَ",
     "meaning": "Canımı sana teslim olmuş biri olarak al ve beni iyilerin arasına kat.",
-    "source": "Yûsuf suresi, 101. ayetten"
+    "source": "Yûsuf suresi, 101. ayet"
   },
   {
     "arabic": "اللَّهُمَّ بِاسْمِكَ أَحْيَا وَبِاسْمِكَ أَمُوتُ",
@@ -292,7 +292,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ اجْعَلْ هَٰذَا الْبَلَدَ آمِنًا",
     "meaning": "Rabbim! Bu beldeyi güvenli kıl.",
-    "source": "İbrâhîm suresi, 35. ayetten (Mekke için)"
+    "source": "İbrâhîm suresi, 35. ayet (Mekke için)"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ فِي سَفَرِي هَذَا مِنَ الْبِرِّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى",
@@ -312,7 +312,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ أَنْزِلْنِي مُنْزَلًا مُبَارَكًا وَأَنْتَ خَيْرُ الْمُنْزِلِينَ",
     "meaning": "Rabbim! Beni bereketli bir yere indir. Sen yerleştirenlerin en hayırlısısın.",
-    "source": "Mü’minûn suresi, 29. ayetten"
+    "source": "Mü’minûn suresi, 29. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنَ الْخَيْرِ كُلِّهِ عَاجِلِهِ وَآجِلِهِ مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ، وَأَعُوذُ بِكَ مِنَ الشَّرِّ كُلِّهِ عَاجِلِهِ وَآجِلِهِ مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ",
@@ -342,7 +342,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ الْمَصِيرُ",
     "meaning": "Rabbimiz! Sana güvendik, sana yöneldik. Dönüş de sanadır.",
-    "source": "Mümtehine suresi, 4. ayetten"
+    "source": "Mümtehine suresi, 4. ayet"
   },
   {
     "arabic": "اللَّهُمَّ آتِ نَفْسِي تَقْوَاهَا وَزَكِّهَا أَنْتَ خَيْرُ مَنْ زَكَّاهَا أَنْتَ وَلِيُّهَا وَمَوْلَاهَا",
@@ -362,7 +362,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَا ۖ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
     "meaning": "Bize ibadetimizin yollarını göster ve tövbemizi kabul et. Şüphesiz tövbeleri çokça kabul eden ve merhametli olan sensin.",
-    "source": "Bakara suresi, 128. ayetten"
+    "source": "Bakara suresi, 128. ayet"
   },
   {
     "arabic": "اقْضِ عَنِّي الدَّيْنَ وَأَغْنِنِي مِنَ الْفَقْرِ",
@@ -372,7 +372,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ",
     "meaning": "Rabbimiz! Bağışlamanı dileriz. Dönüş de sanadır.",
-    "source": "Bakara suresi, 285. ayetten"
+    "source": "Bakara suresi, 285. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَدْمِ، وَأَعُوذُ بِكَ مِنَ التَّرَدِّي، وَأَعُوذُ بِكَ مِنَ الْغَرَقِ وَالْحَرَقِ وَالْهَرَمِ",
@@ -382,7 +382,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ",
     "meaning": "Rabbimiz! Bize gücümüzün yetmeyeceği yükleri yükleme.",
-    "source": "Bakara suresi, 286. ayetten"
+    "source": "Bakara suresi, 286. ayet"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَبِيرًا وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ وَارْحَمْنِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ",
@@ -392,7 +392,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ",
     "meaning": "Allah’ım! Ey mülkün sahibi! Mülkü dilediğine verir, dilediğinden alırsın.",
-    "source": "Âl-i İmrân suresi, 26. ayetten"
+    "source": "Âl-i İmrân suresi, 26. ayet"
   },
   {
     "arabic": "اللَّهُمَّ أَحْيِنِي مَا كَانَتِ الْحَيَاةُ خَيْرًا لِي وَتَوَفَّنِي إِذَا كَانَتِ الْوَفَاةُ خَيْرًا لِي",
@@ -412,7 +412,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا أَخْرِجْنَا مِنْ هَٰذِهِ الْقَرْيَةِ الظَّالِمِ أَهْلُهَا وَاجْعَلْ لَنَا مِنْ لَدُنْكَ وَلِيًّا وَاجْعَلْ لَنَا مِنْ لَدُنْكَ نَصِيرًا",
     "meaning": "Rabbimiz! Halkı zalim olan bu beldeden bizi çıkar; bize katından bir koruyucu ve bir yardımcı ver.",
-    "source": "Nisâ suresi, 75. ayetten (baskı altında)"
+    "source": "Nisâ suresi, 75. ayet (baskı altında)"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ ضِيقِ الدُّنْيَا وَضِيقِ يَوْمِ الْقِيَامَةِ",
@@ -422,7 +422,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "وَارْزُقْنَا وَأَنْتَ خَيْرُ الرَّازِقِينَ",
     "meaning": "Bize rızık ver; sen rızık verenlerin en hayırlısısın.",
-    "source": "Mâide suresi, 114. ayetten"
+    "source": "Mâide suresi, 114. ayet"
   },
   {
     "arabic": "وَاهْدِنِي لِأَحْسَنِ الْأَخْلَاقِ، لَا يَهْدِي لِأَحْسَنِهَا إِلَّا أَنْتَ، وَاصْرِفْ عَنِّي سَيِّئَهَا، لَا يَصْرِفُ عَنِّي سَيِّئَهَا إِلَّا أَنْتَ",
@@ -432,7 +432,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ إِنِّي أَعُوذُ بِكَ أَنْ أَسْأَلَكَ مَا لَيْسَ لِي بِهِ عِلْمٌ ۖ وَإِلَّا تَغْفِرْ لِي وَتَرْحَمْنِي أَكُنْ مِنَ الْخَاسِرِينَ",
     "meaning": "Rabbim! Hakkında bilgim olmayan bir şeyi senden istemekten sana sığınırım. Beni bağışlamaz ve bana merhamet etmezsen kaybedenlerden olurum.",
-    "source": "Hûd suresi, 47. ayetten"
+    "source": "Hûd suresi, 47. ayet"
   },
   {
     "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
@@ -442,7 +442,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ إِمَّا تُرِيَنِّي مَا يُوعَدُونَ ﴿٩٣﴾ رَبِّ فَلَا تَجْعَلْنِي فِي الْقَوْمِ الظَّالِمِينَ ﴿٩٤﴾",
     "meaning": "Rabbim! Onlara vaat edilen azabı bana göstereceksen, Rabbim, beni zalimler topluluğunun içinde bulundurma.",
-    "source": "Mü’minûn suresi, 93–94. ayetlerden"
+    "source": "Mü’minûn suresi, 93–94. ayetler"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الثَّبَاتَ فِي الْأَمْرِ وَعَزِيمَةَ الرُّشْدِ",
@@ -452,7 +452,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا اصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ ۖ إِنَّ عَذَابَهَا كَانَ غَرَامًا",
     "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır. Onun azabı gerçekten sürekli bir sıkıntıdır.",
-    "source": "Furkân suresi, 65. ayetten"
+    "source": "Furkân suresi, 65. ayet"
   },
   {
     "arabic": "اللَّهُمَّ يَسِّرْ لِي جَلِيسًا صَالِحًا",
@@ -472,7 +472,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ ابْنِ لِي عِنْدَكَ بَيْتًا فِي الْجَنَّةِ",
     "meaning": "Rabbim! Bana katında, cennette bir ev yap.",
-    "source": "Tahrîm suresi, 11. ayetten"
+    "source": "Tahrîm suresi, 11. ayet"
   },
   {
     "arabic": "اللَّهُمَّ حَوَالَيْنَا وَلَا عَلَيْنَا",
@@ -482,7 +482,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِنْ شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾",
     "meaning": "Yarattığı şeylerin şerrinden, karanlığı çöktüğü zaman gecenin şerrinden, düğümlere üfleyenlerin şerrinden ve kıskandığı zaman kıskanç kişinin şerrinden sabahın Rabbine sığınırım.",
-    "source": "Felak suresi, 1–5. ayetlerden"
+    "source": "Felak suresi, 1–5. ayetler"
   },
   {
     "arabic": "رَبِّ أَعِنِّي وَلَا تُعِنْ عَلَيَّ وَانْصُرْنِي وَلَا تَنْصُرْ عَلَيَّ",
@@ -502,7 +502,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾",
     "meaning": "İnsanların Rabbine, insanların hükümdarına ve insanların ilahına; insanların kalplerine vesvese veren, cinlerden ve insanlardan olan sinsi vesvesecinin şerrinden sığınırım.",
-    "source": "Nâs suresi, 1–6. ayetlerden"
+    "source": "Nâs suresi, 1–6. ayetler"
   },
   {
     "arabic": "اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِمْ وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ",
@@ -512,7 +512,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ نَجِّنِي مِنَ الْقَوْمِ الظَّالِمِينَ",
     "meaning": "Rabbim! Beni zalimler topluluğundan kurtar.",
-    "source": "Kasas suresi, 21. ayetten"
+    "source": "Kasas suresi, 21. ayet"
   },
   {
     "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
@@ -522,7 +522,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "إِنِّي عُذْتُ بِرَبِّي وَرَبِّكُمْ مِنْ كُلِّ مُتَكَبِّرٍ لَا يُؤْمِنُ بِيَوْمِ الْحِسَابِ",
     "meaning": "Ben, hesap gününe inanmayan her kibirliden benim de sizin de Rabbiniz olan Allah’a sığınırım.",
-    "source": "Mü’min suresi, 27. ayetten (Hz. Mûsâ’nın sözü)"
+    "source": "Mü’min suresi, 27. ayet (Hz. Mûsâ’nın sözü)"
   },
   {
     "arabic": "اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",
@@ -532,7 +532,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ انْصُرْنِي عَلَى الْقَوْمِ الْمُفْسِدِينَ",
     "meaning": "Rabbim! Bozgunculuk yapan topluluğa karşı bana yardım et.",
-    "source": "Ankebût suresi, 30. ayetten (Hz. Lût’un duası)"
+    "source": "Ankebût suresi, 30. ayet (Hz. Lût’un duası)"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أَضِلَّ أَوْ أُضَلَّ أَوْ أَزِلَّ أَوْ أُزَلَّ أَوْ أَظْلِمَ أَوْ أُظْلَمَ أَوْ أَجْهَلَ أَوْ يُجْهَلَ عَلَيَّ",
@@ -542,7 +542,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "وَاجْنُبْنِي وَبَنِيَّ أَنْ نَعْبُدَ الْأَصْنَامَ",
     "meaning": "Beni ve çocuklarımı putlara tapmaktan uzak tut.",
-    "source": "İbrâhîm suresi, 35. ayetten (Hz. İbrâhîm’in duası)"
+    "source": "İbrâhîm suresi, 35. ayet (Hz. İbrâhîm’in duası)"
   },
   {
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",
@@ -552,17 +552,17 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَدْخِلْنِي بِرَحْمَتِكَ فِي عِبَادِكَ الصَّالِحِينَ",
     "meaning": "Rabbim! Bana ve anne babama verdiğin nimete şükretmemi ve razı olacağın iyi işler yapmamı sağla. Rahmetinle beni salih kullarının arasına kat.",
-    "source": "Neml suresi, 19. ayetten"
+    "source": "Neml suresi, 19. ayet"
   },
   {
     "arabic": "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ",
     "meaning": "Rabbimiz! Üzerimize sabır yağdır ve canımızı Müslüman olarak al.",
-    "source": "A‘râf suresi, 126. ayetten"
+    "source": "A‘râf suresi, 126. ayet"
   },
   {
     "arabic": "رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
     "meaning": "Rabbimiz! Günahlarımızı ve işlerimizdeki aşırılıklarımızı bağışla; ayaklarımızı sağlam tut ve inkârcı topluluğa karşı bize yardım et.",
-    "source": "Âl-i İmrân suresi, 147. ayetten"
+    "source": "Âl-i İmrân suresi, 147. ayet"
   },
   {
     "arabic": "وَاجْعَلْنِي مِنْ وَرَثَةِ جَنَّةِ النَّعِيمِ",
@@ -572,7 +572,7 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "أَنْتَ وَلِيُّنَا فَاغْفِرْ لَنَا وَارْحَمْنَا ۖ وَأَنْتَ خَيْرُ الْغَافِرِينَ",
     "meaning": "Sen bizim dostumuzsun; bizi bağışla ve bize merhamet et. Sen bağışlayanların en hayırlısısın.",
-    "source": "A‘râf suresi, 155. ayetten"
+    "source": "A‘râf suresi, 155. ayet"
   },
   {
     "arabic": "رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِلَّذِينَ كَفَرُوا وَاغْفِرْ لَنَا رَبَّنَا ۖ إِنَّكَ أَنْتَ الْعَزِيزُ الْحَكِيمُ",
@@ -582,11 +582,11 @@ window.PAYLASIM_PRAYERS = [
   {
     "arabic": "رَبَّنَا إِنَّنَا آمَنَّا فَاغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ النَّارِ",
     "meaning": "Rabbimiz! Biz iman ettik; günahlarımızı bağışla ve bizi ateş azabından koru.",
-    "source": "Âl-i İmrân suresi, 16. ayetten"
+    "source": "Âl-i İmrân suresi, 16. ayet"
   },
   {
     "arabic": "رَبَّنَا آمَنَّا فَاغْفِرْ لَنَا وَارْحَمْنَا وَأَنْتَ خَيْرُ الرَّاحِمِينَ",
     "meaning": "Rabbimiz! İman ettik; bizi bağışla ve bize merhamet et. Sen merhamet edenlerin en hayırlısısın.",
-    "source": "Mü’minûn suresi, 109. ayetten"
+    "source": "Mü’minûn suresi, 109. ayet"
   }
 ];

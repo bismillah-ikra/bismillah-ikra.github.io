@@ -130,6 +130,11 @@ test('Dua metni mevcut Arapça, anlam ve kaynağı birlikte kopyalar',()=>{
   h.app.actions['copy-prayer-text']();
   assert.equal(copied,`${prayer.arabic}\n\n${prayer.meaning}\n\n${prayer.source}`);
 });
+test('Ayet kaynakları yalın biçimde gösterilir',()=>{
+  const rows=harness().window.PAYLASIM_PRAYERS;
+  assert.ok(rows.some(p=>p.source==='A‘râf suresi, 89. ayet'));
+  assert.ok(rows.filter(p=>/suresi/i.test(p.source)).every(p=>!/ayetten|ayetlerden/.test(p.source)));
+});
 test('Dua listesinde tekrar eden Arapça metin yok',()=>{
   const h=harness(), rows=h.window.PAYLASIM_PRAYERS;
   const normalize=value=>value.normalize('NFKD').replace(/[\u064b-\u065f\u0670\u06d6-\u06ed]/gu,'').replace(/[^\u0621-\u064a]/gu,'');

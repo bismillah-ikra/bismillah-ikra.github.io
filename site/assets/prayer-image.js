@@ -37,12 +37,14 @@
       ctx.beginPath();ctx.moveTo(0,48);ctx.bezierCurveTo(0,14,14,0,48,0);ctx.stroke();
       ctx.beginPath();ctx.moveTo(7,24);ctx.quadraticCurveTo(13,9,20,8);ctx.quadraticCurveTo(20,20,7,24);ctx.moveTo(24,7);ctx.quadraticCurveTo(9,13,8,20);ctx.quadraticCurveTo(20,20,24,7);ctx.stroke();ctx.restore();
     }
-    const ornamentY=145;
+    // Center the ornament, prayer, meaning and source as one block, including short prayers.
+    const contentHeight=100+arabic.length*110+28+85+meaning.length*62+65+62+(source.length-1)*45;
+    const ornamentY=(height-contentHeight)/2;
     ctx.strokeStyle='#b68a45';ctx.lineWidth=2;
     ctx.beginPath();ctx.moveTo(middle-145,ornamentY);ctx.lineTo(middle-22,ornamentY);ctx.moveTo(middle+22,ornamentY);ctx.lineTo(middle+145,ornamentY);ctx.stroke();
     ctx.save();ctx.translate(middle,ornamentY);ctx.rotate(Math.PI/4);ctx.strokeRect(-10,-10,20,20);ctx.restore();
     ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#172746';ctx.direction='rtl';ctx.font='64px "Noto Naskh Arabic", serif';
-    let y=245;
+    let y=ornamentY+100;
     for(const line of arabic){ctx.fillText(line,middle,y);y+=110;}
     y+=28;ctx.strokeStyle='#c49b5b';ctx.beginPath();ctx.moveTo(middle-85,y);ctx.lineTo(middle+85,y);ctx.stroke();y+=85;
     ctx.direction='ltr';ctx.fillStyle='#172746';ctx.font='42px Georgia, serif';

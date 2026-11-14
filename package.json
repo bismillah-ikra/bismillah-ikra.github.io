@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "node build.mjs",
-    "test": "node test.cjs",
+    "test": "node test.cjs && node tools/test-prayer-image.cjs",
     "test:pdf": "node tools/test-question-pdf.mjs"
   }
 }
