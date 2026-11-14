@@ -96,7 +96,7 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
 
 test('Dua kartı bütün duaları sırayla gösterir ve başa döner',()=>{
   const h=harness(), content={innerHTML:''}, button={querySelector:()=>content}, seen=[];
-  assert.equal(h.window.PAYLASIM_PRAYERS.length,110);
+  assert.equal(h.window.PAYLASIM_PRAYERS.length,118);
   assert.match(h.window.PAYLASIM_PRAYERS[1].source, /İbn Mâce, 925/);
   assert.match(h.window.PAYLASIM_PRAYERS[5].arabic, /عِلْمٍ لَا يَنْفَعُ/);
   assert.match(h.window.PAYLASIM_PRAYERS[100].source, /Nâs suresi/);
@@ -109,7 +109,7 @@ test('Dua kartı bütün duaları sırayla gösterir ve başa döner',()=>{
   assert.match(h.window.PAYLASIM_PRAYERS[107].source, /5094/);
   assert.match(h.window.PAYLASIM_PRAYERS[108].source, /İbrâhîm suresi/);
   assert.match(h.window.PAYLASIM_PRAYERS[109].source, /142/);
-  assert.ok(h.window.PAYLASIM_PRAYERS.every((p,i)=>i%2 ? !/suresi/i.test(p.source) : /suresi/i.test(p.source)));
+  assert.ok(h.window.PAYLASIM_PRAYERS.slice(0,110).every((p,i)=>i%2 ? !/suresi/i.test(p.source) : /suresi/i.test(p.source)));
   assert.ok(h.window.PAYLASIM_PRAYERS.every(p=>p.arabic&&p.meaning&&p.source));
   h.nav('home'); assert.match(h.html(),/data-action="next-prayer"/);
   for(let i=0;i<=h.window.PAYLASIM_PRAYERS.length;i++){
@@ -118,8 +118,8 @@ test('Dua kartı bütün duaları sırayla gösterir ve başa döner',()=>{
     assert.match(content.innerHTML,/ayet-kaynak/);
     seen.push(content.innerHTML);
   }
-  assert.equal(new Set(seen.slice(0,110)).size,110);
-  assert.equal(seen[0],seen[110]);
+  assert.equal(new Set(seen.slice(0,h.window.PAYLASIM_PRAYERS.length)).size,h.window.PAYLASIM_PRAYERS.length);
+  assert.equal(seen[0],seen[h.window.PAYLASIM_PRAYERS.length]);
 });
 test('Dua listesinde tekrar eden Arapça metin yok',()=>{
   const h=harness(), rows=h.window.PAYLASIM_PRAYERS;

@@ -548,5 +548,45 @@ window.PAYLASIM_PRAYERS = [
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",
     "meaning": "Allah’ım! Erkek ve dişi şeytanlardan sana sığınırım.",
     "source": "Buhârî, 142 (tuvalete girerken)"
+  },
+  {
+    "arabic": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَدْخِلْنِي بِرَحْمَتِكَ فِي عِبَادِكَ الصَّالِحِينَ",
+    "meaning": "Rabbim! Bana ve anne babama verdiğin nimete şükretmemi ve razı olacağın iyi işler yapmamı sağla. Rahmetinle beni salih kullarının arasına kat.",
+    "source": "Neml suresi, 19. ayetten"
+  },
+  {
+    "arabic": "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ",
+    "meaning": "Rabbimiz! Üzerimize sabır yağdır ve canımızı Müslüman olarak al.",
+    "source": "A‘râf suresi, 126. ayetten"
+  },
+  {
+    "arabic": "رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
+    "meaning": "Rabbimiz! Günahlarımızı ve işlerimizdeki aşırılıklarımızı bağışla; ayaklarımızı sağlam tut ve inkârcı topluluğa karşı bize yardım et.",
+    "source": "Âl-i İmrân suresi, 147. ayetten"
+  },
+  {
+    "arabic": "وَاجْعَلْنِي مِنْ وَرَثَةِ جَنَّةِ النَّعِيمِ",
+    "meaning": "Beni nimetlerle dolu cennetin vârislerinden eyle.",
+    "source": "Şuarâ suresi, 85. ayet"
+  },
+  {
+    "arabic": "أَنْتَ وَلِيُّنَا فَاغْفِرْ لَنَا وَارْحَمْنَا ۖ وَأَنْتَ خَيْرُ الْغَافِرِينَ",
+    "meaning": "Sen bizim dostumuzsun; bizi bağışla ve bize merhamet et. Sen bağışlayanların en hayırlısısın.",
+    "source": "A‘râf suresi, 155. ayetten"
+  },
+  {
+    "arabic": "رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِلَّذِينَ كَفَرُوا وَاغْفِرْ لَنَا رَبَّنَا ۖ إِنَّكَ أَنْتَ الْعَزِيزُ الْحَكِيمُ",
+    "meaning": "Rabbimiz! Bizi inkâr edenler için bir sınama konusu yapma ve bizi bağışla. Rabbimiz! Şüphesiz sen mutlak güç sahibisin, hüküm ve hikmet sahibisin.",
+    "source": "Mümtehine suresi, 5. ayet"
+  },
+  {
+    "arabic": "رَبَّنَا إِنَّنَا آمَنَّا فَاغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ النَّارِ",
+    "meaning": "Rabbimiz! Biz iman ettik; günahlarımızı bağışla ve bizi ateş azabından koru.",
+    "source": "Âl-i İmrân suresi, 16. ayetten"
+  },
+  {
+    "arabic": "رَبَّنَا آمَنَّا فَاغْفِرْ لَنَا وَارْحَمْنَا وَأَنْتَ خَيْرُ الرَّاحِمِينَ",
+    "meaning": "Rabbimiz! İman ettik; bizi bağışla ve bize merhamet et. Sen merhamet edenlerin en hayırlısısın.",
+    "source": "Mü’minûn suresi, 109. ayetten"
   }
 ];
