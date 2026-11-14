@@ -776,4 +776,22 @@ test('Dağıtılan varlıklarda izleyici, ağ çağrısı, belge veya kişisel k
   }
   const html=fs.readFileSync('./dist/index.html','utf8');assert.ok(!/<(?:script|link)[^>]+(?:src|href)="https?:/.test(html));
 });
+(async()=>{
+  for(const supported of [true,false]){
+    const h=harness(),help=h.node('prayer-image-help'),menu=h.node('prayer-copy-menu'),trigger={setAttribute(){}};
+    let written=null;const blob={type:'image/png',size:123};
+    help.querySelector=()=>({hidden:false});menu.hidden=true;
+    h.window.PrayerCardImage={render:async()=>blob};
+    h.window.ClipboardItem=class{constructor(data){this.data=data;}};
+    h.window.navigator={clipboard:supported?{write:async items=>{written=items[0].data['image/png'];}}:undefined};
+    h.nav('home');h.app.actions['toggle-prayer-copy']('',trigger);await new Promise(resolve=>setImmediate(resolve));
+    await h.app.actions['copy-prayer-image']();
+    assert.equal(help.hidden,false);
+    assert.match(h.node('prayer-image-message').textContent,supported?/Kart kopyalandı/:/kopyalanamadı/);
+    assert.equal(written,supported?blob:null);
+    const content={innerHTML:''};h.app.actions['next-prayer']('',{querySelector:()=>content});
+    assert.equal(help.hidden,true);
+  }
+  console.log('✓ Görsel kopyalama ve desteklenmeyen cihazda alternatifler doğrulandı');
+})().catch(error=>{console.error(error);process.exitCode=1;});
 console.log(`\n${passed} test grubu geçti. Gerçek tarayıcı render testi yapılmadı.`);

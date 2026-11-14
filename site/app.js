@@ -338,6 +338,10 @@
           <button type="button" data-action="copy-prayer-image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m4 17 5-5 4 4 3-3 4 4"></path></svg>Kart olarak kopyala</button>
           <button type="button" data-action="copy-prayer-text"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg>Metin olarak kopyala</button>
         </div>
+        <div class="dua-kart-yardim" id="prayer-image-help" hidden>
+          <p id="prayer-image-message" role="status"></p>
+          <div><button type="button" data-action="save-prayer-image">Kartı kaydet</button><button type="button" data-action="send-prayer-image" hidden>Kartı gönder</button></div>
+        </div>
       </div>
     </section>${examCalendar()}`;
   }
@@ -738,28 +742,70 @@
     menu.hidden=true;
     document.querySelector('.dua-kopyala')?.setAttribute('aria-expanded','false');
   }
-  async function copyPrayerImage(){
-    const prayer=prayers[prayerIndex];
+  let preparedPrayer=null,preparedImage=null,prepareRequest=0;
+  function resetPrayerImage(){
+    preparedPrayer=null;preparedImage=null;prepareRequest++;
+    const help=document.getElementById('prayer-image-help');if(help)help.hidden=true;
+  }
+  async function preparePrayerImage(){
+    const prayer=prayers[prayerIndex],request=++prepareRequest;
     if(!prayer)return;
-    const image=window.PrayerCardImage.render(prayer);
-    try {
-      if(!window.navigator?.clipboard?.write || !window.ClipboardItem)throw new Error('Image clipboard unavailable');
-      await window.navigator.clipboard.write([new window.ClipboardItem({'image/png':image})]);
-      toast('Dua kartı görsel olarak kopyalandı.');
-    } catch {
-      try {
-        const blob=await image, url=URL.createObjectURL(blob), link=document.createElement('a');
-        link.href=url;link.download='dua-karti.png';document.body.appendChild(link);link.click();link.remove();
-        setTimeout(()=>URL.revokeObjectURL(url),60000);
-        toast('Bu tarayıcıda görsel kopyalanamadığı için kart indirildi.');
-      } catch { toast('Kart hazırlanamadı. Lütfen tekrar dene.'); }
+    if(preparedPrayer===prayer&&preparedImage)return;
+    preparedPrayer=prayer;preparedImage=null;
+    const button=document.querySelector('[data-action="copy-prayer-image"]');
+    if(button){button.disabled=true;button.lastChild.textContent='Kart hazırlanıyor…';}
+    try{
+      const blob=await window.PrayerCardImage.render(prayer);
+      if(request!==prepareRequest||prayers[prayerIndex]!==prayer)return;
+      preparedImage=blob;
+      if(button?.isConnected){button.disabled=false;button.lastChild.textContent='Kart olarak kopyala';}
+    }catch{
+      if(request!==prepareRequest)return;
+      preparedPrayer=null;
+      if(button?.isConnected){button.disabled=false;button.lastChild.textContent='Kart olarak kopyala';}
+      toast('Kart hazırlanamadı. Lütfen tekrar dene.');
     }
   }
+  function showImageHelp(copied){
+    const help=document.getElementById('prayer-image-help'),message=document.getElementById('prayer-image-message');
+    if(!help||!message)return;
+    message.textContent=copied?'Kart kopyalandı. Yapıştıramazsan kaydedebilir veya gönderebilirsin.':'Bu tarayıcıda görsel kopyalanamadı. Kartı kaydedebilir veya gönderebilirsin.';
+    const send=help.querySelector('[data-action="send-prayer-image"]');
+    try{send.hidden=!(window.navigator?.share&&window.navigator?.canShare&&window.navigator.canShare({files:[new File([preparedImage],'dua-karti.png',{type:'image/png'})]}));}catch{send.hidden=true;}
+    help.hidden=false;
+  }
+  async function copyPrayerImage(){
+    if(preparedPrayer!==prayers[prayerIndex]||!preparedImage){toast('Kart hazırlanıyor. Lütfen tekrar dene.');return;}
+    const prayer=preparedPrayer,blob=preparedImage;
+    try{
+      if(!window.navigator?.clipboard?.write||!window.ClipboardItem)throw new Error('Image clipboard unavailable');
+      await window.navigator.clipboard.write([new window.ClipboardItem({'image/png':blob})]);
+      if(preparedPrayer!==prayer||preparedImage!==blob)return;
+      toast('Dua kartı görsel olarak kopyalandı.');showImageHelp(true);
+    }catch{if(preparedPrayer!==prayer||preparedImage!==blob)return;showImageHelp(false);toast('Görsel kopyalanamadı; kartı kaydetmeyi deneyebilirsin.');}
+  }
+  function savePrayerImage(){
+    if(!preparedImage)return;
+    try{
+      const url=URL.createObjectURL(preparedImage),link=document.createElement('a');
+      link.href=url;link.download='dua-karti.png';document.body.appendChild(link);link.click();link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),60000);toast('Kart indirme için hazırlandı.');
+    }catch{toast('Kart kaydedilemedi. Lütfen tekrar dene.');}
+  }
+  function sendPrayerImage(){
+    if(!preparedImage||!window.navigator?.share)return;
+    try{
+      const file=new File([preparedImage],'dua-karti.png',{type:'image/png'});
+      window.navigator.share({files:[file]}).catch(error=>{if(error?.name!=='AbortError')toast('Gönderme ekranı açılamadı. Kartı kaydetmeyi dene.');});
+    }catch{toast('Gönderme ekranı açılamadı. Kartı kaydetmeyi dene.');}
+  }
   const actions={
-    'toggle-prayer-copy':(_id,target)=>{const menu=document.getElementById('prayer-copy-menu');menu.hidden=!menu.hidden;target.setAttribute('aria-expanded',String(!menu.hidden));},
+    'toggle-prayer-copy':(_id,target)=>{const menu=document.getElementById('prayer-copy-menu');menu.hidden=!menu.hidden;target.setAttribute('aria-expanded',String(!menu.hidden));if(!menu.hidden)preparePrayerImage();},
     'copy-prayer-text':()=>{closePrayerMenu();return copyPrayer();},
     'copy-prayer-image':()=>{closePrayerMenu();return copyPrayerImage();},
-    'next-prayer':(_id,target)=>{closePrayerMenu();target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
+    'save-prayer-image':savePrayerImage,
+    'send-prayer-image':sendPrayerImage,
+    'next-prayer':(_id,target)=>{closePrayerMenu();resetPrayerImage();target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},
     'switch-course':openCoursePicker,
