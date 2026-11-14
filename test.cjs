@@ -96,7 +96,9 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
 
 test('Dua kartı bütün duaları sırayla gösterir ve başa döner',()=>{
   const h=harness(), content={innerHTML:''}, button={querySelector:()=>content}, seen=[];
-  assert.equal(h.window.PAYLASIM_PRAYERS.length,118);
+  assert.equal(h.window.PAYLASIM_PRAYERS.length,122);
+  assert.equal(h.window.PAYLASIM_PRAYERS.filter(p=>p.source==='Furkân suresi, 74. ayet').length,1);
+  assert.ok(h.window.PAYLASIM_PRAYERS.slice(118).every((p,i)=>i%2 ? !/suresi/i.test(p.source) : /suresi/i.test(p.source)));
   assert.match(h.window.PAYLASIM_PRAYERS[1].source, /İbn Mâce, 925/);
   assert.match(h.window.PAYLASIM_PRAYERS[5].arabic, /عِلْمٍ لَا يَنْفَعُ/);
   assert.match(h.window.PAYLASIM_PRAYERS[100].source, /Nâs suresi/);
@@ -126,6 +128,7 @@ test('Dua metni mevcut Arapça, anlam ve kaynağı birlikte kopyalar',()=>{
   h.window.navigator={clipboard:{writeText:text=>{copied=text;return Promise.resolve();}}};
   h.nav('home'); const prayer=h.window.PAYLASIM_PRAYERS[Number(storage.getItem('dua-card-index'))];
   assert.match(h.html(),/data-action="copy-prayer-image"/);
+  assert.doesNotMatch(h.html(),/data-action="send-prayer-image"/);
   assert.match(h.html(),/data-action="copy-prayer-text"/);
   h.app.actions['copy-prayer-text']();
   assert.equal(copied,`${prayer.arabic}\n\n${prayer.meaning}\n\n${prayer.source}`);

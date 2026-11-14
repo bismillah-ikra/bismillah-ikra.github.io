@@ -340,7 +340,7 @@
         </div>
         <div class="dua-kart-yardim" id="prayer-image-help" hidden>
           <p id="prayer-image-message" role="status"></p>
-          <div><button type="button" data-action="save-prayer-image">Kartı kaydet</button><button type="button" data-action="send-prayer-image" hidden>Kartı gönder</button></div>
+          <div><button type="button" data-action="save-prayer-image">Kartı kaydet</button></div>
         </div>
       </div>
     </section>${examCalendar()}`;
@@ -769,9 +769,7 @@
   function showImageHelp(copied){
     const help=document.getElementById('prayer-image-help'),message=document.getElementById('prayer-image-message');
     if(!help||!message)return;
-    message.textContent=copied?'Kart kopyalandı. Yapıştıramazsan kaydedebilir veya gönderebilirsin.':'Bu tarayıcıda görsel kopyalanamadı. Kartı kaydedebilir veya gönderebilirsin.';
-    const send=help.querySelector('[data-action="send-prayer-image"]');
-    try{send.hidden=!(window.navigator?.share&&window.navigator?.canShare&&window.navigator.canShare({files:[new File([preparedImage],'dua-karti.png',{type:'image/png'})]}));}catch{send.hidden=true;}
+    message.textContent=copied?'Kart kopyalandı. Yapıştıramazsan kaydedebilirsin.':'Bu tarayıcıda görsel kopyalanamadı. Kartı kaydedebilirsin.';
     help.hidden=false;
   }
   async function copyPrayerImage(){
@@ -792,19 +790,11 @@
       setTimeout(()=>URL.revokeObjectURL(url),60000);toast('Kart indirme için hazırlandı.');
     }catch{toast('Kart kaydedilemedi. Lütfen tekrar dene.');}
   }
-  function sendPrayerImage(){
-    if(!preparedImage||!window.navigator?.share)return;
-    try{
-      const file=new File([preparedImage],'dua-karti.png',{type:'image/png'});
-      window.navigator.share({files:[file]}).catch(error=>{if(error?.name!=='AbortError')toast('Gönderme ekranı açılamadı. Kartı kaydetmeyi dene.');});
-    }catch{toast('Gönderme ekranı açılamadı. Kartı kaydetmeyi dene.');}
-  }
   const actions={
     'toggle-prayer-copy':(_id,target)=>{const menu=document.getElementById('prayer-copy-menu');menu.hidden=!menu.hidden;target.setAttribute('aria-expanded',String(!menu.hidden));if(!menu.hidden)preparePrayerImage();},
     'copy-prayer-text':()=>{closePrayerMenu();return copyPrayer();},
     'copy-prayer-image':()=>{closePrayerMenu();return copyPrayerImage();},
     'save-prayer-image':savePrayerImage,
-    'send-prayer-image':sendPrayerImage,
     'next-prayer':(_id,target)=>{closePrayerMenu();resetPrayerImage();target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},

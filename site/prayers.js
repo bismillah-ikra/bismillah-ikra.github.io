@@ -588,5 +588,25 @@ window.PAYLASIM_PRAYERS = [
     "arabic": "رَبَّنَا آمَنَّا فَاغْفِرْ لَنَا وَارْحَمْنَا وَأَنْتَ خَيْرُ الرَّاحِمِينَ",
     "meaning": "Rabbimiz! İman ettik; bizi bağışla ve bize merhamet et. Sen merhamet edenlerin en hayırlısısın.",
     "source": "Mü’minûn suresi, 109. ayet"
+  },
+  {
+    "arabic": "رَبَّنَا وَسِعْتَ كُلَّ شَيْءٍ رَحْمَةً وَعِلْمًا فَاغْفِرْ لِلَّذِينَ تَابُوا وَاتَّبَعُوا سَبِيلَكَ وَقِهِمْ عَذَابَ الْجَحِيمِ",
+    "meaning": "Rabbimiz! Rahmetin ve ilmin her şeyi kuşatmıştır. Tövbe edip senin yoluna uyanları bağışla ve onları cehennem azabından koru.",
+    "source": "Mü’min suresi, 7. ayet (meleklerin duası)"
+  },
+  {
+    "arabic": "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
+    "meaning": "Rabbim! Beni bağışla ve tövbemi kabul et. Şüphesiz sen tövbeleri çok kabul eden, çok merhamet edensin.",
+    "source": "Ebû Dâvûd, 1516"
+  },
+  {
+    "arabic": "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَلِمَنْ دَخَلَ بَيْتِيَ مُؤْمِنًا وَلِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ",
+    "meaning": "Rabbim! Beni, anne babamı, evime mümin olarak girenleri, mümin erkekleri ve mümin kadınları bağışla.",
+    "source": "Nûh suresi, 28. ayet (Hz. Nûh’un duasından)"
+  },
+  {
+    "arabic": "اللَّهُمَّ اغْفِرْ لِي خَطِيئَتِي وَجَهْلِي وَإِسْرَافِي فِي أَمْرِي وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي اللَّهُمَّ اغْفِرْ لِي جِدِّي وَهَزْلِي وَخَطَئِي وَعَمْدِي وَكُلُّ ذَلِكَ عِنْدِي",
+    "meaning": "Allah’ım! Hatalarımı, bilgisizliğimi, işlerimdeki aşırılığımı ve benim bilmediğim, senin benden iyi bildiğin kusurlarımı bağışla. Allah’ım! Ciddi olarak ve şakayla, yanılarak ve bilerek yaptıklarımı bağışla; bunların hepsi bende vardır.",
+    "source": "Müslim, 2719a’daki duadan"
   }
 ];
