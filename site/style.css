@@ -656,11 +656,18 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 .ayet-karti .ayet-arapca.uzun { font-size:clamp(29px,4.7vw,45px); line-height:1.95; }
 .ayet-ipucu { margin-top:20px; color:var(--muted); font-size:12px; font-weight:600; }
 .dua-degistir:focus-visible { outline:3px solid var(--gold); outline-offset:-6px; border-radius:16px; }
-.dua-islemler { display:flex; justify-content:center; padding:0 18px 26px; }
-.dua-kopyala { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 17px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); font:inherit; font-size:13px; font-weight:600; line-height:1; cursor:pointer; }
-.dua-kopyala svg { width:17px; height:17px; }
-.dua-kopyala:hover { border-color:var(--accent); color:var(--accent); }
-.dua-kopyala:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+.dua-islemler { position:relative; display:flex; flex-direction:column; align-items:flex-end; padding:0 18px 20px; }
+.dua-kopyala { order:2; position:relative; display:grid; place-items:center; width:44px; height:44px; padding:0; background:transparent; color:var(--ink); cursor:pointer; }
+.dua-kopyala::before { content:""; position:absolute; inset:4px; border:1px solid #b58c52; border-radius:50%; background:var(--paper); }
+.dua-kopyala svg { position:relative; width:17px; height:17px; }
+.dua-kopyala:hover::before { background:var(--accent-soft); }
+.dua-kopyala:focus-visible { outline:3px solid var(--gold); outline-offset:2px; border-radius:50%; }
+.dua-kopya-menu { order:1; position:relative; z-index:3; width:min(280px,100%); margin-bottom:8px; padding:16px; border:1px solid var(--line); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 28px #101a3033; text-align:left; }
+.dua-kopya-menu[hidden] { display:none; }
+.dua-kopya-menu strong { display:block; text-align:center; font:600 19px Georgia,serif; margin:0 0 12px; }
+.dua-kopya-menu button { display:flex; align-items:center; gap:12px; width:100%; min-height:48px; margin-top:8px; padding:9px 12px; border:1px solid var(--line); border-radius:10px; background:var(--paper); color:var(--ink); font-size:13px; font-weight:600; text-align:left; }
+.dua-kopya-menu button:hover { background:var(--accent-soft); }
+.dua-kopya-menu svg { width:20px; height:20px; }
 @media(max-width:600px) { .ayet-karti { padding:0; } .dua-degistir { padding:34px 18px 18px; } }
 
 .site-theme[hidden] { display: none !important; }

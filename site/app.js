@@ -332,7 +332,13 @@
       <button type="button" class="dua-degistir" data-action="next-prayer" aria-label="Başka bir dua göster">
         <span class="dua-icerik" aria-live="polite" aria-atomic="true">${prayerContent(nextPrayer())}</span>
       </button>
-      <div class="dua-islemler"><button type="button" class="dua-kopyala" data-action="copy-prayer" aria-label="Duanın Arapçasını ve anlamını kopyala"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg><span>Kopyala</span></button></div>
+      <div class="dua-islemler">
+        <button type="button" class="dua-kopyala" data-action="toggle-prayer-copy" aria-label="Kopyalama seçenekleri" aria-expanded="false" aria-controls="prayer-copy-menu" title="Kopyala"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg></button>
+        <div class="dua-kopya-menu" id="prayer-copy-menu" hidden><strong>Kopyala</strong>
+          <button type="button" data-action="copy-prayer-image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m4 17 5-5 4 4 3-3 4 4"></path></svg>Kart olarak kopyala</button>
+          <button type="button" data-action="copy-prayer-text"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg>Metin olarak kopyala</button>
+        </div>
+      </div>
     </section>${examCalendar()}`;
   }
 
@@ -708,11 +714,11 @@
   async function copyPrayer(){
     const prayer=prayers[prayerIndex];
     if(!prayer)return;
-    const text=`${prayer.arabic}\n\n${prayer.meaning}`;
+    const text=`${prayer.arabic}\n\n${prayer.meaning}\n\n${prayer.source}`;
     try {
       if(!window.navigator?.clipboard?.writeText)throw new Error('Clipboard unavailable');
       await window.navigator.clipboard.writeText(text);
-      toast('Dua ve anlamı kopyalandı.');
+      toast('Dua, anlamı ve kaynağı kopyalandı.');
     } catch {
       let field;
       try {
@@ -721,14 +727,39 @@
         field.style.cssText='position:fixed;left:-9999px;top:0';
         document.body.appendChild(field);field.focus();field.select();field.setSelectionRange(0,field.value.length);
         if(!document.execCommand('copy'))throw new Error('Copy failed');
-        toast('Dua ve anlamı kopyalandı.');
+        toast('Dua, anlamı ve kaynağı kopyalandı.');
       } catch { toast('Kopyalanamadı. Tarayıcının kopyalama iznini kontrol et.'); }
       finally {field?.remove();}
     }
   }
+  function closePrayerMenu(){
+    const menu=document.getElementById('prayer-copy-menu');
+    if(!menu)return;
+    menu.hidden=true;
+    document.querySelector('.dua-kopyala')?.setAttribute('aria-expanded','false');
+  }
+  async function copyPrayerImage(){
+    const prayer=prayers[prayerIndex];
+    if(!prayer)return;
+    const image=window.PrayerCardImage.render(prayer);
+    try {
+      if(!window.navigator?.clipboard?.write || !window.ClipboardItem)throw new Error('Image clipboard unavailable');
+      await window.navigator.clipboard.write([new window.ClipboardItem({'image/png':image})]);
+      toast('Dua kartı görsel olarak kopyalandı.');
+    } catch {
+      try {
+        const blob=await image, url=URL.createObjectURL(blob), link=document.createElement('a');
+        link.href=url;link.download='dua-karti.png';document.body.appendChild(link);link.click();link.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+        toast('Bu tarayıcıda görsel kopyalanamadığı için kart indirildi.');
+      } catch { toast('Kart hazırlanamadı. Lütfen tekrar dene.'); }
+    }
+  }
   const actions={
-    'copy-prayer':copyPrayer,
-    'next-prayer':(_id,target)=>{target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
+    'toggle-prayer-copy':(_id,target)=>{const menu=document.getElementById('prayer-copy-menu');menu.hidden=!menu.hidden;target.setAttribute('aria-expanded',String(!menu.hidden));},
+    'copy-prayer-text':()=>{closePrayerMenu();return copyPrayer();},
+    'copy-prayer-image':()=>{closePrayerMenu();return copyPrayerImage();},
+    'next-prayer':(_id,target)=>{closePrayerMenu();target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},
     'switch-course':openCoursePicker,
@@ -912,7 +943,8 @@
     e.preventDefault();
     setCourseMenu(false,true);
   });
-  document.addEventListener('click',e=>{const target=e.target.closest('[data-action]');if(!target||target.disabled)return;const fn=actions[target.dataset.action];if(fn)fn(target.dataset.id,target);});
+  document.addEventListener('click',e=>{if(!e.target.closest('.dua-islemler'))closePrayerMenu();const target=e.target.closest('[data-action]');if(!target||target.disabled)return;const fn=actions[target.dataset.action];if(fn)fn(target.dataset.id,target);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closePrayerMenu();});
   function readExamInput(el){
     if(el.id==='exam-count')examConfig.count=el.value===''?'':Number(el.value);
     else if(el.id==='exam-minutes')examConfig.minutes=Number(el.value);

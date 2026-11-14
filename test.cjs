@@ -121,6 +121,15 @@ test('Dua kartı bütün duaları sırayla gösterir ve başa döner',()=>{
   assert.equal(new Set(seen.slice(0,h.window.PAYLASIM_PRAYERS.length)).size,h.window.PAYLASIM_PRAYERS.length);
   assert.equal(seen[0],seen[h.window.PAYLASIM_PRAYERS.length]);
 });
+test('Dua metni mevcut Arapça, anlam ve kaynağı birlikte kopyalar',()=>{
+  const storage=fakeStorage(),h=harness(D,storage); let copied='';
+  h.window.navigator={clipboard:{writeText:text=>{copied=text;return Promise.resolve();}}};
+  h.nav('home'); const prayer=h.window.PAYLASIM_PRAYERS[Number(storage.getItem('dua-card-index'))];
+  assert.match(h.html(),/data-action="copy-prayer-image"/);
+  assert.match(h.html(),/data-action="copy-prayer-text"/);
+  h.app.actions['copy-prayer-text']();
+  assert.equal(copied,`${prayer.arabic}\n\n${prayer.meaning}\n\n${prayer.source}`);
+});
 test('Dua listesinde tekrar eden Arapça metin yok',()=>{
   const h=harness(), rows=h.window.PAYLASIM_PRAYERS;
   const normalize=value=>value.normalize('NFKD').replace(/[\u064b-\u065f\u0670\u06d6-\u06ed]/gu,'').replace(/[^\u0621-\u064a]/gu,'');
