@@ -385,9 +385,9 @@ window.PAYLASIM_PRAYERS = [
     "source": "Bakara suresi, 286. ayetten"
   },
   {
-    "arabic": "اللَّهُمَّ رَحْمَتَكَ أَرْجُو فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ وَأَصْلِحْ لِي شَأْنِي كُلَّهُ لَا إِلَهَ إِلَّا أَنْتَ",
-    "meaning": "Allah’ım! Rahmetini umuyorum. Beni göz açıp kapayıncaya kadar bile kendime bırakma; bütün işlerimi düzelt. Senden başka ilah yoktur.",
-    "source": "Sahîh İbn Hibbân, 970 (Elbânî: hasen)"
+    "arabic": "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَبِيرًا وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ وَارْحَمْنِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ",
+    "meaning": "Allah’ım! Ben kendime çok zulmettim. Günahları senden başka bağışlayacak kimse yoktur. Katından bir bağışlamayla beni bağışla ve bana merhamet et. Şüphesiz sen çok bağışlayansın, çok merhametlisin.",
+    "source": "Müslim, 2705a"
   },
   {
     "arabic": "اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ",
