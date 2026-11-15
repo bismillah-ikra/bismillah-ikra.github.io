@@ -109,10 +109,10 @@
   .bank-filters { padding: 14px; }
   .close-bank-filters { display: inline-flex; margin-top: 14px; width: 100%; }
   .form-field select, .form-field input { font-size: 16px; }
-  .question-pdf { flex-direction: row; align-items: center; gap: 10px; padding: 12px; margin-bottom: 14px; }
-  .question-pdf strong { font-size: 14px; }
-  .question-pdf p { display: none; }
-  .question-pdf a { padding-inline: 10px; }
+  .question-downloads { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; margin-bottom: 14px; }
+  .question-downloads strong { font-size: 14px; }
+  .question-downloads p { display: none; }
+  .question-download-actions a { flex: 1; padding-inline: 10px; }
   .bank-item { padding: 14px; }
   .question-panel { padding: 18px 14px; }
   .question-bottom { flex-wrap: wrap; }

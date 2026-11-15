@@ -507,7 +507,19 @@
     const solve=list.length?btn(extras.length?'Ana soruları sırayla çöz':'Listelenen soruları çöz','filtered','','secondary'):'';
     results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
   }
-  function bank(){if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}const pdfCourse=catalogId();main.innerHTML=heading(courseTitle(),'Tüm sorular')+`<section class="question-pdf"><div><strong>Tüm sorular bir arada</strong><p>Ana soruları, varsa ek soruları ve cevap anahtarını tek PDF olarak indir.</p></div><a class="secondary" href="./soru-pdf/${esc(pdfCourse)}.pdf" download="${esc(courseById.get(pdfCourse))} - Tüm Sorular.pdf">PDF indir ↓</a></section>
+  function bank(){
+    if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}
+    const course = catalogId();
+    const filename = esc(courseById.get(course)) + ' - Tüm Sorular';
+    const release = document.querySelector('meta[name="site-release"]')?.content;
+    const wordVersion = release ? '?v=' + encodeURIComponent(release) : '';
+    main.innerHTML=heading(courseTitle(),'Tüm sorular')+`<section class="question-downloads">
+      <div><strong>Tüm sorular bir arada</strong><p>Ana sorular, varsa ek sorular ve cevap anahtarı.</p></div>
+      <div class="question-download-actions">
+        <a class="secondary" href="./soru-pdf/${esc(course)}.pdf" download="${filename}.pdf">PDF indir ↓</a>
+        <a class="secondary" href="./soru-word/${esc(course)}.docx${wordVersion}" download="${filename}.docx">Word indir ↓</a>
+      </div>
+    </section>
     <section class="bank-filters" id="bank-filters" aria-label="Soruları filtrele">
     ${!isExtraSet()?`<fieldset class="bank-sources"><legend>Soru türü</legend><label><input type="checkbox" name="bank-source" value="main"${bankSources.has('main')?' checked':''}> Ana sorular</label><label><input type="checkbox" name="bank-source" value="extra"${bankSources.has('extra')?' checked':''}${extraSetsByCourse.has(activeCourse)?'':' disabled'}> Ek sorular</label>${extraSetsByCourse.has(activeCourse)?'':'<small>Bu derse henüz ek soru eklenmedi.</small>'}</fieldset>`:''}
     <label class="form-field bank-filter">Çözüm durumu

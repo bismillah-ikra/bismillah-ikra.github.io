@@ -3,9 +3,11 @@ import { spawnSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
+import { answerLetters, buildQuestionDocx } from './question-docx.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const output = resolve(process.argv[2]);
+const wordOutput = process.argv[3] && resolve(process.argv[3]);
 const candidates = [process.env.PDF_CHROME, ...(process.platform === 'win32'
   ? ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']
   : ['/usr/bin/chromium-browser', '/usr/bin/chromium', '/usr/bin/google-chrome'])].filter(Boolean);
@@ -23,27 +25,34 @@ try {
   const bold = (await readFile(join(root, 'site/assets/pdfjs/standard_fonts/LiberationSans-Bold.ttf'))).toString('base64');
   const arabic = (await readFile(join(root, 'site/assets/NotoNaskhArabic-Regular.ttf'))).toString('base64');
   await mkdir(output, {recursive:true});
+  if (wordOutput) await mkdir(wordOutput, {recursive:true});
   for (const course of courses) {
-    let body = `<h1>${esc(course.name)}</h1><p class="subtitle">Tüm çalışma soruları ve cevap anahtarı</p>`;
-    for (const set of course.sets) {
-      body += `<h2>${esc(set.name)}</h2>`;
+    const sets = course.sets.map(set => {
       const topicIds = new Set(set.topics.map(topic => topic.id));
       for (const q of set.questions) {
-        if (!topicIds.has(q.topic) || !Array.isArray(q.options) || q.correct < 0 || q.correct >= q.options.length)
+        if (!topicIds.has(q.topic) || !Array.isArray(q.options) || q.options.length > answerLetters.length ||
+            !Number.isInteger(q.correct) || q.correct < 0 || q.correct >= q.options.length)
           throw Error(`${course.name}: ${q.id} sorusunun haftası veya cevap anahtarı geçersiz.`);
       }
-      for (const topic of set.topics) {
-        const questions = set.questions.filter(q => q.topic === topic.id);
-        if (!questions.length) continue;
-        body += `<h3>${esc(topic.name)}</h3>` + questions.map((q,i) => `<section class="question"><strong>${i+1}. ${renderText(q.stem)}</strong><div class="options">${q.options.map((o,j) => `<div>${'ABCDE'[j]}) ${renderText(o.text)}</div>`).join('')}</div></section>`).join('');
+      return {
+        name: set.name,
+        topics: set.topics.map(topic => ({
+          name: topic.name, questions: set.questions.filter(q => q.topic === topic.id)
+        })).filter(topic => topic.questions.length)
+      };
+    });
+    let body = `<h1>${esc(course.name)}</h1><p class="subtitle">Tüm çalışma soruları ve cevap anahtarı</p>`;
+    for (const set of sets) {
+      body += `<h2>${esc(set.name)}</h2>`;
+      for (const { name, questions } of set.topics) {
+        body += `<h3>${esc(name)}</h3>` + questions.map((q,i) => `<section class="question"><strong>${i+1}. ${renderText(q.stem)}</strong><div class="options">${q.options.map((o,j) => `<div>${answerLetters[j]}) ${renderText(o.text)}</div>`).join('')}</div></section>`).join('');
       }
     }
     body += '<div class="answers"><h2>Cevap Anahtarı</h2>';
-    for (const set of course.sets) {
+    for (const set of sets) {
       body += `<h3>${esc(set.name)}</h3>`;
-      for (const topic of set.topics) {
-        const qs = set.questions.filter(q => q.topic === topic.id);
-        if (qs.length) body += `<p><b>${esc(topic.name)}:</b> ${qs.map((q,i)=>`${i+1}. ${'ABCDE'[q.correct]}`).join(' &nbsp; · &nbsp; ')}</p>`;
+      for (const { name, questions } of set.topics) {
+        body += `<p><b>${esc(name)}:</b> ${questions.map((q,i)=>`${i+1}. ${answerLetters[q.correct]}`).join(' &nbsp; · &nbsp; ')}</p>`;
       }
     }
     body += '</div>';
@@ -58,6 +67,7 @@ try {
     const pdf = join(output, `${course.id}.pdf`);
     run(chrome, ['--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--no-pdf-header-footer',`--user-data-dir=${join(work,'chrome-profile')}`,`--print-to-pdf=${pdf}`,pathToFileURL(input).href]);
     const header = await readFile(pdf); if (header.subarray(0,5).toString() !== '%PDF-') throw Error(`PDF oluşturulamadı: ${course.name}`);
+    if (wordOutput) await writeFile(join(wordOutput, `${course.id}.docx`), buildQuestionDocx(course.name, sets));
     console.log(`${course.name}: ${course.sets.reduce((n,s)=>n+s.questions.length,0)} soru`);
   }
 } finally { await rm(work,{recursive:true,force:true}); }

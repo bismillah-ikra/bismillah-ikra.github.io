@@ -14,7 +14,9 @@ const staging = await mkdtemp(join(root, '.dist-'));
 try {
   await cp(source, staging, { recursive: true });
   await buildLessonArchive(root, staging);
-  execFileSync(process.execPath, [join(root, 'tools/build-question-pdfs.mjs'), join(staging, 'soru-pdf')], { stdio: 'inherit' });
+  execFileSync(process.execPath, [
+    join(root, 'tools/build-question-pdfs.mjs'), join(staging, 'soru-pdf'), join(staging, 'soru-word')
+  ], { stdio: 'inherit' });
   const release = randomUUID();
   const versioned = path => path.split('?')[0] + '?v=' + release;
   for (const page of ['index.html', 'dersler/index.html', 'dersler/pdf.html']) {

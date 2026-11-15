@@ -818,18 +818,26 @@ test('Test PDF düğmeleri yalnız o testin sorularını kullanır',()=>{
   h.app.actions['pdf-run']('',{textContent:'PDF',disabled:false});
   assert.deepEqual(Array.from(captured[1].questions,q=>q.id),['HAD-SAY-30']);
 });
-test('Ders PDF verisi tüm ana ve ek soru kümelerini içerir',()=>{
+test('Ders indirmeleri ana ve ek soru kümelerini PDF ve Word olarak sunar',()=>{
   const os=require('node:os'),path=require('node:path'),child=require('node:child_process');
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'question-export-test-'));
   try{
     child.execFileSync(process.execPath,['tools/export-question-data.cjs',dir]);
     const exported=JSON.parse(fs.readFileSync(path.join(dir,'question-data.json'),'utf8'));
     const ctx={window:{}};vm.runInNewContext(fs.readFileSync('site/course-data.js','utf8'),ctx);
+    const h=harness(published,fakeStorage(),true);
     for(const course of exported){
       const extras=Object.values(ctx.window.PAYLASIM_COURSE_DATA).filter(set=>set.parentCourse===course.id);
       assert.equal(course.sets.length,extras.length+1,course.id);
       extras.forEach((set,i)=>assert.deepEqual(course.sets[i+1].questions.map(q=>q.id),Array.from(set.questions,q=>q.id)));
+      h.nav('ders/'+course.id+'/bank');
+      assert.ok(h.html().includes('href="./soru-pdf/'+course.id+'.pdf"'),course.id);
+      assert.ok(h.html().includes('href="./soru-word/'+course.id+'.docx"'),course.id);
+      assert.ok(h.html().includes(' - Tüm Sorular.docx">Word indir'),course.id);
+      assert.equal(fs.readFileSync(path.join('dist','soru-word',course.id+'.docx')).readUInt32LE(0),0x04034b50,course.id);
     }
+    h.nav('ders/ornek-hadis-metinleri-ek/bank');
+    assert.ok(h.html().includes('href="./soru-word/ornek-hadis-metinleri.docx"'));
     assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,47);
     assert.equal(exported.find(c=>c.id==='ornek-hadis-metinleri').sets[1].questions.length,27);
   }finally{fs.rmSync(dir,{recursive:true,force:true});}

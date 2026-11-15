@@ -12,7 +12,7 @@ npm test
 python -m http.server 8080 --directory dist
 ```
 
-Önizlemeyi `http://localhost:8080/` adresinden aç. Derleme, ders arşivini ve katalog dosyasını `dist/` içine yazar. Ayrıca her dersin soru PDF’sini güncel soru verisinden oluşturur.
+Önizlemeyi `http://localhost:8080/` adresinden aç. Derleme, ders arşivini ve katalog dosyasını `dist/` içine yazar. Her dersin soru PDF’sini ve Word dosyasını aynı güncel soru verisinden oluşturur.
 
 ## Ders dosyalarını güncelleme
 

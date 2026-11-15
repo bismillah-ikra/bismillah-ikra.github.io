@@ -4,9 +4,16 @@ import { crc32, deflateRawSync, inflateSync } from 'node:zlib';
 
 // Rebuild the original Word package from deduplicated, losslessly stored entries.
 export async function buildWord(entries, partsDirectory) {
-  const files = await Promise.all(entries.map(async ([name, hash, prefix]) => {
+  const parts = await Promise.all(entries.map(async ([name, hash, prefix]) => {
     if (!/^[a-f0-9]{64}$/.test(hash) || !/^(?:[a-f0-9]{2})*$/.test(prefix)) throw new Error('Invalid Word archive');
     const data = Buffer.concat([Buffer.from(prefix, 'hex'), inflateSync(await readFile(join(partsDirectory, hash + '.z')))]);
+    return [name, data];
+  }));
+  return packWord(parts);
+}
+
+export function packWord(parts) {
+  const files = parts.map(([name, data]) => {
     const compressed = deflateRawSync(data);
     const useCompression = compressed.length < data.length;
     return {
@@ -16,7 +23,7 @@ export async function buildWord(entries, partsDirectory) {
       method: useCompression ? 8 : 0,
       checksum: crc32(data)
     };
-  }));
+  });
   const local = [], central = [];
   let offset = 0;
   for (const file of files) {
