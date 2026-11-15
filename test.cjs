@@ -474,7 +474,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1752);
+  assert.equal(counts,1641);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -566,7 +566,7 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   h.nav(four+'academy');
   assert.match(h.html(),/<h1>Ek sorular<\/h1>/);
   assert.match(h.html(),/href="#academy"[^>]*>[^]*?Ana sorulara dön/);
-  assert.match(h.html(),/160 soru · 9 hafta/);
+  assert.match(h.html(),/49 soru · 9 hafta/);
   assert.match(h.html(),/din-bilim-iliskisi-4-sikli\/lesson\/hafta-1/);
   assert.equal(h.app.getState().bookmarks.length,0);
   const mainLinks=[...h.node('nav').innerHTML.matchAll(/href="#([^"]+)"/g)].map(match=>match[1]);
@@ -608,13 +608,13 @@ test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   h.nav('bank');
   h.events.change({target:{id:'remember',checked:true}});
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/374 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
   assert.match(h.node('bank-results').innerHTML,/id="question-S-01-02"/);
   assert.match(h.node('bank-results').innerHTML,/id="question-extra-S-01-02"/);
   h.events.change({target:{name:'bank-source',value:'main',checked:false}});
-  assert.match(h.node('bank-results').innerHTML,/160 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/49 soru listeleniyor/);
   h.events.change({target:{name:'extra-bank-week',value:'hafta-1',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/18 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/6 soru listeleniyor/);
   const item={innerHTML:'',querySelector:()=>({focus(){}})};
   h.app.actions['extra-answer-card']('S-01-02/0',{closest:()=>item});
   assert.equal(h.app.getState().records['S-01-02'],undefined);
@@ -633,7 +633,7 @@ test('Denemede ana ve ek başlıklar seçilir; kayıtlar yenilemede korunur',()=
   h.nav('exam');h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
   h.events.change({target:{name:'exam-source',value:'main',checked:false}});
   h.events.change({target:{name:'exam-extra-week',value:'hafta-1',checked:true}});
-  assert.equal(h.node('exam-count').max,'18');
+  assert.equal(h.node('exam-count').max,'6');
   h.app.actions['exam-count']('4');h.app.actions['start-exam']();h.flush();
   const ids=Array.from(h.app.getRun().ids);
   assert.ok(ids.every(id=>id.startsWith('extra:S-01-')));
@@ -649,12 +649,36 @@ test('Denemede ana ve ek başlıklar seçilir; kayıtlar yenilemede korunur',()=
   reopened.events.change({target:{id:'remember',checked:false}});
   assert.deepEqual([...storage.map.keys()].filter(k=>k!=='dua-card-index'),[]);
 });
+test('Tekrar olan ek soru kaldırıldığında kayıtlı karma deneme kalan sorularla açılır',()=>{
+  const storage=fakeStorage();
+  const removed='extra:S-01-01',extra='extra:S-01-05',main='Q001';
+  const previous=M.empty(published.version);
+  const saved=M.createRun('exam',[main,removed,extra],Date.now(),20);
+  saved.index=1;
+  saved.answers={[main]:2,[removed]:1};
+  saved.times={[main]:12,[removed]:4};
+  saved.flags=[removed,extra];
+  previous.activeRun=saved;
+  M.persist(storage,previous,true);
+
+  const h=harness(published,storage,true);
+  h.nav('run');
+  const run=h.app.getRun();
+  assert.deepEqual(Array.from(run.ids),[main,extra]);
+  assert.equal(run.index,1);
+  assert.equal(run.answers[main],2);
+  assert.equal(run.times[main],12);
+  assert.ok(!Object.hasOwn(run.answers,removed));
+  assert.ok(!Object.hasOwn(run.times,removed));
+  assert.deepEqual(Array.from(run.flags),[extra]);
+  assert.equal(run.deadline,saved.deadline);
+});
 test('Karma denemede seçilen haftalar ve ek başlıklar birlikte kullanılır',()=>{
   const h=harness(published,fakeStorage(),true);
   h.nav('exam');h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
   h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
   h.events.change({target:{name:'exam-extra-week',value:'hafta-2',checked:true}});
-  const total=Number(h.node('exam-count').max);assert.ok(total>=23);
+  const total=Number(h.node('exam-count').max);assert.equal(total,21);
   h.app.actions['exam-count'](String(total));h.app.actions['start-exam']();h.flush();
   const ids=Array.from(h.app.getRun().ids);
   assert.ok(ids.some(id=>id.startsWith('extra:S-02-')));
@@ -728,10 +752,10 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   assert.equal(navCount(),230);
   assert.match(h.node('bank-results').innerHTML,/230 soru listeleniyor/);
   h.nav('academy');
-  assert.equal(navCount(),374);
+  assert.equal(navCount(),263);
   h.nav('bank');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/374 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
   h.nav('ders/kelam/academy');
   assert.equal(navCount(),180);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
@@ -746,7 +770,7 @@ test('Mobil menü ve filtreler kapanır, seçimler filtre yeniden çizilince kor
   assert.equal(h.node('course-menu-toggle').attrs['aria-expanded'],'false');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
   assert.equal(h.document.documentElement.dataset.bankFilters,'open');
-  assert.match(h.node('bank-results').innerHTML,/374 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
   h.node('course-menu-toggle').click();
   assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
   h.node('course-filter-toggle').click();
@@ -803,7 +827,7 @@ test('Ders PDF verisi tüm ana ve ek soru kümelerini içerir',()=>{
       assert.equal(course.sets.length,extras.length+1,course.id);
       extras.forEach((set,i)=>assert.deepEqual(course.sets[i+1].questions.map(q=>q.id),Array.from(set.questions,q=>q.id)));
     }
-    assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,160);
+    assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,49);
     assert.equal(exported.find(c=>c.id==='ornek-hadis-metinleri').sets[1].questions.length,30);
   }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });

@@ -58,15 +58,29 @@
   }
   function restoreRun(saved){
     if(!saved||!['quick','exam','reinforce'].includes(saved.type)||!Array.isArray(saved.ids)||!saved.ids.length||
-       new Set(saved.ids).size!==saved.ids.length||saved.ids.some(id=>!lookup[id])||
+       new Set(saved.ids).size!==saved.ids.length||saved.ids.some(id=>typeof id!=='string')||
        !Number.isInteger(saved.index)||saved.index<0||saved.index>=saved.ids.length||
        !saved.answers||typeof saved.answers!=='object'||Array.isArray(saved.answers)||
-       Object.entries(saved.answers).some(([id,value])=>!saved.ids.includes(id)||
-         (!M.isRetiredAnswer(lookup[id],value)&&(!Number.isInteger(value)||value<0||value>=lookup[id].options.length)))||
        !saved.times||typeof saved.times!=='object'||Array.isArray(saved.times)||
        !Array.isArray(saved.flags)||!Number.isFinite(saved.elapsed)||saved.elapsed<0||
        (saved.deadline!==null&&!Number.isFinite(saved.deadline)))return null;
-    const restoredRun={...saved,ids:[...saved.ids],answers:{...saved.answers},times:{...saved.times},flags:saved.flags.filter(id=>saved.ids.includes(id))};
+    const savedIds=new Set(saved.ids);
+    const available=id=>Object.hasOwn(lookup,id);
+    for(const [id,choice] of Object.entries(saved.answers)){
+      if(!savedIds.has(id))return null;
+      if(!available(id))continue;
+      const q=lookup[id];
+      if(!M.isRetiredAnswer(q,choice)&&(!Number.isInteger(choice)||choice<0||choice>=q.options.length))return null;
+    }
+    const ids=saved.ids.filter(available);
+    // Completed work keeps its original score in the history.
+    if(!ids.length||(saved.finished&&ids.length!==saved.ids.length))return null;
+    const retained=new Set(ids);
+    const keepEntries=entries=>Object.fromEntries(Object.entries(entries).filter(([id])=>retained.has(id)));
+    const index=Math.min(saved.ids.slice(0,saved.index).filter(available).length,ids.length-1);
+    const restoredRun={...saved,ids,index,answers:keepEntries(saved.answers),times:keepEntries(saved.times),
+      flags:saved.flags.filter(id=>retained.has(id))};
+    if(saved.recordBaselines)restoredRun.recordBaselines=keepEntries(saved.recordBaselines);
     if(!restoredRun.finished)restoredRun.tickAt=Date.now();
     return restoredRun;
   }
