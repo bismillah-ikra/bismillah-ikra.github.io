@@ -240,6 +240,30 @@ test('Arayüz kontrolü: hızlı cevap sonrası dört açıklama ve doğru gönd
   h.app.actions.answer(String(lookup.Q001.correct));assert.ok(h.html().includes('Dört seçenekten öğren'));assert.equal((h.html().match(/class="explanation"/g)||[]).length,4);
   assert.equal(h.app.getState().records.Q001.lastCorrect,true);assert.equal(h.app.getState().records.Q001.lastTime,7);
 });
+test('Soru haritası doğru, yanlış, boş ve tekrar bak durumlarını korur',()=>{
+  const storage=fakeStorage(),h=harness(D,storage);
+  h.events.change({target:{id:'remember',checked:true,dataset:{}}});
+  h.app.actions.single('Q001');h.flush();
+  assert.match(h.html(),/1\. soru, boş/);
+  h.app.actions.answer(String(lookup.Q001.correct));
+  assert.match(h.html(),/1\. soru, doğru/);
+  h.app.actions.flag();assert.match(h.html(),/1\. soru, doğru, tekrar bakılacak/);
+  h.app.actions.answer(String((lookup.Q001.correct+1)%4));
+  assert.match(h.html(),/1\. soru, yanlış, tekrar bakılacak/);
+  const reopened=harness(D,storage);reopened.nav('run');
+  assert.match(reopened.html(),/1\. soru, yanlış, tekrar bakılacak/);
+  reopened.app.actions['clear-answer']();assert.match(reopened.html(),/1\. soru, boş, tekrar bakılacak/);
+  reopened.app.actions.flag();assert.doesNotMatch(reopened.html(),/tekrar bakılacak/);
+});
+test('Deneme bitmeden soru haritası doğruluğu gizler',()=>{
+  const h=harness();h.app.actions['start-exam']();h.flush();const r=h.app.getRun(),q=lookup[r.ids[0]];
+  h.app.actions.answer(String(q.correct));
+  assert.match(h.html(),/1\. soru, cevaplandı/);
+  assert.doesNotMatch(h.html(),/1\. soru, doğru/);
+  assert.doesNotMatch(h.html(),/class="palette-correct/);
+  h.app.actions.finish();h.node('confirm-ok').click();h.flush();h.app.actions.review();h.flush();
+  assert.match(h.html(),/1\. soru, doğru/);
+});
 test('Arayüz kontrolü: deneme navigasyon kilidi, değişen cevap ve bitiş incelemesi',()=>{
   const h=harness();h.app.actions['start-exam']();h.flush();const r=h.app.getRun(),q=lookup[r.ids[0]];
   h.app.actions.answer(String((q.correct+1)%4));h.app.actions.answer(String(q.correct));assert.ok(!h.html().includes('Dört seçenekten öğren'));

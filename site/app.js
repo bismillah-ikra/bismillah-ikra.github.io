@@ -586,9 +586,26 @@
     ${reveal?answerReview(q,chosen):''}${!readonly&&answered?`<div class="actions">${btn('Cevabı kaldır','clear-answer','','text-button')}<span class="small-copy">Cevabını başka bir seçenekle değiştirebilirsin.</span></div>`:''}</div>`;
   }
   function runView(review=false){if(!run)return navigate('academy');const q=lookup[run.ids[run.index]],isExam=run.type==='exam',reveal=review||(!isExam&&Object.hasOwn(run.answers,q.id));
+    const previousPalette=document.querySelector('.palette'), previousScroll=previousPalette?.scrollTop || 0;
+    const paletteItem=(id,i)=>{
+      const answered=Object.hasOwn(run.answers,id),marked=run.flags.includes(id),current=i===run.index;
+      const outcome=!answered?'blank':isExam&&!review?'answered':run.answers[id]===lookup[id].correct?'correct':'wrong';
+      const status={blank:'boş',answered:'cevaplandı',correct:'doğru',wrong:'yanlış'}[outcome];
+      return `<button type="button" data-action="jump" data-id="${i}" class="palette-${outcome}${current?' current':''}${marked?' flagged':''}" aria-label="${runQuestionNumber(i)}. soru, ${status}${marked?', tekrar bakılacak':''}"${current?' aria-current="step"':''}>${runQuestionNumber(i)}${current&&(outcome==='correct'||outcome==='wrong')?`<span class="palette-result-mark ${outcome}" aria-hidden="true">${outcome==='correct'?'✓':'×'}</span>`:''}${marked?'<span class="palette-review-mark" aria-hidden="true">↻</span>':''}</button>`;
+    };
     main.innerHTML=`<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'Çalışmadaki sıra'} · ${run.index+1} / ${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
-    <div class="question-layout"><section>${question(q,run.answers,`${runQuestionNumber(run.index)}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?btn(run.flags.includes(q.id)?'İşareti kaldır':'İşaretle','flag','','secondary'):''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
-    <aside class="panel palette-panel"><h3>Sorular</h3><p class="small-copy">${Object.keys(run.answers).length} cevaplandı · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette">${run.ids.map((id,i)=>`<button data-action="jump" data-id="${i}" class="${i===run.index?'current ':''}${Object.hasOwn(run.answers,id)?'answered ':''}${run.flags.includes(id)?'flagged':''}" aria-label="${runQuestionNumber(i)}. soru${Object.hasOwn(run.answers,id)?', cevaplandı':', boş'}${run.flags.includes(id)?', işaretli':''}"${i===run.index?' aria-current="step"':''}>${runQuestionNumber(i)}</button>`).join('')}</div><p class="palette-legend">Açık renk: cevaplandı<br>Alt çizgi: işaretlendi</p>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
+    <div class="question-layout"><section>${question(q,run.answers,`${runQuestionNumber(run.index)}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?`<button type="button" class="secondary review-toggle" data-action="flag" aria-pressed="${run.flags.includes(q.id)}">↻ ${run.flags.includes(q.id)?'Tekrar bak işaretini kaldır':'Tekrar bak'}</button>`:''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
+    <aside class="panel palette-panel"><h3>Sorular</h3><p class="small-copy">${Object.keys(run.answers).length} cevaplandı · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette" aria-label="Sorular">${run.ids.map(paletteItem).join('')}</div><div class="palette-legend"><span><i class="legend-current"></i>Açık soru</span><span><i class="legend-blank"></i>Boş</span>${isExam&&!review?'<span><i class="legend-answered"></i>Cevaplandı</span>':'<span><i class="legend-correct"></i>Doğru</span><span><i class="legend-wrong"></i>Yanlış</span>'}<span><i class="legend-review">↻</i>Tekrar bak</span></div>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
+    const palette=document.querySelector('.palette');
+    if(palette){
+      palette.scrollTop=previousScroll;
+      const current=palette.querySelector?.('.current');
+      if(current?.getBoundingClientRect&&palette.getBoundingClientRect){
+        const box=palette.getBoundingClientRect(),item=current.getBoundingClientRect();
+        if(item.top<box.top)palette.scrollTop-=box.top-item.top;
+        else if(item.bottom>box.bottom)palette.scrollTop+=item.bottom-box.bottom;
+      }
+    }
   }
   function clock(){if(!run)return '';if(run.finished)return time(run.elapsed);if(run.deadline)return 'Kalan '+time(Math.max(0,Math.ceil((run.deadline-Date.now())/1000)));return time(run.elapsed);}
   const examPool=()=>{
