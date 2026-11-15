@@ -30,6 +30,7 @@
   let storage;try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw Error()},removeItem:()=>{}};}
   const restored=M.load(storage,D.version);
   let state=restored.state,consent=restored.consent,theme=window.SiteTheme.get();
+  if(restored.previousVersion==='din-bilim-9-hafta-v1')M.migrateFourChoices(state,D.questions);
   const courseProgress=new Map([[defaultCourse,state]]);
   const courseRuns=new Map();
   let run=null,route='',renderedHash='',lessonLevel=1,teacherContext=null,confirmAction=null,toastTimer=null;
@@ -60,7 +61,8 @@
        new Set(saved.ids).size!==saved.ids.length||saved.ids.some(id=>!lookup[id])||
        !Number.isInteger(saved.index)||saved.index<0||saved.index>=saved.ids.length||
        !saved.answers||typeof saved.answers!=='object'||Array.isArray(saved.answers)||
-       Object.entries(saved.answers).some(([id,value])=>!saved.ids.includes(id)||!Number.isInteger(value)||value<0||value>=lookup[id].options.length)||
+       Object.entries(saved.answers).some(([id,value])=>!saved.ids.includes(id)||
+         (!M.isRetiredAnswer(lookup[id],value)&&(!Number.isInteger(value)||value<0||value>=lookup[id].options.length)))||
        !saved.times||typeof saved.times!=='object'||Array.isArray(saved.times)||
        !Array.isArray(saved.flags)||!Number.isFinite(saved.elapsed)||saved.elapsed<0||
        (saved.deadline!==null&&!Number.isFinite(saved.deadline)))return null;
@@ -544,10 +546,11 @@
   }
   function answerReview(q,chosen,inline=false){
     const outcome=chosen===undefined?'blank':chosen===q.correct?'correct':'wrong';
+    const retired=M.isRetiredAnswer(q,chosen);
     const message=outcome==='blank'?`Soru boş bırakıldı. Doğru cevap ${letters[q.correct]}.`
-      :outcome==='correct'?'✓ Doğru cevap.':`× Doğru cevap ${letters[q.correct]}.`;
+      :outcome==='correct'?'✓ Doğru cevap.':`${retired?'Önceki seçeneğin kaldırıldı. ':'× '}Doğru cevap ${letters[q.correct]}.`;
     return `<div class="answer-review" data-outcome="${outcome}">
-      <div class="feedback${outcome==='blank'?'':' sr-only'}"${inline?'':' id="run-answer-feedback"'} role="status" tabindex="-1"><strong>${message}</strong></div>
+      <div class="feedback${outcome==='blank'||retired?'':' sr-only'}"${inline?'':' id="run-answer-feedback"'} role="status" tabindex="-1"><strong>${message}</strong></div>
       ${explanation(q,inline)}
     </div>`;
   }
@@ -642,7 +645,8 @@
     const rows=entry.ids.map((questionId,index)=>{
       const q=lookup[questionId],choice=entry.answers[questionId];
       if(!q)return `<div class="bank-item"><span class="number">${index+1}</span><div class="bank-content"><h3>Bu soru güncel soru listesinde bulunmuyor.</h3></div></div>`;
-      const selected=Number.isInteger(choice)&&q.options[choice] ? `${letters[choice]} · ${rich(q.options[choice].text)}` : 'Boş bırakıldı';
+      const selected=Number.isInteger(choice)&&q.options[choice] ? `${letters[choice]} · ${rich(q.options[choice].text)}`
+        : M.isRetiredAnswer(q,choice) ? 'Önceki sürümde kaldırılan seçenek' : 'Boş bırakıldı';
       return `<div class="bank-item"><span class="number">${index+1}</span><div class="bank-content"><h3>${rich(q.stem)}</h3><p class="small-copy">Cevabın: ${selected}</p><p class="small-copy">Doğru cevap: ${letters[q.correct]} · ${rich(q.options[q.correct].text)}</p></div></div>`;
     }).join('');
     main.innerHTML=backLink(practiceHref('analysis'),'Başarı analizine dön')+heading('ÇALIŞMA GEÇMİŞİ','Cevapların',`${date(entry.at)} · ${entry.correct} doğru · ${entry.wrong} yanlış · ${entry.blank} boş`)+`<div class="bank-list">${rows}</div>`;

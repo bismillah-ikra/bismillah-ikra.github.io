@@ -324,13 +324,13 @@ test('Boş soru bankasında çalışmayan başlatma düğmesi yok',()=>{
   h.nav('quick');assert.equal(h.app.getRun(),null);
   assert.doesNotMatch(h.node('nav').innerHTML,/nav-count/);
 });
-test('On haftanın soruları beş seçenek ve geçerli cevap anahtarı içeriyor',()=>{
+test('Din-Bilim soruları dört seçenek ve geçerli cevap anahtarı içeriyor',()=>{
   assert.equal(published.topics.length,10);
   assert.equal(published.questions.length,155);
   assert.equal(new Set(published.questions.map(q=>q.id)).size,155);
   for(const t of published.topics)assert.equal(published.questions.filter(q=>q.topic===t.id).length,t.id==='hafta-10'?20:15);
   for(const q of published.questions){
-    assert.equal(q.options.length,5);
+    assert.equal(q.options.length,4);
     assert.ok(q.options[q.correct].text);
     assert.ok(q.explanation?.trim(), q.id);
   }
@@ -418,11 +418,14 @@ test('Kaydedilen tek tek çözüm doğru konumda açılır, deneme devamı korun
   exam.app.actions.resume();exam.flush();assert.equal(exam.app.getRun(),run);
   assert.equal(run.type,'exam');assert.equal(run.finished,false);
 });
-test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
+test('E’den taşınan doğru cevap tek tek çözümde ve denemede değerlendirilir',()=>{
   const h=harness(published),q=published.questions.find(q=>q.id==='Q10-12');
+  assert.equal(q.options[q.correct].text,'Latince');
   h.app.actions.single(q.id);h.flush();
-  assert.match(h.html(),/class="letter">E</);assert.doesNotMatch(h.html(),/Cevap açıklaması/);
+  assert.doesNotMatch(h.html(),/class="letter">E</);assert.doesNotMatch(h.html(),/Cevap açıklaması/);
   h.events.keydown({target:{matches:()=>false},key:'5',preventDefault(){}});
+  assert.equal(h.app.getState().records[q.id],undefined);
+  h.events.keydown({target:{matches:()=>false},key:String(q.correct+1),preventDefault(){}});
   assert.equal(h.app.getState().records[q.id].lastCorrect,true);
   assert.match(h.html(),/Cevap açıklaması/);assert.ok(h.html().includes(q.explanation));
   h.nav('exam');h.events.change({target:{name:'exam-week',value:q.topic,checked:true}});
@@ -430,10 +433,42 @@ test('Beşinci şık hızlı çözümde ve denemede kaydedilir',()=>{
   const examQuestionIndex=h.app.getRun().ids.indexOf(q.id);
   assert.ok(examQuestionIndex>=0);
   h.app.actions.jump(String(examQuestionIndex));
-  h.app.actions.answer('4');assert.doesNotMatch(h.html(),/Cevap açıklaması/);
+  h.app.actions.answer(String(q.correct));assert.doesNotMatch(h.html(),/Cevap açıklaması/);
   h.app.actions.finish();h.node('confirm-ok').click();h.flush();
   assert.equal(h.app.getState().history.at(-1).correct,1);
-  assert.equal(h.app.getState().records[q.id].lastAnswer,4);
+  assert.equal(h.app.getState().records[q.id].lastAnswer,q.correct);
+});
+test('Dört şık güncellemesi önceki cevapları, sonuçları ve açık denemeyi korur',()=>{
+  const storage=fakeStorage(),previous=M.empty('din-bilim-9-hafta-v1');
+  const kept='Q10-12',removed='Q001';
+  const oldOptions=Array(5).fill({text:'Eski seçenek'});
+  M.record(previous,{id:kept,options:oldOptions,correct:4},4,1);
+  M.record(previous,{id:removed,options:oldOptions,correct:3},4,1);
+  previous.history=[{answers:{[kept]:4,[removed]:4},correct:1,wrong:1}];
+  previous.activeRun=M.createRun('exam',[kept,removed]);
+  previous.activeRun.answers={[kept]:4,[removed]:4};
+  previous.activeRun.index=1;
+  M.persist(storage,previous,true);
+
+  const h=harness(published,storage,true),state=h.app.getState(),run=h.app.getRun();
+  const q=published.questions.find(item=>item.id===kept);
+  assert.equal(state.records[kept].lastAnswer,q.correct);
+  assert.equal(state.records[removed].lastCorrect,false);
+  assert.ok(M.isRetiredAnswer(published.questions[0],state.records[removed].lastAnswer));
+  assert.equal(state.history[0].answers[kept],q.correct);
+  assert.equal(state.history[0].answers[removed],state.records[removed].lastAnswer);
+  assert.equal(state.history[0].correct,1);
+  assert.equal(state.history[0].wrong,1);
+  assert.equal(run.index,1);
+  assert.equal(run.answers[kept],q.correct);
+  assert.equal(run.answers[removed],state.records[removed].lastAnswer);
+  h.nav('run');
+  h.app.actions.finish();h.node('confirm-ok').click();h.flush();
+  assert.equal(state.history.at(-1).correct,1);
+  assert.equal(state.history.at(-1).wrong,1);
+  assert.equal(state.history.at(-1).blank,0);
+  const reloaded=harness(published,storage,true);
+  assert.equal(reloaded.app.getRun().answers[kept],q.correct);
 });
 test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeriyor',()=>{
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
@@ -445,7 +480,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
     for(const question of course.questions){
       assert.ok(weeks.has(question.topic)&&question.stem,id);
-      assert.equal(question.options.length,id==='din-bilim-iliskisi'?5:4,id);
+      assert.equal(question.options.length,4,id);
       assert.ok(Number.isInteger(question.correct)&&question.options[question.correct]?.text,id);
       const options=question.options.map(option=>option.text.trim());
       assert.ok(options.every(Boolean),question.id);
@@ -512,7 +547,7 @@ test('Örnek Hadis 10. hafta PDF ve Word dosyaları arşivde yer alır',()=>{
     assert.ok(matches[0].wordUrl,folder);
   }
 });
-test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır',()=>{
+test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);
   const data=h.window.PAYLASIM_COURSE_DATA;
   const extraQuestions=data['din-bilim-iliskisi-4-sikli'].questions;
@@ -539,7 +574,7 @@ test('Dört ve beş şıklı deneme havuzları ve çözüm kayıtları ayrıdır
   assert.doesNotMatch(h.html(),/Ek sorulardan deneme|Tüm sorular bir arada/);
   h.nav(mainLinks[3]);
   assert.match(h.node('bank-results').innerHTML,/194 soru listeleniyor/);
-  assert.equal((h.node('bank-results').innerHTML.match(/class="letter">E</g)||[]).length,194);
+  assert.doesNotMatch(h.node('bank-results').innerHTML,/class="letter">E</);
   h.nav(four+'exam');
   h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
   h.app.actions['exam-count']('4');h.app.actions['start-exam']();h.flush();

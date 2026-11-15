@@ -2,6 +2,8 @@
   'use strict';
   const normalize=s=>String(s).toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ı/g,'i');
   const empty=version=>({version,records:{},bookmarks:[],history:[],theme:'light'});
+  const retiredAnswer=-1;
+  const isRetiredAnswer=(q,choice)=>Number.isInteger(q.retiredChoice)&&choice===retiredAnswer;
   function createRun(type,ids,now=Date.now(),minutes=0){
     return {type,ids:[...ids],index:0,answers:{},times:{},flags:[],startedAt:now,tickAt:now,
       elapsed:0,deadline:minutes?now+minutes*60000:null,finished:false,recorded:false};
@@ -33,7 +35,7 @@
   }
   function validChoice(q,choice){return Number.isInteger(choice)&&choice>=0&&choice<q.options.length;}
   function record(state,q,choice,seconds,now=Date.now()){
-    if(!q||!validChoice(q,choice))return;
+    if(!q||(!validChoice(q,choice)&&!isRetiredAnswer(q,choice)))return;
     const ok=choice===q.correct;
     const prev=state.records[q.id]||{attempts:0,correctCount:0,wrongCount:0,totalTime:0};
     const measured=Number.isFinite(seconds);
@@ -60,6 +62,29 @@
        (status==='saved'&&state.bookmarks.includes(q.id))));
   }
   function shuffle(items,rng=Math.random){const result=[...items];for(let i=result.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;}
+  function migrateFourChoices(state,questions){
+    const replacements=new Map(questions.filter(q=>Number.isInteger(q.retiredChoice)).map(q=>[q.id,q.retiredChoice]));
+    function migrateChoice(id,choice){
+      if(!replacements.has(id))return choice;
+      const removed=replacements.get(id);
+      if(choice===removed)return retiredAnswer;
+      return choice===4?removed:choice;
+    }
+    function migrateRecords(records){
+      for(const [id,record] of Object.entries(records||{})){
+        if(Number.isInteger(record?.lastAnswer))record.lastAnswer=migrateChoice(id,record.lastAnswer);
+      }
+    }
+    function migrateAnswers(answers){
+      for(const [id,choice] of Object.entries(answers||{})){
+        answers[id]=migrateChoice(id,choice);
+      }
+    }
+    migrateRecords(state.records);
+    for(const entry of state.history)migrateAnswers(entry?.answers);
+    migrateAnswers(state.activeRun?.answers);
+    migrateRecords(state.activeRun?.recordBaselines);
+  }
   function load(storage,version,progressKey='muskam-progress'){
     try{if(storage.getItem('muskam-consent')!=='yes')return {state:empty(version),consent:false};
       const parsed=JSON.parse(storage.getItem(progressKey)||'null');
@@ -71,7 +96,7 @@
       if(Array.isArray(parsed.history))state.history=parsed.history;
       if(parsed.activeRun&&typeof parsed.activeRun==='object'&&!Array.isArray(parsed.activeRun))state.activeRun=parsed.activeRun;
       if(['run','list'].includes(parsed.studyPosition?.kind)&&typeof parsed.studyPosition.id==='string')state.studyPosition={kind:parsed.studyPosition.kind,id:parsed.studyPosition.id};
-      return {state,consent:true};
+      return {state,consent:true,previousVersion:parsed.version};
     }catch{return {state:empty(version),consent:false};}
   }
   function persist(storage,state,consent,progressKey='muskam-progress'){
@@ -79,6 +104,6 @@
       else{storage.removeItem(progressKey);storage.removeItem('muskam-consent');}return true;
     }catch{return false;}
   }
-  const api={normalize,empty,createRun,tick,answer,score,record,finish,filter,shuffle,load,persist};
+  const api={normalize,empty,createRun,tick,answer,score,record,finish,filter,shuffle,load,persist,isRetiredAnswer,migrateFourChoices};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.MuskamModel=api;
 })(typeof window!=='undefined'?window:globalThis);

@@ -1,5 +1,5 @@
 window.MUSKAM_DATA = {
-  "version": "din-bilim-9-hafta-v1",
+  "version": "din-bilim-four-choice-v1",
   "weekly": true,
   "source": {
     "title": "Din-Bilim İlişkisi Soru Havuzu"
@@ -60,13 +60,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Fuat Sezgin"
-        },
-        {
-          "text": "Osman Turan"
         }
       ],
       "correct": 3,
-      "explanation": "Fuat Sezgin bu eserinde İslâm bilim ve teknoloji mirasını tanıtır."
+      "explanation": "Fuat Sezgin bu eserinde İslâm bilim ve teknoloji mirasını tanıtır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q002",
@@ -85,13 +83,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kalkan"
-        },
-        {
-          "text": "Mızrak ucu"
         }
       ],
       "correct": 0,
-      "explanation": "Sebe’ sûresinin 10 ve 11. âyetlerinde Hz. Dâvûd için demirin yumuşatıldığı ve ondan zırh yapmasının istendiği anlatılır."
+      "explanation": "Sebe’ sûresinin 10 ve 11. âyetlerinde Hz. Dâvûd için demirin yumuşatıldığı ve ondan zırh yapmasının istendiği anlatılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q003",
@@ -109,14 +105,12 @@ window.MUSKAM_DATA = {
           "text": "Koleksiyonu yapım malzemelerine göre ayırmak"
         },
         {
-          "text": "Aletlerde kullanılan ölçü birimlerini ortaklaştırmak"
-        },
-        {
           "text": "Aletlerin çalışma biçimini göstermek"
         }
       ],
-      "correct": 4,
-      "explanation": "Usturlap ve su saati gibi aletlerin modelleri, çalışma ilkelerini somutlaştırır."
+      "correct": 3,
+      "explanation": "Usturlap ve su saati gibi aletlerin modelleri, çalışma ilkelerini somutlaştırır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q004",
@@ -125,7 +119,7 @@ window.MUSKAM_DATA = {
       "stem": "Vahiy merkezli ilim anlayışı, tabiatın işleyişi hakkında hangi ek soruyu sorar?",
       "options": [
         {
-          "text": "Düzenlilik hangi ölçümlerle saptanır?"
+          "text": "Bu düzenin yaratılış ve insan için anlamı nedir?"
         },
         {
           "text": "Olay hangi fizik kanunuyla açıklanır?"
@@ -135,13 +129,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Süreç hangi şartlarda değişir?"
-        },
-        {
-          "text": "Bu düzenin yaratılış ve insan için anlamı nedir?"
         }
       ],
-      "correct": 4,
-      "explanation": "Bu anlayış, tabiat araştırmalarından edinilen bilgiyi vahiy ve insanın hayatına dair anlam sorularıyla birlikte ele alır."
+      "correct": 0,
+      "explanation": "Bu anlayış, tabiat araştırmalarından edinilen bilgiyi vahiy ve insanın hayatına dair anlam sorularıyla birlikte ele alır.",
+      "retiredChoice": 0
     },
     {
       "id": "Q005",
@@ -160,13 +152,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Allah’ı tanımayı"
-        },
-        {
-          "text": "Allah’a tevekkül etmeyi"
         }
       ],
       "correct": 3,
-      "explanation": "Marifet tanıma ve bilme, muhabbet ise sevgi anlamı taşır."
+      "explanation": "Marifet tanıma ve bilme, muhabbet ise sevgi anlamı taşır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q006",
@@ -185,13 +175,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Muhkem âyetler"
-        },
-        {
-          "text": "Medenî âyetler"
         }
       ],
       "correct": 1,
-      "explanation": "Tekvinî âyetler, yaratılmış âlemdeki işaretlerdir. Kelâmî âyetler ise vahiy metnindeki âyetlerdir."
+      "explanation": "Tekvinî âyetler, yaratılmış âlemdeki işaretlerdir. Kelâmî âyetler ise vahiy metnindeki âyetlerdir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q007",
@@ -209,14 +197,12 @@ window.MUSKAM_DATA = {
           "text": "Velâyet"
         },
         {
-          "text": "Müçtehitlik"
-        },
-        {
           "text": "Peygamberlik"
         }
       ],
-      "correct": 4,
-      "explanation": "Mucize, peygamberlik iddiasının doğruluğuna işaret eden olağanüstü olaydır."
+      "correct": 3,
+      "explanation": "Mucize, peygamberlik iddiasının doğruluğuna işaret eden olağanüstü olaydır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q008",
@@ -235,13 +221,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bilgiyi ağırlıklı olarak sözlü yolla aktardı."
-        },
-        {
-          "text": "Önceki hesapları yeni yazı biçimleriyle kaydetti."
         }
       ],
       "correct": 1,
-      "explanation": "Tercümeler bilgiye erişim sağladı. Bilginler bu birikimi eleştirdi, geliştirdi ve sonraki kuşaklara aktardı."
+      "explanation": "Tercümeler bilgiye erişim sağladı. Bilginler bu birikimi eleştirdi, geliştirdi ve sonraki kuşaklara aktardı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q009",
@@ -260,13 +244,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Richard Dawkins"
-        },
-        {
-          "text": "Charles Lyell"
         }
       ],
       "correct": 2,
-      "explanation": "Paley, saatin düzeninden saatçiyi düşünmeyi, tabiatın düzeninden hareket eden bir tasarım benzetmesine dönüştürür."
+      "explanation": "Paley, saatin düzeninden saatçiyi düşünmeyi, tabiatın düzeninden hareket eden bir tasarım benzetmesine dönüştürür.",
+      "retiredChoice": 4
     },
     {
       "id": "Q010",
@@ -285,13 +267,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Yaz."
-        },
-        {
-          "text": "Dinle."
         }
       ],
       "correct": 1,
-      "explanation": "Alak sûresinin ilk âyeti “Oku” emriyle başlar."
+      "explanation": "Alak sûresinin ilk âyeti “Oku” emriyle başlar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q011",
@@ -310,13 +290,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Belirli bir olayın geleceğine dair tahmini"
-        },
-        {
-          "text": "Araştırmada kullanılan ölçme kuralını"
         }
       ],
       "correct": 0,
-      "explanation": "Tabiat kanunu, yer çekimi gibi olaylardaki düzenliliği ifade eder."
+      "explanation": "Tabiat kanunu, yer çekimi gibi olaylardaki düzenliliği ifade eder.",
+      "retiredChoice": 4
     },
     {
       "id": "Q012",
@@ -335,13 +313,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kararını iddiayı savunan kişinin itibarına göre verir."
-        },
-        {
-          "text": "Görüşü en çok kişinin benimsediği biçimde kabul eder."
         }
       ],
       "correct": 2,
-      "explanation": "Bilimsel düşünmede iddialar kanıtlara göre değerlendirilir. Yeni bulgular bir görüşün yeniden ele alınmasını gerektirebilir."
+      "explanation": "Bilimsel düşünmede iddialar kanıtlara göre değerlendirilir. Yeni bulgular bir görüşün yeniden ele alınmasını gerektirebilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q013",
@@ -360,13 +336,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tartışmaların kaynaklarını eksik sınıflandırmak"
-        },
-        {
-          "text": "Farklı bilim dallarını tek yöntemle incelemek"
         }
       ],
       "correct": 0,
-      "explanation": "Bilim ile din arasındaki ilişkiler, toplumların kurumlarına ve tarihî şartlarına göre farklı biçimler alabilir."
+      "explanation": "Bilim ile din arasındaki ilişkiler, toplumların kurumlarına ve tarihî şartlarına göre farklı biçimler alabilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q014",
@@ -385,13 +359,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Vahiy"
-        },
-        {
-          "text": "Tevekkül"
         }
       ],
       "correct": 2,
-      "explanation": "Rubûbiyet, Allah’ın varlıkları yaratıp gözetmesini ve kâinatın düzenini yönetmesini ifade eder."
+      "explanation": "Rubûbiyet, Allah’ın varlıkları yaratıp gözetmesini ve kâinatın düzenini yönetmesini ifade eder.",
+      "retiredChoice": 4
     },
     {
       "id": "Q015",
@@ -410,13 +382,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bilimsel açıklama ve ahlâkî sorumluluk"
-        },
-        {
-          "text": "Deneysel araştırma ve ölçüm"
         }
       ],
       "correct": 3,
-      "explanation": "Hastalığın işleyişini araştırmak bilimsel, hastaya karşı nasıl davranılacağını düşünmek ahlâkî bir sorudur."
+      "explanation": "Hastalığın işleyişini araştırmak bilimsel, hastaya karşı nasıl davranılacağını düşünmek ahlâkî bir sorudur.",
+      "retiredChoice": 4
     },
     {
       "id": "Q016",
@@ -431,17 +401,15 @@ window.MUSKAM_DATA = {
           "text": "Sonuçların yazılı olarak kaydedilmesi"
         },
         {
-          "text": "Araştırmanın uzun sürmesi"
+          "text": "Araştırma koşullarının planlı biçimde değiştirilmesi"
         },
         {
           "text": "Bir araçtan yararlanılması"
-        },
-        {
-          "text": "Araştırma koşullarının planlı biçimde değiştirilmesi"
         }
       ],
-      "correct": 4,
-      "explanation": "Deneyde araştırmacı bir etkinin sonucunu incelemek için koşulları planlı biçimde düzenler."
+      "correct": 2,
+      "explanation": "Deneyde araştırmacı bir etkinin sonucunu incelemek için koşulları planlı biçimde düzenler.",
+      "retiredChoice": 2
     },
     {
       "id": "Q017",
@@ -460,13 +428,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Doğrudan gözlem"
-        },
-        {
-          "text": "Sonuçları yorumlama"
         }
       ],
       "correct": 2,
-      "explanation": "Bilimsel tahmin, bilinen ilişkileri kullanarak henüz gerçekleşmemiş bir olay hakkında sınanabilir bir beklenti oluşturur."
+      "explanation": "Bilimsel tahmin, bilinen ilişkileri kullanarak henüz gerçekleşmemiş bir olay hakkında sınanabilir bir beklenti oluşturur.",
+      "retiredChoice": 4
     },
     {
       "id": "Q018",
@@ -485,13 +451,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Karşı örnek"
-        },
-        {
-          "text": "Sonuç"
         }
       ],
       "correct": 1,
-      "explanation": "Aksiyom başlangıç önermesidir. Teorem, bu başlangıçlardan kurallara uygun biçimde ispatlanır."
+      "explanation": "Aksiyom başlangıç önermesidir. Teorem, bu başlangıçlardan kurallara uygun biçimde ispatlanır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q019",
@@ -510,13 +474,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Hipotez"
-        },
-        {
-          "text": "Tanım"
         }
       ],
       "correct": 0,
-      "explanation": "Teorem, kabul edilen önermelerden geçerli çıkarımlarla elde edilir."
+      "explanation": "Teorem, kabul edilen önermelerden geçerli çıkarımlarla elde edilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q020",
@@ -525,7 +487,7 @@ window.MUSKAM_DATA = {
       "stem": "Bir önerme ve olumsuzu aynı sistemde birlikte ispatlanamıyorsa sistem hangi özelliğe sahiptir?",
       "options": [
         {
-          "text": "Ölçülebilirlik"
+          "text": "Tutarlılık"
         },
         {
           "text": "Sadelik"
@@ -535,13 +497,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tamlık"
-        },
-        {
-          "text": "Tutarlılık"
         }
       ],
-      "correct": 4,
-      "explanation": "Tutarlı bir sistemde bir önerme ile onun olumsuzu birlikte ispatlanamaz."
+      "correct": 0,
+      "explanation": "Tutarlı bir sistemde bir önerme ile onun olumsuzu birlikte ispatlanamaz.",
+      "retiredChoice": 0
     },
     {
       "id": "Q021",
@@ -560,13 +520,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tümdengelim"
-        },
-        {
-          "text": "Tümevarım"
         }
       ],
       "correct": 3,
-      "explanation": "Tümdengelim, genel öncülleri belirli bir duruma uygulayabilir. Dedüksiyon adıyla da anılır."
+      "explanation": "Tümdengelim, genel öncülleri belirli bir duruma uygulayabilir. Dedüksiyon adıyla da anılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q022",
@@ -585,13 +543,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Ölçme"
-        },
-        {
-          "text": "Matematiksel ispat"
         }
       ],
       "correct": 2,
-      "explanation": "Tümevarım gözlenen örnekleri aşan bir genelleme yapar. Yeni örnekler genellemeyi değiştirebilir."
+      "explanation": "Tümevarım gözlenen örnekleri aşan bir genelleme yapar. Yeni örnekler genellemeyi değiştirebilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q023-v2",
@@ -610,13 +566,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Hipotez"
-        },
-        {
-          "text": "Sınıflandırma"
         }
       ],
       "correct": 3,
-      "explanation": "Hipotez, bir olguya ilişkin sınanabilir açıklamadır. Sonraki gözlemler veya deneyler bu açıklamayı değerlendirmeye yarar."
+      "explanation": "Hipotez, bir olguya ilişkin sınanabilir açıklamadır. Sonraki gözlemler veya deneyler bu açıklamayı değerlendirmeye yarar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q024",
@@ -635,13 +589,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Gerekçesinin deneysel gözleme dayanmaması"
-        },
-        {
-          "text": "Geçmişe ait bir belgeye dayanması"
         }
       ],
       "correct": 3,
-      "explanation": "A priori bir yargının gerekçelendirilmesi, deneysel gözleme başvurmayı gerektirmez."
+      "explanation": "A priori bir yargının gerekçelendirilmesi, deneysel gözleme başvurmayı gerektirmez.",
+      "retiredChoice": 4
     },
     {
       "id": "Q025",
@@ -653,20 +605,18 @@ window.MUSKAM_DATA = {
           "text": "Geometrik şekillerin alanlarının hesaplanmasıyla"
         },
         {
-          "text": "Cebir denklemlerinin çözüm yöntemleriyle"
+          "text": "Belirli biçimsel sistemlerde ispatın sınırlarıyla"
         },
         {
           "text": "Olasılıkların sayısal olarak hesaplanmasıyla"
         },
         {
           "text": "Matematiksel modellerin ölçümlere uygunluğuyla"
-        },
-        {
-          "text": "Belirli biçimsel sistemlerde ispatın sınırlarıyla"
         }
       ],
-      "correct": 4,
-      "explanation": "Gödel’in sonucu, aritmetiği ifade edebilen belirli sistemlerde hangi önermelerin ispatlanabileceğine ilişkindir."
+      "correct": 1,
+      "explanation": "Gödel’in sonucu, aritmetiği ifade edebilen belirli sistemlerde hangi önermelerin ispatlanabileceğine ilişkindir.",
+      "retiredChoice": 1
     },
     {
       "id": "Q026",
@@ -685,13 +635,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bilimsel ölçümlerin hata payını hesaplamak"
-        },
-        {
-          "text": "Felsefî görüşleri ortaya çıkış sırasına dizmek"
         }
       ],
       "correct": 1,
-      "explanation": "Mantık, düşünmenin ve delillendirmenin kurallarını incelemeye yardım eder."
+      "explanation": "Mantık, düşünmenin ve delillendirmenin kurallarını incelemeye yardım eder.",
+      "retiredChoice": 4
     },
     {
       "id": "Q027",
@@ -710,13 +658,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Hipotezin önceki açıklamalara benzerliğine bakılarak"
-        },
-        {
-          "text": "Hipotez daha genel bir ifadeye dönüştürülerek"
         }
       ],
       "correct": 0,
-      "explanation": "Hipotezden çıkarılan tahminlerin yeni gözlem ve deneylerle uyuşması, hipoteze destek sağlar."
+      "explanation": "Hipotezden çıkarılan tahminlerin yeni gözlem ve deneylerle uyuşması, hipoteze destek sağlar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q028",
@@ -735,13 +681,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Sonucun öncüllerden daha genel olması"
-        },
-        {
-          "text": "Çıkarımın çok sayıda örnek içermesi"
         }
       ],
       "correct": 1,
-      "explanation": "Geçerli çıkarım ve doğru öncüller birlikte doğru sonucu güvenceye alır."
+      "explanation": "Geçerli çıkarım ve doğru öncüller birlikte doğru sonucu güvenceye alır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q029-v2",
@@ -760,13 +704,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Hipotezin cümlesiyle aynı biçimde yazılmalıdır."
-        },
-        {
-          "text": "Daha önce kabul edilmiş bir görüşü tekrar etmelidir."
         }
       ],
       "correct": 0,
-      "explanation": "Bir tahmin, hangi sonucun gözleneceğini belirtirse gözlem veya deneyle karşılaştırılabilir."
+      "explanation": "Bir tahmin, hangi sonucun gözleneceğini belirtirse gözlem veya deneyle karşılaştırılabilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q030",
@@ -785,13 +727,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Çıkarımın mantık kurallarına uyduğunu göstermek"
-        },
-        {
-          "text": "İspatın hangi öncüllere dayandığını belirlemek"
         }
       ],
       "correct": 2,
-      "explanation": "Bir ispat sistem içindeki geçerliliği gösterir. Fiziksel uygunluk ayrıca gözlem ve ölçümle sınanır."
+      "explanation": "Bir ispat sistem içindeki geçerliliği gösterir. Fiziksel uygunluk ayrıca gözlem ve ölçümle sınanır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q031",
@@ -810,13 +750,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kavram çözümlemesi"
-        },
-        {
-          "text": "Bilimsel genelleme"
         }
       ],
       "correct": 1,
-      "explanation": "Nesnellik, araştırmacının delilleri kendi görüşüne göre ayıklamadan sunmasını gerektirir."
+      "explanation": "Nesnellik, araştırmacının delilleri kendi görüşüne göre ayıklamadan sunmasını gerektirir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q032",
@@ -835,13 +773,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Estetik"
-        },
-        {
-          "text": "Etik"
         }
       ],
       "correct": 2,
-      "explanation": "Epistemoloji “Neyi, nasıl biliyoruz?” türündeki soruları inceler."
+      "explanation": "Epistemoloji “Neyi, nasıl biliyoruz?” türündeki soruları inceler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q033",
@@ -860,13 +796,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Ontoloji"
-        },
-        {
-          "text": "Estetik"
         }
       ],
       "correct": 3,
-      "explanation": "Ontoloji varlığın ne olduğunu ve nelerin var sayıldığını inceler."
+      "explanation": "Ontoloji varlığın ne olduğunu ve nelerin var sayıldığını inceler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q034",
@@ -885,13 +819,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Ampirizm"
-        },
-        {
-          "text": "Nominalizm"
         }
       ],
       "correct": 3,
-      "explanation": "Ampirizm, bilgi edinmede duyusal deneyime ağırlık verir."
+      "explanation": "Ampirizm, bilgi edinmede duyusal deneyime ağırlık verir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q035",
@@ -909,14 +841,12 @@ window.MUSKAM_DATA = {
           "text": "Nominalizm"
         },
         {
-          "text": "Panteizm"
-        },
-        {
           "text": "Rasyonalizm"
         }
       ],
-      "correct": 4,
-      "explanation": "Rasyonalizm, bazı bilgilerin gerekçelendirilmesinde aklı öne çıkarır."
+      "correct": 3,
+      "explanation": "Rasyonalizm, bazı bilgilerin gerekçelendirilmesinde aklı öne çıkarır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q036",
@@ -935,13 +865,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Analoji"
-        },
-        {
-          "text": "Deney düzeneği"
         }
       ],
       "correct": 2,
-      "explanation": "Paradigma, bir araştırma topluluğunun paylaştığı sorunları, örnekleri ve çözüm yollarını kapsar."
+      "explanation": "Paradigma, bir araştırma topluluğunun paylaştığı sorunları, örnekleri ve çözüm yollarını kapsar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q037",
@@ -960,13 +888,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Karl Popper"
-        },
-        {
-          "text": "Thomas Kuhn"
         }
       ],
       "correct": 3,
-      "explanation": "Popper, bir iddianın hangi olası sonuçla çürütülebileceğinin gösterilmesine önem verir."
+      "explanation": "Popper, bir iddianın hangi olası sonuçla çürütülebileceğinin gösterilmesine önem verir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q038",
@@ -985,13 +911,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Thomas Kuhn"
-        },
-        {
-          "text": "Gottfried Wilhelm Leibniz"
         }
       ],
       "correct": 1,
-      "explanation": "Feyerabend, bilim tarihindeki yöntem çeşitliliğini vurgular."
+      "explanation": "Feyerabend, bilim tarihindeki yöntem çeşitliliğini vurgular.",
+      "retiredChoice": 4
     },
     {
       "id": "Q039",
@@ -1010,13 +934,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Agnostisizm"
-        },
-        {
-          "text": "Deizm"
         }
       ],
       "correct": 1,
-      "explanation": "Panteizm, Tanrı ile tabiatı veya evreni özdeş kabul eden yaklaşımdır."
+      "explanation": "Panteizm, Tanrı ile tabiatı veya evreni özdeş kabul eden yaklaşımdır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q040",
@@ -1025,7 +947,7 @@ window.MUSKAM_DATA = {
       "stem": "Bir bilim insanının ulaştığı sonucun bilimsel geçerliliği öncelikle neye göre değerlendirilir?",
       "options": [
         {
-          "text": "Kişisel inancına göre"
+          "text": "Kullandığı yönteme ve sunduğu kanıtlara göre"
         },
         {
           "text": "Yaşadığı toplumun çoğunluk görüşüne göre"
@@ -1035,13 +957,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Görüşünün ne kadar yaygın olduğuna göre"
-        },
-        {
-          "text": "Kullandığı yönteme ve sunduğu kanıtlara göre"
         }
       ],
-      "correct": 4,
-      "explanation": "Bir bilimsel sonucun geçerliliğini değerlendirmek için yönteme, verilere ve sonucun bu verilerden çıkıp çıkmadığına bakılır."
+      "correct": 0,
+      "explanation": "Bir bilimsel sonucun geçerliliğini değerlendirmek için yönteme, verilere ve sonucun bu verilerden çıkıp çıkmadığına bakılır.",
+      "retiredChoice": 0
     },
     {
       "id": "Q041",
@@ -1060,13 +980,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Agnostisizm"
-        },
-        {
-          "text": "Ampirizm"
         }
       ],
       "correct": 0,
-      "explanation": "Determinizm, olayların önceki koşullar ve yasalar tarafından belirlendiğini savunur."
+      "explanation": "Determinizm, olayların önceki koşullar ve yasalar tarafından belirlendiğini savunur.",
+      "retiredChoice": 4
     },
     {
       "id": "Q042",
@@ -1085,13 +1003,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Deney verilerini tablo ve grafiklerle düzenler."
-        },
-        {
-          "text": "Laboratuvarda kullanılan araçların ayarını yapar."
         }
       ],
       "correct": 0,
-      "explanation": "Felsefe, bilimsel bir sonucun hangi gerekçelere dayandığını ve hangi durumlar için geçerli olduğunu sorgular."
+      "explanation": "Felsefe, bilimsel bir sonucun hangi gerekçelere dayandığını ve hangi durumlar için geçerli olduğunu sorgular.",
+      "retiredChoice": 4
     },
     {
       "id": "Q043-v2",
@@ -1110,13 +1026,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Gerekçelendirme, iddiayı ilk kimin ortaya attığını belirlemektir."
-        },
-        {
-          "text": "Gerekçelendirme, iddiayı farklı kelimelerle tekrar etmektir."
         }
       ],
       "correct": 2,
-      "explanation": "Bir kişi bir iddiaya inanabilir. Gerekçe sunmak, bu inancın hangi nedenlere veya kanıtlara dayandığını açıklamaktır."
+      "explanation": "Bir kişi bir iddiaya inanabilir. Gerekçe sunmak, bu inancın hangi nedenlere veya kanıtlara dayandığını açıklamaktır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q044",
@@ -1135,13 +1049,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Görüşleri destekleyen deneysel verileri toplar."
-        },
-        {
-          "text": "Tartışmada kullanılacak araştırma yöntemini belirler."
         }
       ],
       "correct": 0,
-      "explanation": "Bir kelime farklı anlamlarda kullanılabilir. Anlamları baştan belirlemek, görüş ayrılığının nereden kaynaklandığını görmeyi sağlar."
+      "explanation": "Bir kelime farklı anlamlarda kullanılabilir. Anlamları baştan belirlemek, görüş ayrılığının nereden kaynaklandığını görmeyi sağlar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q045",
@@ -1159,14 +1071,12 @@ window.MUSKAM_DATA = {
           "text": "Gözlemcinin seçtiği yöntem yaşama elverişli koşulları belirler."
         },
         {
-          "text": "Gözlemcinin var olması için bütün fiziksel koşullar eşit derecede elverişlidir."
-        },
-        {
           "text": "Gözlemci ancak var olabildiği koşullarda gözlem yapabilir."
         }
       ],
-      "correct": 4,
-      "explanation": "Gözlem yapabilen varlıkların bulunması, gözlem yapılan koşulların gözlemciye elverişli olmasını gerektirir."
+      "correct": 3,
+      "explanation": "Gözlem yapabilen varlıkların bulunması, gözlem yapılan koşulların gözlemciye elverişli olmasını gerektirir.",
+      "retiredChoice": 3
     },
     {
       "id": "Q046",
@@ -1185,13 +1095,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Onluk sistem"
-        },
-        {
-          "text": "İkilik sistem"
         }
       ],
       "correct": 1,
-      "explanation": "Bir saatin 60 dakikaya bölünmesi, eski altmışlık hesap geleneğinin izlerindendir."
+      "explanation": "Bir saatin 60 dakikaya bölünmesi, eski altmışlık hesap geleneğinin izlerindendir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q047",
@@ -1210,13 +1118,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Geometri"
-        },
-        {
-          "text": "Tıp"
         }
       ],
       "correct": 3,
-      "explanation": "Arazi ölçümü, alan ve sınır hesabı için pratik geometriyi gerekli kıldı."
+      "explanation": "Arazi ölçümü, alan ve sınır hesabı için pratik geometriyi gerekli kıldı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q048",
@@ -1235,13 +1141,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bilgi aktarımı ağırlıklı olarak ortak bir yazı sistemi sayesinde gerçekleşti."
-        },
-        {
-          "text": "Aktarılan bilgiler önceki biçimleriyle korunmakla kaldı."
         }
       ],
       "correct": 2,
-      "explanation": "Antik bilim birikimi, farklı toplumların gözlem ve hesaplarını aktarması ve geliştirmesiyle oluştu."
+      "explanation": "Antik bilim birikimi, farklı toplumların gözlem ve hesaplarını aktarması ve geliştirmesiyle oluştu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q049",
@@ -1260,13 +1164,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Benzer yapıdaki organların her canlıda aynı işi yaptığını"
-        },
-        {
-          "text": "Organların yapısının yaşam boyunca değişmeden kaldığını"
         }
       ],
       "correct": 2,
-      "explanation": "Galen, organların görevlerine uygun biçimde yaratıldığını düşünüyordu. Gözün görmeye elverişli yapısı buna örnektir."
+      "explanation": "Galen, organların görevlerine uygun biçimde yaratıldığını düşünüyordu. Gözün görmeye elverişli yapısı buna örnektir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q050",
@@ -1284,14 +1186,12 @@ window.MUSKAM_DATA = {
           "text": "Demokritos"
         },
         {
-          "text": "Thales"
-        },
-        {
           "text": "Sokrates"
         }
       ],
-      "correct": 4,
-      "explanation": "Sokrates, kişinin kendisini ve davranışlarını sorgulamasını ahlâkî hayatla ilişkilendirir."
+      "correct": 3,
+      "explanation": "Sokrates, kişinin kendisini ve davranışlarını sorgulamasını ahlâkî hayatla ilişkilendirir.",
+      "retiredChoice": 3
     },
     {
       "id": "Q051",
@@ -1310,13 +1210,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Demokritos"
-        },
-        {
-          "text": "Sokrates"
         }
       ],
       "correct": 0,
-      "explanation": "Eflâtun’un Akademi’si, felsefe ve matematik öğretiminin önemli merkezlerindendi."
+      "explanation": "Eflâtun’un Akademi’si, felsefe ve matematik öğretiminin önemli merkezlerindendi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q052",
@@ -1335,13 +1233,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bilgi nasıl temellendirilir?"
-        },
-        {
-          "text": "İyi yönetim nasıl kurulur?"
         }
       ],
       "correct": 2,
-      "explanation": "Arkhe, var olanların temelini ya da kökenini açıklamak için kullanılan kavramdır."
+      "explanation": "Arkhe, var olanların temelini ya da kökenini açıklamak için kullanılan kavramdır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q053",
@@ -1360,13 +1256,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Batlamyus"
-        },
-        {
-          "text": "Thales"
         }
       ],
       "correct": 0,
-      "explanation": "Eratosthenes, farklı yerlerdeki Güneş açılarından yararlanarak Dünya’nın çevresini hesapladı."
+      "explanation": "Eratosthenes, farklı yerlerdeki Güneş açılarından yararlanarak Dünya’nın çevresini hesapladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q054",
@@ -1385,13 +1279,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Theophrastos"
-        },
-        {
-          "text": "Sokrates"
         }
       ],
       "correct": 1,
-      "explanation": "Arşimet, kaldırma kuvveti ve kaldıraç ilkeleriyle anılır."
+      "explanation": "Arşimet, kaldırma kuvveti ve kaldıraç ilkeleriyle anılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q055",
@@ -1410,13 +1302,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Botanik"
-        },
-        {
-          "text": "Ahlâk"
         }
       ],
       "correct": 0,
-      "explanation": "Almagest, gök cisimlerinin hareketlerini yer merkezli bir modelle ele alan bir astronomi eseridir."
+      "explanation": "Almagest, gök cisimlerinin hareketlerini yer merkezli bir modelle ele alan bir astronomi eseridir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q056",
@@ -1435,13 +1325,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Theophrastos"
-        },
-        {
-          "text": "Galen"
         }
       ],
       "correct": 3,
-      "explanation": "Theophrastos, bitkilerin yapıları ve özellikleri üzerine çalışmalarıyla botanik tarihinde öne çıkar."
+      "explanation": "Theophrastos, bitkilerin yapıları ve özellikleri üzerine çalışmalarıyla botanik tarihinde öne çıkar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q057-v2",
@@ -1460,13 +1348,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Her eseri yazıldığı bölgeye geri gönderdi."
-        },
-        {
-          "text": "Eserleri konuları yerine yalnız yazıldıkları yıla göre değerlendirdi."
         }
       ],
       "correct": 1,
-      "explanation": "Bir merkezde toplanan farklı eserler, bilginlerin daha fazla kaynağa ulaşmasını ve görüşleri karşılaştırmasını kolaylaştırdı."
+      "explanation": "Bir merkezde toplanan farklı eserler, bilginlerin daha fazla kaynağa ulaşmasını ve görüşleri karşılaştırmasını kolaylaştırdı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q058",
@@ -1478,20 +1364,18 @@ window.MUSKAM_DATA = {
           "text": "Canlıları yalnızca yaşadıkları yere göre gruplamak"
         },
         {
-          "text": "Bitkileri tedavideki kullanımlarına göre sıralamak"
+          "text": "Canlıları gözlemlemek ve özelliklerine göre sınıflamak"
         },
         {
           "text": "Canlı çeşitliliğini sayısal oranlarla açıklamak"
         },
         {
           "text": "Hayvanları yalnızca insanlara sağladıkları yarara göre ayırmak"
-        },
-        {
-          "text": "Canlıları gözlemlemek ve özelliklerine göre sınıflamak"
         }
       ],
-      "correct": 4,
-      "explanation": "Aristoteles, canlıların özelliklerini karşılaştırarak sınıflamalar yaptı."
+      "correct": 1,
+      "explanation": "Aristoteles, canlıların özelliklerini karşılaştırarak sınıflamalar yaptı.",
+      "retiredChoice": 1
     },
     {
       "id": "Q059",
@@ -1510,13 +1394,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bitkileri ve ilaç maddelerini"
-        },
-        {
-          "text": "Beslenme düzenini ve beden hareketlerini"
         }
       ],
       "correct": 3,
-      "explanation": "Dioskorides’in eseri, tedavide kullanılan bitkileri ve başka maddeleri tanıtır."
+      "explanation": "Dioskorides’in eseri, tedavide kullanılan bitkileri ve başka maddeleri tanıtır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q060",
@@ -1534,14 +1416,12 @@ window.MUSKAM_DATA = {
           "text": "Tanıyı hastanın beslenme düzenine bakarak koyar."
         },
         {
-          "text": "Benzer vakaları izlemeden aynı tedaviyi uygular."
-        },
-        {
           "text": "Hastayı gözlemler ve vakaları karşılaştırır."
         }
       ],
-      "correct": 4,
-      "explanation": "Hipokrat geleneğinde hekim, hastayı izler ve benzer vakalardan edindiği tecrübeyi kullanır."
+      "correct": 3,
+      "explanation": "Hipokrat geleneğinde hekim, hastayı izler ve benzer vakalardan edindiği tecrübeyi kullanır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q061",
@@ -1559,14 +1439,12 @@ window.MUSKAM_DATA = {
           "text": "Tabiat olaylarını deney yoluyla sınıflandırmak"
         },
         {
-          "text": "Dinî metinlerin dil özelliklerini incelemek"
-        },
-        {
           "text": "İnanç esaslarını aklî gerekçelerle açıklamak"
         }
       ],
-      "correct": 4,
-      "explanation": "Skolastik düşüncede inanç esasları akıl ve tartışma yoluyla temellendirilmeye çalışılır."
+      "correct": 3,
+      "explanation": "Skolastik düşüncede inanç esasları akıl ve tartışma yoluyla temellendirilmeye çalışılır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q062",
@@ -1585,13 +1463,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Gramer"
-        },
-        {
-          "text": "Quadrivium"
         }
       ],
       "correct": 0,
-      "explanation": "Trivium, dil ve tartışmayla ilgili bu üç öğrenim alanını bir araya getirir."
+      "explanation": "Trivium, dil ve tartışmayla ilgili bu üç öğrenim alanını bir araya getirir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q063",
@@ -1610,13 +1486,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tıp eğitimi ve ilaç hazırlama"
-        },
-        {
-          "text": "Hekimlerin ücretlerini belirleme ve su kaynaklarını denetleme"
         }
       ],
       "correct": 3,
-      "explanation": "Bu hastaneler, tedavi ve ilaç hazırlama hizmetleriyle hekimlerin uygulamalı eğitimini bir araya getirebiliyordu."
+      "explanation": "Bu hastaneler, tedavi ve ilaç hazırlama hizmetleriyle hekimlerin uygulamalı eğitimini bir araya getirebiliyordu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q064",
@@ -1635,13 +1509,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Gerbert"
-        },
-        {
-          "text": "Galileo Galilei"
         }
       ],
       "correct": 0,
-      "explanation": "Aquinalı Thomas, aklın ve vahyin farklı yollardan bilgi sağladığını düşünür."
+      "explanation": "Aquinalı Thomas, aklın ve vahyin farklı yollardan bilgi sağladığını düşünür.",
+      "retiredChoice": 4
     },
     {
       "id": "Q065",
@@ -1660,13 +1532,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Roger Bacon"
-        },
-        {
-          "text": "Thomas Hobbes"
         }
       ],
       "correct": 3,
-      "explanation": "Roger Bacon, araştırmada aklî delilin yanında deney ve tecrübeyi de vurgular."
+      "explanation": "Roger Bacon, araştırmada aklî delilin yanında deney ve tecrübeyi de vurgular.",
+      "retiredChoice": 4
     },
     {
       "id": "Q066",
@@ -1685,13 +1555,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Endülüs ve Sicilya"
-        },
-        {
-          "text": "Flandre ve Ren havzası"
         }
       ],
       "correct": 3,
-      "explanation": "İberya’daki Endülüs çevresi ve Akdeniz’deki Sicilya önemli temas ve tercüme alanlarıdır."
+      "explanation": "İberya’daki Endülüs çevresi ve Akdeniz’deki Sicilya önemli temas ve tercüme alanlarıdır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q067",
@@ -1710,13 +1578,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Avrupa’daki ilk rasathanenin burada açılması"
-        },
-        {
-          "text": "Avrupa’da hareketli harflerle ilk kitabın burada basılması"
         }
       ],
       "correct": 1,
-      "explanation": "Toledo çevresindeki tercümeler, Arapça bilim ve felsefe metinlerinin Avrupa’da dolaşmasına katkı sağladı."
+      "explanation": "Toledo çevresindeki tercümeler, Arapça bilim ve felsefe metinlerinin Avrupa’da dolaşmasına katkı sağladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q068",
@@ -1735,13 +1601,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Pizalı Leonardo"
-        },
-        {
-          "text": "Gerbert"
         }
       ],
       "correct": 0,
-      "explanation": "Constantinus Africanus’un tercümeleri, Avrupa’daki tıp eğitimine yeni metinler kazandırdı."
+      "explanation": "Constantinus Africanus’un tercümeleri, Avrupa’daki tıp eğitimine yeni metinler kazandırdı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q069",
@@ -1760,13 +1624,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Öklid"
-        },
-        {
-          "text": "Eratosthenes"
         }
       ],
       "correct": 1,
-      "explanation": "Pizalı Leonardo, yani Fibonacci, Kuzey Afrika’da öğrendiği hesap yöntemlerini Liber Abaci’de işledi."
+      "explanation": "Pizalı Leonardo, yani Fibonacci, Kuzey Afrika’da öğrendiği hesap yöntemlerini Liber Abaci’de işledi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q070",
@@ -1785,13 +1647,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Harfle gösterim ve toplama çizgisi"
-        },
-        {
-          "text": "İşaret tablosu ve abaküs"
         }
       ],
       "correct": 2,
-      "explanation": "Basamak değeri rakamın konumuna göre değerini belirler. Sıfır, boş basamağı da gösterebilir."
+      "explanation": "Basamak değeri rakamın konumuna göre değerini belirler. Sıfır, boş basamağı da gösterebilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q071",
@@ -1809,14 +1669,12 @@ window.MUSKAM_DATA = {
           "text": "Uluğ Bey"
         },
         {
-          "text": "Şerefeddin Sabuncuoğlu"
-        },
-        {
           "text": "Takıyyüddin er-Râsıd"
         }
       ],
-      "correct": 4,
-      "explanation": "Takıyyüddin’in İstanbul Rasathanesi ile Uluğ Bey’in Semerkant Rasathanesi ayrı kurumlardır."
+      "correct": 3,
+      "explanation": "Takıyyüddin’in İstanbul Rasathanesi ile Uluğ Bey’in Semerkant Rasathanesi ayrı kurumlardır.",
+      "retiredChoice": 3
     },
     {
       "id": "Q072",
@@ -1835,13 +1693,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Geçmiş tutulmaları resimli kitaplarda tanıtmak"
-        },
-        {
-          "text": "Gözlem aletlerini sergilemek"
         }
       ],
       "correct": 2,
-      "explanation": "Rasathane, yeni gök gözlemleri yapmak ve bunları hesaplarla karşılaştırmak için kurulur."
+      "explanation": "Rasathane, yeni gök gözlemleri yapmak ve bunları hesaplarla karşılaştırmak için kurulur.",
+      "retiredChoice": 4
     },
     {
       "id": "Q073",
@@ -1859,14 +1715,12 @@ window.MUSKAM_DATA = {
           "text": "Bilimsel bilgiyi sözlü aktarımla sınırladı."
         },
         {
-          "text": "Her bölgenin ayrı bilim terimleri kullanmasını sağladı."
-        },
-        {
           "text": "Eserleri ve tartışmaları paylaşmayı kolaylaştırdı."
         }
       ],
-      "correct": 4,
-      "explanation": "Ortak dil, bilginlerin başka şehirlerdeki eserleri okumasına ve tartışmalara katılmasına yardım etti."
+      "correct": 3,
+      "explanation": "Ortak dil, bilginlerin başka şehirlerdeki eserleri okumasına ve tartışmalara katılmasına yardım etti.",
+      "retiredChoice": 3
     },
     {
       "id": "Q074",
@@ -1885,13 +1739,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Zekât miktarını hesaplamak"
-        },
-        {
-          "text": "Kurban etini bölüştürmek"
         }
       ],
       "correct": 2,
-      "explanation": "Namaz vakitleri Güneş’in doğuşu, batışı ve gün içindeki konumuyla ilişkilidir."
+      "explanation": "Namaz vakitleri Güneş’in doğuşu, batışı ve gün içindeki konumuyla ilişkilidir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q075",
@@ -1910,13 +1762,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Roger Bacon"
-        },
-        {
-          "text": "Constantinus Africanus"
         }
       ],
       "correct": 1,
-      "explanation": "Gerbert, İberya’daki hesap ve astronomi birikimiyle temas etti. Daha sonra II. Sylvester adıyla papa oldu."
+      "explanation": "Gerbert, İberya’daki hesap ve astronomi birikimiyle temas etti. Daha sonra II. Sylvester adıyla papa oldu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q076",
@@ -1935,13 +1785,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "İbnü’n-Nefîs"
-        },
-        {
-          "text": "Ebû Bekir er-Râzî"
         }
       ],
       "correct": 0,
-      "explanation": "İbn Sînâ’nın el-Kânûn’u, tıp bilgisini düzenli biçimde bir araya getiren etkili bir eserdir."
+      "explanation": "İbn Sînâ’nın el-Kânûn’u, tıp bilgisini düzenli biçimde bir araya getiren etkili bir eserdir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q077",
@@ -1960,13 +1808,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Galen"
-        },
-        {
-          "text": "İbn Sînâ"
         }
       ],
       "correct": 1,
-      "explanation": "İbnü’n-Nefîs küçük kan dolaşımını Şerhu Teşrîhi’l-Kânûn adlı anatomi şerhinde açıkladı."
+      "explanation": "İbnü’n-Nefîs küçük kan dolaşımını Şerhu Teşrîhi’l-Kânûn adlı anatomi şerhinde açıkladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q078",
@@ -1975,7 +1821,7 @@ window.MUSKAM_DATA = {
       "stem": "Kataraktı içi boş ince bir aletle emme tekniği hangi hekimle anılır?",
       "options": [
         {
-          "text": "İbnü’l-Baytâr"
+          "text": "Ammâr b. Ali el-Mevsılî"
         },
         {
           "text": "İbnü’n-Nefîs"
@@ -1985,13 +1831,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Abdüllatîf el-Bağdâdî"
-        },
-        {
-          "text": "Ammâr b. Ali el-Mevsılî"
         }
       ],
-      "correct": 4,
-      "explanation": "Ammâr, Kitâbü’l-Müntehab adlı eserinde içi boş bir iğneyle emme tekniğini ve uygulama deneyimini anlatır."
+      "correct": 0,
+      "explanation": "Ammâr, Kitâbü’l-Müntehab adlı eserinde içi boş bir iğneyle emme tekniğini ve uygulama deneyimini anlatır.",
+      "retiredChoice": 0
     },
     {
       "id": "Q079",
@@ -2010,13 +1854,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Dîneverî"
-        },
-        {
-          "text": "İbn Sînâ"
         }
       ],
       "correct": 2,
-      "explanation": "Zehrâvî, et-Tasrîf’in cerrahi bölümünde işlemleri ve kullanılan aletleri görsellerle anlatır."
+      "explanation": "Zehrâvî, et-Tasrîf’in cerrahi bölümünde işlemleri ve kullanılan aletleri görsellerle anlatır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q080",
@@ -2035,13 +1877,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Şerefeddin Sabuncuoğlu"
-        },
-        {
-          "text": "Abdüllatîf el-Bağdâdî"
         }
       ],
       "correct": 3,
-      "explanation": "Sabuncuoğlu, cerrahi işlemleri resimlerle açıklayıp kendi tecrübelerine de yer verdi."
+      "explanation": "Sabuncuoğlu, cerrahi işlemleri resimlerle açıklayıp kendi tecrübelerine de yer verdi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q081",
@@ -2060,13 +1900,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Alt çenenin çiğneme sırasında hareket ettiği görüşünü"
-        },
-        {
-          "text": "Alt çenenin kafatasına eklemle bağlandığı görüşünü"
         }
       ],
       "correct": 1,
-      "explanation": "El-Bağdâdî, yetişkin iskeletlerini inceleyerek alt çenenin tek kemikten oluştuğunu gösterdi."
+      "explanation": "El-Bağdâdî, yetişkin iskeletlerini inceleyerek alt çenenin tek kemikten oluştuğunu gösterdi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q082",
@@ -2085,13 +1923,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Ebû Bekir er-Râzî"
-        },
-        {
-          "text": "İbnü’l-Heysem"
         }
       ],
       "correct": 3,
-      "explanation": "Râzî, Galen’in bazı görüşlerini gözlem ve akıl yürütmeyle sorguladı."
+      "explanation": "Râzî, Galen’in bazı görüşlerini gözlem ve akıl yürütmeyle sorguladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q083",
@@ -2110,13 +1946,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Dîneverî"
-        },
-        {
-          "text": "Huneyn b. İshak"
         }
       ],
       "correct": 3,
-      "explanation": "Dîneverî’nin Kitâbü’n-Nebât’ı, İslâm dünyasının erken botanik çalışmalarındandır."
+      "explanation": "Dîneverî’nin Kitâbü’n-Nebât’ı, İslâm dünyasının erken botanik çalışmalarındandır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q084",
@@ -2135,13 +1969,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Hârizmî"
-        },
-        {
-          "text": "Kâtib Çelebi"
         }
       ],
       "correct": 0,
-      "explanation": "Câhiz, eserinde hayvanlara ilişkin gözlemlere ve anlatılara yer verir."
+      "explanation": "Câhiz, eserinde hayvanlara ilişkin gözlemlere ve anlatılara yer verir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q085",
@@ -2159,14 +1991,12 @@ window.MUSKAM_DATA = {
           "text": "Hastalık belirtileri ve teşhis yöntemleri"
         },
         {
-          "text": "İnsan iskeleti ve kasları"
-        },
-        {
           "text": "Basit ilaçlar ve besin maddeleri"
         }
       ],
-      "correct": 4,
-      "explanation": "Eser, tek tek ilaç maddeleri ve besinler hakkındaki bilgileri derler."
+      "correct": 3,
+      "explanation": "Eser, tek tek ilaç maddeleri ve besinler hakkındaki bilgileri derler.",
+      "retiredChoice": 3
     },
     {
       "id": "Q086",
@@ -2185,13 +2015,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Jülyen takvimi"
-        },
-        {
-          "text": "Rûmî takvim"
         }
       ],
       "correct": 2,
-      "explanation": "Selçuklu döneminde hazırlanan Celâlî takvimi, Hayyâm’ın da katıldığı ortak bir çalışmadır."
+      "explanation": "Selçuklu döneminde hazırlanan Celâlî takvimi, Hayyâm’ın da katıldığı ortak bir çalışmadır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q087-v2",
@@ -2210,13 +2038,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Gözlemcilerin kullandığı saatlerin yapımını açıklar."
-        },
-        {
-          "text": "Tutulma sırasında yıldızların parlaklığını doğrudan ölçer."
         }
       ],
       "correct": 2,
-      "explanation": "Astronomi cetvelleri, gök cisimlerinin konumlarını hesaplamaya yardım eder. Bir tutulma için gereken konumlar böylece öngörülebilir."
+      "explanation": "Astronomi cetvelleri, gök cisimlerinin konumlarını hesaplamaya yardım eder. Bir tutulma için gereken konumlar böylece öngörülebilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q088",
@@ -2235,13 +2061,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kalbin sağ tarafından böbreklere, oradan kalbin sol tarafına"
-        },
-        {
-          "text": "Kalbin sağ tarafından beyne, oradan kalbin sol tarafına"
         }
       ],
       "correct": 0,
-      "explanation": "İbnü’n-Nefîs, kalbin iki tarafı arasında doğrudan geçiş olduğu görüşünü sorguladı ve kanın akciğerlerden geçtiğini açıkladı."
+      "explanation": "İbnü’n-Nefîs, kalbin iki tarafı arasında doğrudan geçiş olduğu görüşünü sorguladı ve kanın akciğerlerden geçtiğini açıkladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q089",
@@ -2260,13 +2084,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Pusula"
-        },
-        {
-          "text": "Güneş saati"
         }
       ],
       "correct": 1,
-      "explanation": "Usturlap, bir gök cisminin yüksekliğini ölçmeye ve bu ölçümle zaman hesabı yapmaya yarar."
+      "explanation": "Usturlap, bir gök cisminin yüksekliğini ölçmeye ve bu ölçümle zaman hesabı yapmaya yarar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q090",
@@ -2275,7 +2097,7 @@ window.MUSKAM_DATA = {
       "stem": "Huneyn b. İshak’ın Süryânîce ve Arapça çalışmaları tıp bilgisini nasıl yaygınlaştırdı?",
       "options": [
         {
-          "text": "Tıp terimlerini tek bir dilde topladı."
+          "text": "Tıp metinlerini farklı dil çevrelerine taşıdı."
         },
         {
           "text": "Tıp eğitimini tek bir merkezde yürüttü."
@@ -2285,13 +2107,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Önceki metinleri yalnızca özgün dillerinde korudu."
-        },
-        {
-          "text": "Tıp metinlerini farklı dil çevrelerine taşıdı."
         }
       ],
-      "correct": 4,
-      "explanation": "Huneyn’in çevirileri, önceki tıp bilgisini yeni okurlara ve hekimlere ulaştırdı."
+      "correct": 0,
+      "explanation": "Huneyn’in çevirileri, önceki tıp bilgisini yeni okurlara ve hekimlere ulaştırdı.",
+      "retiredChoice": 0
     },
     {
       "id": "Q091",
@@ -2310,13 +2130,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Evliya Çelebi"
-        },
-        {
-          "text": "Pîrî Reis"
         }
       ],
       "correct": 1,
-      "explanation": "İdrîsî, Palermo’da hazırladığı ve Kitâbü Rucâr adıyla da anılan eserinde farklı bölgeleri haritalarla tanıttı."
+      "explanation": "İdrîsî, Palermo’da hazırladığı ve Kitâbü Rucâr adıyla da anılan eserinde farklı bölgeleri haritalarla tanıttı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q092",
@@ -2335,13 +2153,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kâtib Çelebi"
-        },
-        {
-          "text": "Ali Kuşçu"
         }
       ],
       "correct": 2,
-      "explanation": "Pîrî Reis’in 1513 haritası, Amerika kıyılarına ilişkin bilgilerin Osmanlı haritacılığına yansıdığını gösterir."
+      "explanation": "Pîrî Reis’in 1513 haritası, Amerika kıyılarına ilişkin bilgilerin Osmanlı haritacılığına yansıdığını gösterir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q093",
@@ -2360,13 +2176,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "İbn Tufeyl"
-        },
-        {
-          "text": "Fârâbî"
         }
       ],
       "correct": 2,
-      "explanation": "Bîrûnî, yeryüzünün boyutlarını araştırırken ölçüm ve geometrik hesapları birleştirdi."
+      "explanation": "Bîrûnî, yeryüzünün boyutlarını araştırırken ölçüm ve geometrik hesapları birleştirdi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q094",
@@ -2385,13 +2199,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Abbas İbn Firnâs"
-        },
-        {
-          "text": "İdrîsî"
         }
       ],
       "correct": 3,
-      "explanation": "Abbas İbn Firnâs, Endülüs’te yaptığı süzülme denemesiyle uçuş girişimleri tarihinde anılır."
+      "explanation": "Abbas İbn Firnâs, Endülüs’te yaptığı süzülme denemesiyle uçuş girişimleri tarihinde anılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q095",
@@ -2410,13 +2222,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Cezerî"
-        },
-        {
-          "text": "İbn Rüşd"
         }
       ],
       "correct": 1,
-      "explanation": "İbnü’l-Heysem bu eserinde ışık ve görmeyi geometri ve deneyle inceler."
+      "explanation": "İbnü’l-Heysem bu eserinde ışık ve görmeyi geometri ve deneyle inceler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q096",
@@ -2431,17 +2241,15 @@ window.MUSKAM_DATA = {
           "text": "Takıyyüddin er-Râsıd"
         },
         {
-          "text": "Abbas İbn Firnâs"
+          "text": "Cezerî"
         },
         {
           "text": "Bîrûnî"
-        },
-        {
-          "text": "Cezerî"
         }
       ],
-      "correct": 4,
-      "explanation": "Cezerî, Artuklu sarayında su akışı ve mekanik parçalarla çalışan saatler ve otomatik düzenekler tasarladı."
+      "correct": 2,
+      "explanation": "Cezerî, Artuklu sarayında su akışı ve mekanik parçalarla çalışan saatler ve otomatik düzenekler tasarladı.",
+      "retiredChoice": 2
     },
     {
       "id": "Q097",
@@ -2460,13 +2268,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Ömer Hayyâm"
-        },
-        {
-          "text": "Cezerî"
         }
       ],
       "correct": 0,
-      "explanation": "Hârizmî’nin eseri, cebirin sistemli biçimde ele alındığı öncü çalışmalardandır."
+      "explanation": "Hârizmî’nin eseri, cebirin sistemli biçimde ele alındığı öncü çalışmalardandır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q098-v2",
@@ -2485,13 +2291,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kimya"
-        },
-        {
-          "text": "Matematik"
         }
       ],
       "correct": 0,
-      "explanation": "Cihannümâ, Kâtib Çelebi’nin ülkeleri, bölgeleri ve yeryüzüne ilişkin bilgileri ele aldığı coğrafya eseridir."
+      "explanation": "Cihannümâ, Kâtib Çelebi’nin ülkeleri, bölgeleri ve yeryüzüne ilişkin bilgileri ele aldığı coğrafya eseridir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q099-v2",
@@ -2500,7 +2304,7 @@ window.MUSKAM_DATA = {
       "stem": "Câbir b. Hayyân’la anılan maddeleri ayırma ve işleme çalışmaları hangi bilim alanına katkı sağladı?",
       "options": [
         {
-          "text": "Botanik"
+          "text": "Kimya"
         },
         {
           "text": "Astronomi"
@@ -2510,13 +2314,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Geometri"
-        },
-        {
-          "text": "Kimya"
         }
       ],
-      "correct": 4,
-      "explanation": "Maddelerin özelliklerini inceleme, karışımları ayırma ve maddeleri işleme çalışmaları kimya tarihinin bir parçasıdır."
+      "correct": 0,
+      "explanation": "Maddelerin özelliklerini inceleme, karışımları ayırma ve maddeleri işleme çalışmaları kimya tarihinin bir parçasıdır.",
+      "retiredChoice": 0
     },
     {
       "id": "Q100",
@@ -2535,13 +2337,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Fârâbî"
-        },
-        {
-          "text": "Hârizmî"
         }
       ],
       "correct": 3,
-      "explanation": "Fârâbî bu eserinde iyi toplumun nasıl bir düzen içinde kurulabileceğini inceler."
+      "explanation": "Fârâbî bu eserinde iyi toplumun nasıl bir düzen içinde kurulabileceğini inceler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q101",
@@ -2559,14 +2359,12 @@ window.MUSKAM_DATA = {
           "text": "Kindî"
         },
         {
-          "text": "Cezerî"
-        },
-        {
           "text": "İbn Tufeyl"
         }
       ],
-      "correct": 4,
-      "explanation": "İbn Tufeyl, bir ada hikâyesi üzerinden insanın tecrübe ve akıl yürütmeyle bilgi edinmesini işler."
+      "correct": 3,
+      "explanation": "İbn Tufeyl, bir ada hikâyesi üzerinden insanın tecrübe ve akıl yürütmeyle bilgi edinmesini işler.",
+      "retiredChoice": 3
     },
     {
       "id": "Q102",
@@ -2585,13 +2383,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "İbn Rüşd"
-        },
-        {
-          "text": "İbn Tufeyl"
         }
       ],
       "correct": 3,
-      "explanation": "İbn Rüşd, bu eserinde Gazzâlî’nin filozoflara yönelttiği eleştirileri ele alır."
+      "explanation": "İbn Rüşd, bu eserinde Gazzâlî’nin filozoflara yönelttiği eleştirileri ele alır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q103",
@@ -2610,13 +2406,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Nesneden ışık kaynağına"
-        },
-        {
-          "text": "Gözden nesneye"
         }
       ],
       "correct": 0,
-      "explanation": "Görme için nesneden gelen ışığın göze ulaşması gerekir."
+      "explanation": "Görme için nesneden gelen ışığın göze ulaşması gerekir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q104",
@@ -2635,13 +2429,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Coğrafya ve iklim sınıflaması"
-        },
-        {
-          "text": "Beslenme ve gıda saklama"
         }
       ],
       "correct": 2,
-      "explanation": "İbnü’l-Avvâm, Kitâbü’l-Filâha’da bitki yetiştirme, bahçecilik ve tarımsal uygulamaları ele alır."
+      "explanation": "İbnü’l-Avvâm, Kitâbü’l-Filâha’da bitki yetiştirme, bahçecilik ve tarımsal uygulamaları ele alır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q105",
@@ -2660,13 +2452,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bir rasathanenin gök gözlemleri doğrudan haritaya aktarıldı."
-        },
-        {
-          "text": "Bir seyyahın şehir listesi çizime temel alındı."
         }
       ],
       "correct": 1,
-      "explanation": "Me’mûn dönemindeki harita, farklı araştırmacıların coğrafî bilgileri ortak bir tasvirde birleştirmesine örnektir."
+      "explanation": "Me’mûn dönemindeki harita, farklı araştırmacıların coğrafî bilgileri ortak bir tasvirde birleştirmesine örnektir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q106",
@@ -2681,17 +2471,15 @@ window.MUSKAM_DATA = {
           "text": "Karaviyyîn"
         },
         {
-          "text": "Sahn-ı Semân"
+          "text": "Beytülhikme"
         },
         {
           "text": "Ezher"
-        },
-        {
-          "text": "Beytülhikme"
         }
       ],
-      "correct": 4,
-      "explanation": "Beytülhikme, Bağdat’ta kitap, tercüme ve araştırma faaliyetleriyle anılır."
+      "correct": 2,
+      "explanation": "Beytülhikme, Bağdat’ta kitap, tercüme ve araştırma faaliyetleriyle anılır.",
+      "retiredChoice": 2
     },
     {
       "id": "Q107",
@@ -2710,13 +2498,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kahire"
-        },
-        {
-          "text": "Kurtuba"
         }
       ],
       "correct": 3,
-      "explanation": "Dârülhikme Kahire’de, adı benzer olan Beytülhikme ise Bağdat’taydı."
+      "explanation": "Dârülhikme Kahire’de, adı benzer olan Beytülhikme ise Bağdat’taydı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q108",
@@ -2735,13 +2521,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Nizâmülmülk"
-        },
-        {
-          "text": "Çağrı Bey"
         }
       ],
       "correct": 3,
-      "explanation": "Nizâmiye medreseleri, Selçuklu veziri Nizâmülmülk’ün teşkilatçılığıyla anılır."
+      "explanation": "Nizâmiye medreseleri, Selçuklu veziri Nizâmülmülk’ün teşkilatçılığıyla anılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q109",
@@ -2760,13 +2544,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Denizcilik ve liman yönetimi"
-        },
-        {
-          "text": "Matbaacılık ve kitap basımı"
         }
       ],
       "correct": 0,
-      "explanation": "Cündişâpûr’da farklı kültürlerin tıp birikimi, tedavi ve eğitim çevresinde buluştu."
+      "explanation": "Cündişâpûr’da farklı kültürlerin tıp birikimi, tedavi ve eğitim çevresinde buluştu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q110",
@@ -2785,13 +2567,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Palermo"
-        },
-        {
-          "text": "Fes"
         }
       ],
       "correct": 2,
-      "explanation": "Harran, Sâbit b. Kurre gibi bilginlerle anılan bir astronomi ve matematik çevresidir."
+      "explanation": "Harran, Sâbit b. Kurre gibi bilginlerle anılan bir astronomi ve matematik çevresidir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q111",
@@ -2810,13 +2590,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bağdat"
-        },
-        {
-          "text": "Konya"
         }
       ],
       "correct": 0,
-      "explanation": "Karaviyyîn, Fas’ın Fes şehrinde cami çevresinde gelişen tarihî bir ilim merkezidir."
+      "explanation": "Karaviyyîn, Fas’ın Fes şehrinde cami çevresinde gelişen tarihî bir ilim merkezidir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q112",
@@ -2835,13 +2613,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Orhan Gazi"
-        },
-        {
-          "text": "III. Ahmed"
         }
       ],
       "correct": 1,
-      "explanation": "Sahn-ı Semân, İstanbul’daki Fâtih Külliyesi’nin sekiz medresesidir."
+      "explanation": "Sahn-ı Semân, İstanbul’daki Fâtih Külliyesi’nin sekiz medresesidir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q113",
@@ -2860,13 +2636,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Eserleri yalnızca basım tarihine göre sıralamak"
-        },
-        {
-          "text": "Koleksiyonu tek bir bilgi alanında toplamak"
         }
       ],
       "correct": 1,
-      "explanation": "Kütüphaneler yazmaları korur ve sonraki kuşakların eserlere erişmesini sağlar. Böylece birikim yeniden incelenip geliştirilebilir."
+      "explanation": "Kütüphaneler yazmaları korur ve sonraki kuşakların eserlere erişmesini sağlar. Böylece birikim yeniden incelenip geliştirilebilir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q114",
@@ -2885,13 +2659,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "İtalya"
-        },
-        {
-          "text": "İskandinavya"
         }
       ],
       "correct": 2,
-      "explanation": "Kâğıt yapım tekniği Çin’de gelişti ve zamanla başka bölgelere yayıldı."
+      "explanation": "Kâğıt yapım tekniği Çin’de gelişti ve zamanla başka bölgelere yayıldı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q115",
@@ -2910,13 +2682,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Semerkant"
-        },
-        {
-          "text": "Kurtuba"
         }
       ],
       "correct": 3,
-      "explanation": "Semerkant, kâğıt üretimi ve bu tekniğin farklı bölgelere yayılmasıyla anılır."
+      "explanation": "Semerkant, kâğıt üretimi ve bu tekniğin farklı bölgelere yayılmasıyla anılır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q116",
@@ -2934,14 +2704,12 @@ window.MUSKAM_DATA = {
           "text": "Pizalı Leonardo"
         },
         {
-          "text": "Johann Heinrich Pestalozzi"
-        },
-        {
           "text": "Johannes Gutenberg"
         }
       ],
-      "correct": 4,
-      "explanation": "Gutenberg, Avrupa’da hareketli metal harflerle kitap basımının gelişmesinde önemli bir isimdir."
+      "correct": 3,
+      "explanation": "Gutenberg, Avrupa’da hareketli metal harflerle kitap basımının gelişmesinde önemli bir isimdir.",
+      "retiredChoice": 3
     },
     {
       "id": "Q117-v2",
@@ -2960,13 +2728,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kitapların fiyatı artar ve nüshalar daha az el değiştirir."
-        },
-        {
-          "text": "Baskı, okurların yabancı dil öğrenme ihtiyacını ortadan kaldırır."
         }
       ],
       "correct": 0,
-      "explanation": "Müteferrika, matbaanın kitapları çoğaltmayı ve okurlara ulaştırmayı kolaylaştıracağını savundu."
+      "explanation": "Müteferrika, matbaanın kitapları çoğaltmayı ve okurlara ulaştırmayı kolaylaştıracağını savundu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q118",
@@ -2981,17 +2747,15 @@ window.MUSKAM_DATA = {
           "text": "Öğretim programını konulara ayırmayı"
         },
         {
-          "text": "Sınav sonuçlarını karşılaştırmayı"
+          "text": "Öğrencilerin eğitimlerine devam etmesini"
         },
         {
           "text": "Öğreticileri uzmanlıklarına göre görevlendirmeyi"
-        },
-        {
-          "text": "Öğrencilerin eğitimlerine devam etmesini"
         }
       ],
-      "correct": 4,
-      "explanation": "Vakıf desteği, öğrencilerin geçim yükünü azaltarak öğrenime devam etmelerine yardım eder."
+      "correct": 2,
+      "explanation": "Vakıf desteği, öğrencilerin geçim yükünü azaltarak öğrenime devam etmelerine yardım eder.",
+      "retiredChoice": 2
     },
     {
       "id": "Q119",
@@ -3010,13 +2774,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Her sayfada yeni harf kalıpları üretmeyi"
-        },
-        {
-          "text": "Dizgiyi değiştirmeden farklı metinler basmayı"
         }
       ],
       "correct": 2,
-      "explanation": "Harfler sökülüp yeniden dizilebilir, böylece her sayfa için baştan bütün bir kalıp oyulması gerekmez."
+      "explanation": "Harfler sökülüp yeniden dizilebilir, böylece her sayfa için baştan bütün bir kalıp oyulması gerekmez.",
+      "retiredChoice": 4
     },
     {
       "id": "Q120",
@@ -3035,13 +2797,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Vankulu Lugati’nin Müteferrika matbaasında basılması"
-        },
-        {
-          "text": "Müteferrika’nın matbaa hakkında bir risale yazması"
         }
       ],
       "correct": 1,
-      "explanation": "İstanbul’daki Yahudi matbaalarının erken basımları, Müteferrika’nın Türkçe basım girişiminden daha eskidir."
+      "explanation": "İstanbul’daki Yahudi matbaalarının erken basımları, Müteferrika’nın Türkçe basım girişiminden daha eskidir.",
+      "retiredChoice": 4
     },
     {
       "id": "Q121",
@@ -3060,13 +2820,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Charles Lyell"
-        },
-        {
-          "text": "William Paley"
         }
       ],
       "correct": 3,
-      "explanation": "Lyell, geçmişteki jeolojik değişimleri bugün de gözlenebilen doğal süreçlerle açıklamayı öne çıkardı."
+      "explanation": "Lyell, geçmişteki jeolojik değişimleri bugün de gözlenebilen doğal süreçlerle açıklamayı öne çıkardı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q122",
@@ -3085,13 +2843,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Teleskopla yapılan gezegen gözlemlerine"
-        },
-        {
-          "text": "Kayaçlardan alınan izotop ölçümlerine"
         }
       ],
       "correct": 1,
-      "explanation": "Ussher’ın kısa kronolojisi, kutsal metinlerdeki zaman ve soy kayıtlarının yorumuna dayanır."
+      "explanation": "Ussher’ın kısa kronolojisi, kutsal metinlerdeki zaman ve soy kayıtlarının yorumuna dayanır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q123",
@@ -3110,13 +2866,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kayaç türlerini sınıflandırma"
-        },
-        {
-          "text": "Aşınma hızını ölçme"
         }
       ],
       "correct": 1,
-      "explanation": "Radyometrik tarihleme, radyoaktif izotopların bilinen bozunma hızlarından yararlanır."
+      "explanation": "Radyometrik tarihleme, radyoaktif izotopların bilinen bozunma hızlarından yararlanır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q124",
@@ -3135,13 +2889,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tycho Brahe"
-        },
-        {
-          "text": "Kepler"
         }
       ],
       "correct": 2,
-      "explanation": "Kopernik’in modelinde Dünya da diğer gezegenler gibi Güneş çevresinde dolanır."
+      "explanation": "Kopernik’in modelinde Dünya da diğer gezegenler gibi Güneş çevresinde dolanır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q125",
@@ -3160,13 +2912,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Mars"
-        },
-        {
-          "text": "Venüs"
         }
       ],
       "correct": 2,
-      "explanation": "Jüpiter’in uyduları, bazı gök cisimlerinin Dünya dışında bir cismin çevresinde dolandığını gösterdi."
+      "explanation": "Jüpiter’in uyduları, bazı gök cisimlerinin Dünya dışında bir cismin çevresinde dolandığını gösterdi.",
+      "retiredChoice": 4
     },
     {
       "id": "Q126-v2",
@@ -3185,13 +2935,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Jüpiter’in uyduları Güneş’in çevresindeki yörüngelerinde birbirinden bağımsızdır."
-        },
-        {
-          "text": "Ay ve Jüpiter’in uyduları aynı gezegenin çevresinde dolanır."
         }
       ],
       "correct": 1,
-      "explanation": "Jüpiter’in uyduları Jüpiter’in çevresinde hareket eder. Bu gözlem, her gök cisminin doğrudan Dünya’yı dolaştığı düşüncesini zorladı."
+      "explanation": "Jüpiter’in uyduları Jüpiter’in çevresinde hareket eder. Bu gözlem, her gök cisminin doğrudan Dünya’yı dolaştığı düşüncesini zorladı.",
+      "retiredChoice": 4
     },
     {
       "id": "Q127",
@@ -3210,13 +2958,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Galileo Galilei"
-        },
-        {
-          "text": "Batlamyus"
         }
       ],
       "correct": 3,
-      "explanation": "Galileo’nun Diyalog’u, yer merkezli ve Güneş merkezli sistemleri tartışır."
+      "explanation": "Galileo’nun Diyalog’u, yer merkezli ve Güneş merkezli sistemleri tartışır.",
+      "retiredChoice": 4
     },
     {
       "id": "Q128",
@@ -3235,13 +2981,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Agnostisizm"
-        },
-        {
-          "text": "Materyalizm"
         }
       ],
       "correct": 0,
-      "explanation": "Deizm, Tanrı’yı evrenin ve tabiat düzeninin kurucusu olarak görür. Bu anlayışta evren, kurulan düzen içinde işler."
+      "explanation": "Deizm, Tanrı’yı evrenin ve tabiat düzeninin kurucusu olarak görür. Bu anlayışta evren, kurulan düzen içinde işler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q129-v2",
@@ -3250,7 +2994,7 @@ window.MUSKAM_DATA = {
       "stem": "Doğal seçilim bir özelliğin nesiller boyunca nasıl yaygınlaştığını açıklar. Bu açıklama, canlılığın amacı hakkında hangi soruyu açık bırakır?",
       "options": [
         {
-          "text": "Kalıtsal özellikler nesilden nesle aktarılabilir mi?"
+          "text": "Canlılığın bir yaratılış amacı var mıdır?"
         },
         {
           "text": "Çevre, hangi özelliklerin avantaj sağladığını etkiler mi?"
@@ -3260,13 +3004,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Bir toplulukta kalıtsal özellikler zamanla değişebilir mi?"
-        },
-        {
-          "text": "Canlılığın bir yaratılış amacı var mıdır?"
         }
       ],
-      "correct": 4,
-      "explanation": "Doğal seçilim, bazı özelliklerin neden daha yaygın hâle geldiğini biyolojik olarak açıklar. Canlılığın amacı ise felsefî veya dinî bir değerlendirme konusudur."
+      "correct": 0,
+      "explanation": "Doğal seçilim, bazı özelliklerin neden daha yaygın hâle geldiğini biyolojik olarak açıklar. Canlılığın amacı ise felsefî veya dinî bir değerlendirme konusudur.",
+      "retiredChoice": 0
     },
     {
       "id": "Q130",
@@ -3281,17 +3023,15 @@ window.MUSKAM_DATA = {
           "text": "Bir canlının embriyosu nasıl gelişir?"
         },
         {
-          "text": "Çevre bir canlının davranışını nasıl etkiler?"
+          "text": "Canlı toplulukları nesiller boyunca nasıl değişir?"
         },
         {
           "text": "Bir canlının organları nasıl çalışır?"
-        },
-        {
-          "text": "Canlı toplulukları nesiller boyunca nasıl değişir?"
         }
       ],
-      "correct": 4,
-      "explanation": "Biyolojik evrim, canlı topluluklarının kuşaklar içindeki değişimini açıklar. İlk canlılığın ortaya çıkışı ayrı bir araştırma konusudur."
+      "correct": 2,
+      "explanation": "Biyolojik evrim, canlı topluluklarının kuşaklar içindeki değişimini açıklar. İlk canlılığın ortaya çıkışı ayrı bir araştırma konusudur.",
+      "retiredChoice": 2
     },
     {
       "id": "Q131",
@@ -3310,13 +3050,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Kutsal metinleri yorumlama"
-        },
-        {
-          "text": "Gök cisimlerini adlandırma"
         }
       ],
       "correct": 3,
-      "explanation": "Galileo tartışması, astronomik kanıtların değerlendirilmesiyle birlikte kutsal metnin nasıl ve kim tarafından yorumlanacağı sorusunu da içeriyordu."
+      "explanation": "Galileo tartışması, astronomik kanıtların değerlendirilmesiyle birlikte kutsal metnin nasıl ve kim tarafından yorumlanacağı sorusunu da içeriyordu.",
+      "retiredChoice": 4
     },
     {
       "id": "Q132",
@@ -3331,17 +3069,15 @@ window.MUSKAM_DATA = {
           "text": "İfadeler her zaman ilk akla gelen anlamıyla alınmalıdır."
         },
         {
-          "text": "Yorum konusunda yalnız astronomların görüşü esas alınmalıdır."
+          "text": "İfadenin bağlamı ve anlatım biçimi incelenmelidir."
         },
         {
           "text": "Her ifade doğrudan bir fizik açıklaması sayılmalıdır."
-        },
-        {
-          "text": "İfadenin bağlamı ve anlatım biçimi incelenmelidir."
         }
       ],
-      "correct": 4,
-      "explanation": "Galileo, kanıtlanmış fizik sonuçları karşısında metnin nasıl anlaşılması gerektiğini yeniden düşünmeyi savunur."
+      "correct": 2,
+      "explanation": "Galileo, kanıtlanmış fizik sonuçları karşısında metnin nasıl anlaşılması gerektiğini yeniden düşünmeyi savunur.",
+      "retiredChoice": 2
     },
     {
       "id": "Q133",
@@ -3360,13 +3096,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "İlk yaratılıştan sonra evrenin kendi düzeninde işlediğini savunmayı"
-        },
-        {
-          "text": "Bilimsel açıklamalarla dinî yorumları ayrı ayrı değerlendirmeyi"
         }
       ],
       "correct": 0,
-      "explanation": "Bu yaklaşım ilâhî etkinliği mevcut bilimsel bilgi boşluklarına bağlar."
+      "explanation": "Bu yaklaşım ilâhî etkinliği mevcut bilimsel bilgi boşluklarına bağlar.",
+      "retiredChoice": 4
     },
     {
       "id": "Q134-v2",
@@ -3385,13 +3119,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Tek bir gözlemi bütün benzer olaylara uygulamayı sağlayabilir."
-        },
-        {
-          "text": "Araştırmada kullanılacak ölçüm araçlarını doğrudan belirleyebilir."
         }
       ],
       "correct": 2,
-      "explanation": "Dinî bir metin, okurun bir tabiat olayını fark edip soru sormasına vesile olabilir. Bilimsel araştırma bu soruyu gözlem ve deneyle inceler."
+      "explanation": "Dinî bir metin, okurun bir tabiat olayını fark edip soru sormasına vesile olabilir. Bilimsel araştırma bu soruyu gözlem ve deneyle inceler.",
+      "retiredChoice": 4
     },
     {
       "id": "Q135",
@@ -3410,13 +3142,11 @@ window.MUSKAM_DATA = {
         },
         {
           "text": "Özelliğin kullanım sıklığının artması"
-        },
-        {
-          "text": "Özelliğin yalnızca dış görünüşü değiştirmesi"
         }
       ],
       "correct": 0,
-      "explanation": "Kalıtsal bir özellik, belirli bir çevrede üreme başarısını artırıyorsa sonraki kuşaklarda yaygınlaşabilir."
+      "explanation": "Kalıtsal bir özellik, belirli bir çevrede üreme başarısını artırıyorsa sonraki kuşaklarda yaygınlaşabilir.",
+      "retiredChoice": 4
     }
   ],
   "reinforcement": [],
@@ -3426,24 +3156,24 @@ window.MUSKAM_DATA = {
 // 10. hafta kaynak testinden aktarıldı.
 window.MUSKAM_DATA.topics.push({id:'hafta-10',name:'10. Hafta'});
 window.MUSKAM_DATA.questions.push(...[
-  {"id":"Q10-01","number":1,"topic":"hafta-10","stem":"Nil taşkınlarından sonra geometri ne için kullanıldı?","options":[{"text":"Toprağın türünü belirlemek"},{"text":"Tohum miktarını hesaplamak"},{"text":"Tarla sınırlarını yeniden ölçmek"},{"text":"Taşkın zamanını takvime yazmak"},{"text":"Suyun akış yönünü değiştirmek"}],"correct":2,"explanation":"Ders notunda verilen örnekte, Nil’in taşması tarla sınırlarının yeniden belirlenmesini gerektiriyordu. Geometrik ölçümler arazinin sınırlarını ve alanını hesaplamaya yardım etti."},
-  {"id":"Q10-02","number":2,"topic":"hafta-10","stem":"Babil’de dinî günleri belirlemek hangi çalışmayı gerektiriyordu?","options":[{"text":"Gökyüzünü düzenli gözlemlemek"},{"text":"Hastalıkları sınıflandırmak"},{"text":"Yazılı yasaları derlemek"},{"text":"Tarım alanlarını ölçmek"},{"text":"Yapı planları hazırlamak"}],"correct":0,"explanation":"Güneş ve Ay’ın düzenli hareketlerini izlemek, takvimin hazırlanmasına yardım etti. Dinî günler bu takvimle belirlenebiliyordu."},
-  {"id":"Q10-03","number":3,"topic":"hafta-10","stem":"İngiltere’de bazı manastırlar sağlık alanında ne yapıyordu?","options":[{"text":"Tıp dergileri yayımlıyordu."},{"text":"Hasta bakımı sağlıyordu."},{"text":"İlaçların fiyatını belirliyordu."},{"text":"Mikroskop üretiyordu."},{"text":"Tıbbî cihazları denetliyordu."}],"correct":1,"explanation":"Bazı İngiliz manastırlarında hasta bakımı için ayrılmış yerler vardı. Manastır toplulukları bu mekânlarda hastaların bakımını üstlenebiliyordu."},
-  {"id":"Q10-04","number":4,"topic":"hafta-10","stem":"Roger Bacon tabiatı incelemede hangi yöntemi öne çıkardı?","options":[{"text":"Metin karşılaştırması"},{"text":"Sözlü tanıklık"},{"text":"Tarihsel sınıflandırma"},{"text":"Deney ve gözlem"},{"text":"Kavram çözümlemesi"}],"correct":3,"explanation":"Roger Bacon, tabiat hakkındaki açıklamaları sınamak için gözlem ve deneyden yararlanmayı vurguladı. Matematiğe de tabiatı incelemede önemli bir yer verdi."},
-  {"id":"Q10-05","number":5,"topic":"hafta-10","stem":"Londra Kraliyet Cemiyeti’nin çevresi hangi özelliğiyle öne çıktı?","options":[{"text":"Farklı uzmanlıklardan kişileri bir araya getirmesiyle"},{"text":"Üyelerini tek bir meslekten seçmesiyle"},{"text":"Yalnız tıp araştırmalarına yer vermesiyle"},{"text":"Çalışmalarını dil araştırmalarıyla sınırlamasıyla"},{"text":"Yalnız din adamlarını kabul etmesiyle"}],"correct":0,"explanation":"Cemiyetin ilk çevresi farklı bilgi ve meslek alanlarından gelen kişileri buluşturdu. Bu ortam, gözlem ve deney sonuçlarının paylaşılmasına imkân verdi."},
-  {"id":"Q10-06","number":6,"topic":"hafta-10","stem":"Robert Hooke şişe mantarında gördüğü küçük bölmelere ne ad verdi?","options":[{"text":"Molekül"},{"text":"Organel"},{"text":"Hücre"},{"text":"Doku"},{"text":"Çekirdek"}],"correct":2,"explanation":"Hooke, mikroskopla incelediği şişe mantarında gördüğü küçük bölmelere hücre adını verdi. Bu gözlemi 1665’te yayımlanan Micrographia’da anlattı."},
-  {"id":"Q10-07","number":7,"topic":"hafta-10","stem":"Bir türün iki sözcüklü bilimsel adı hangi parçalardan oluşur?","options":[{"text":"Tür ve sınıf"},{"text":"Cins adı ve türü belirten ikinci ad"},{"text":"Aile ve takım"},{"text":"Takım ve cins"},{"text":"Sınıf ve şube"}],"correct":1,"explanation":"İki sözcük birlikte türün bilimsel adını oluşturur. Örneğin Homo sapiens adında Homo cinsi, sapiens ise tür adının ikinci bölümünü gösterir."},
-  {"id":"Q10-08","number":8,"topic":"hafta-10","stem":"Kepler’in gök hareketleri araştırmasında öne çıkan konu nedir?","options":[{"text":"Hastalıkların yayılması"},{"text":"Matematiksel ahenk"},{"text":"Hücre yapısının incelenmesi"},{"text":"Canlıların sınıflandırılması"},{"text":"Maddenin kimyasal bileşimi"}],"correct":1,"explanation":"Kepler, gezegenlerin hareketleri arasında matematiksel oranlar ve düzen aradı. Dünyanın Ahengi adlı eseri bu araştırmanın bir örneğidir."},
-  {"id":"Q10-09","number":9,"topic":"hafta-10","stem":"Newton çekim yasasını yaratıcı inancıyla nasıl bağdaştırdı?","options":[{"text":"Kanunu yaratıcının müdahalesini dışlayan bir düzen saydı."},{"text":"Kanunu yalnız kutsal metinden çıkardı."},{"text":"Kanunu ilahî varlığın kendisiyle özdeşleştirdi."},{"text":"Kanunu dinî bir ibadet kuralı saydı."},{"text":"Kanunu yaratıcı idaresiyle uyumlu gördü."}],"correct":4,"explanation":"Newton, çekim yasasını gözlenen hareketi matematikle açıklayan bir düzenlilik olarak gördü. Bu düzenin işlemesini yaratıcının evreni yönetmesiyle bağdaşır saydı."},
-  {"id":"Q10-10","number":10,"topic":"hafta-10","stem":"Descartes’ın düalizmi hangi iki cevheri ayırır?","options":[{"text":"Kütle ve hareket"},{"text":"Mekân ve zaman"},{"text":"Ölçü ve oran"},{"text":"Sebep ve sonuç"},{"text":"Madde ve düşünen cevher"}],"correct":4,"explanation":"Descartes, yer kaplayan maddî cevher ile düşünen cevheri birbirinden ayırır. Düalizm bu iki cevher ayrımını ifade eder."},
-  {"id":"Q10-11","number":11,"topic":"hafta-10","stem":"Gaye sebep bir değişikliğin hangi yönünü açıklar?","options":[{"text":"Meydana getiren etkeni"},{"text":"Ölçülen hızını"},{"text":"Gözlendiği zamanı"},{"text":"Yöneldiği amacı"},{"text":"Oluştuğu yeri"}],"correct":3,"explanation":"Gaye sebep, bir değişikliğin ne için gerçekleştiğini açıklar. Değişikliği meydana getiren etken ise fail sebep olarak adlandırılır."},
-  {"id":"Q10-12","number":12,"topic":"hafta-10","stem":"Orta Çağ’da Arapça bilim eserlerinin Batı Avrupa’daki öğrenim çevrelerine yayılmasında başlıca çeviri dili hangisiydi?","options":[{"text":"Fransızca"},{"text":"İngilizce"},{"text":"İspanyolca"},{"text":"Almanca"},{"text":"Latince"}],"correct":4,"explanation":"Latince çeviriler, Arapça bilim ve felsefe eserlerinin Batı Avrupa’daki öğrenim çevrelerine ulaşmasında başlıca araçlardan biriydi. Kastilyaca gibi dillere de çeviriler yapıldı."},
-  {"id":"Q10-13","number":13,"topic":"hafta-10","stem":"Bilim ile din arasındaki çatışma tezi neyi savunur?","options":[{"text":"Aralarındaki ilişkinin her dönemde uyumlu olduğunu"},{"text":"Dinî kurumların her dönemde aynı görevleri üstlendiğini"},{"text":"Aralarındaki ilişkinin sürekli mücadeleyle biçimlendiğini"},{"text":"Bilimsel çalışmaların yalnız üniversitelerde yapıldığını"},{"text":"Bilimsel yöntemin yalnız matematiğe dayandığını"}],"correct":2,"explanation":"Draper ve White’ın yaygınlaştırdığı çatışma tezi, bilim ile din arasındaki ilişkiyi sürekli bir mücadele olarak yorumlar. Bu yorumun bütün dönemlere genellenmesi tarihçilerce eleştirilmiştir."},
-  {"id":"Q10-14","number":14,"topic":"hafta-10","stem":"Bilim ve din tarihindeki bir anlaşmazlığı anlamak için önce ne incelenir?","options":[{"text":"Yalnız bugünkü ders kitapları"},{"text":"En çok tekrarlanan genel yargı"},{"text":"Yalnız tartışmanın ne kadar sürdüğü"},{"text":"Olayın tarafları ve yaşandığı koşullar"},{"text":"Konuya ilişkin en yeni kuram"}],"correct":3,"explanation":"Olayın taraflarını, dönemin koşullarını ve eldeki belgeleri incelemek, anlaşmazlığın ne hakkında olduğunu gösterir. Böylece tek bir olaydan bütün dönemler için sonuç çıkarma hatası önlenir."},
-  {"id":"Q10-15","number":15,"topic":"hafta-10","stem":"İki kitap modelinde kâinat kitabı hangi araçlarla okunur?","options":[{"text":"İbadet, dua ve tefekkürle"},{"text":"Gelenek, hitabet ve törenle"},{"text":"Hukuk, yönetim ve yaptırımla"},{"text":"Ölçüm, deney ve matematikle"},{"text":"Şiir, musiki ve resimle"}],"correct":3,"explanation":"İki kitap modelinde kâinatı okumak, tabiatın işleyişini araştırmaktır. Ölçüm, deney ve matematik bu işleyişi incelemeye yardım eder."},
-  {"id":"Q10-16","number":16,"topic":"hafta-10","stem":"İki kitap modelinde vahiy kitabı neye rehberlik eder?","options":[{"text":"İman, gaye ve sorumluluğa"},{"text":"Maddelerin sıcaklık ölçümüne"},{"text":"Canlıların ikili adlandırılmasına"},{"text":"Hücrelerin mikroskopla ölçümüne"},{"text":"Gezegenlerin yörünge hesabına"}],"correct":0,"explanation":"İki kitap modelinde vahiy, iman, ahlâk ve insanın sorumluluğu hakkında yol gösterir. Gaye, insan hayatının neye yöneldiğiyle ilgili sorudur."},
-  {"id":"Q10-17","number":17,"topic":"hafta-10","stem":"Hücre zarı örneğinde hangi soru felsefî yorum gerektirir?","options":[{"text":"Zar hangi maddeleri geçirir?"},{"text":"Zarda hangi lipitler bulunur?"},{"text":"Hücredeki düzenin nihai kaynağı nedir?"},{"text":"Zarın kalınlığı ne kadardır?"},{"text":"Zardaki kanallar nasıl çalışır?"}],"correct":2,"explanation":"Zarın kalınlığı veya hangi maddeleri geçirdiği ölçümle incelenebilir. Hücredeki düzenin nihai kaynağını sormak ise ölçülen mekanizmanın ötesinde felsefî bir yorum gerektirir."},
-  {"id":"Q10-18","number":18,"topic":"hafta-10","stem":"Mîzan sözcüğünün temel anlamı nedir?","options":[{"text":"Zaman ve mekân"},{"text":"Sebep ve etki"},{"text":"Isı ve ışık"},{"text":"Hareket ve hız"},{"text":"Ölçü ve denge"}],"correct":4,"explanation":"Mîzan ölçü ve denge anlamına gelir. Rahmân sûresinde bu kavram, düzenle birlikte tartıda ölçüyü koruma sorumluluğuyla da ilişkilendirilir."},
-  {"id":"Q10-19","number":19,"topic":"hafta-10","stem":"Arapça matematik geleneğiyle Avrupa’ya aktarılan hangi yenilik hesabı kolaylaştırdı?","options":[{"text":"Yansıtmalı teleskop kullanımı"},{"text":"Konumsal sayı yazımı ve sıfır"},{"text":"Çekimin hareket yasasıyla açıklanması"},{"text":"Canlıların ikili adlandırılması"},{"text":"Mikroskopla hücre incelemesi"}],"correct":1,"explanation":"Konumsal yazımda rakamın değeri bulunduğu basamağa göre değişir ve sıfır boş basamağı gösterebilir. Hint kökenli bu hesap geleneğinin Avrupa’ya ulaşmasında Arapça matematik eserleri rol oynadı."},
-  {"id":"Q10-20","number":20,"topic":"hafta-10","stem":"İslam dünyasındaki tercüme hareketi araştırmayı nasıl destekledi?","options":[{"text":"Eski eserleri erişilebilir kılıp yeni çalışmalara zemin hazırladı."},{"text":"Eserlerin yalnız sözlü yolla yayılmasını sağladı."},{"text":"Yalnızca kitap adlarını farklı dillere aktardı."},{"text":"Önceki eserlerin yerine sadece ders listeleri hazırladı."},{"text":"Araştırmayı tek bir bilim dalıyla sınırladı."}],"correct":0,"explanation":"Tercüme, önceki çalışmaları yeni okurlar için erişilebilir kıldı. Bilginler bu eserleri inceleyip eleştirebildi ve birikimi yeni araştırmalarla geliştirebildi."}
+  {"id":"Q10-01","number":1,"topic":"hafta-10","stem":"Nil taşkınlarından sonra geometri ne için kullanıldı?","options":[{"text":"Toprağın türünü belirlemek"},{"text":"Tohum miktarını hesaplamak"},{"text":"Tarla sınırlarını yeniden ölçmek"},{"text":"Taşkın zamanını takvime yazmak"}],"correct":2,"explanation":"Ders notunda verilen örnekte, Nil’in taşması tarla sınırlarının yeniden belirlenmesini gerektiriyordu. Geometrik ölçümler arazinin sınırlarını ve alanını hesaplamaya yardım etti.","retiredChoice":4},
+  {"id":"Q10-02","number":2,"topic":"hafta-10","stem":"Babil’de dinî günleri belirlemek hangi çalışmayı gerektiriyordu?","options":[{"text":"Gökyüzünü düzenli gözlemlemek"},{"text":"Hastalıkları sınıflandırmak"},{"text":"Yazılı yasaları derlemek"},{"text":"Tarım alanlarını ölçmek"}],"correct":0,"explanation":"Güneş ve Ay’ın düzenli hareketlerini izlemek, takvimin hazırlanmasına yardım etti. Dinî günler bu takvimle belirlenebiliyordu.","retiredChoice":4},
+  {"id":"Q10-03","number":3,"topic":"hafta-10","stem":"İngiltere’de bazı manastırlar sağlık alanında ne yapıyordu?","options":[{"text":"Tıp dergileri yayımlıyordu."},{"text":"Hasta bakımı sağlıyordu."},{"text":"İlaçların fiyatını belirliyordu."},{"text":"Mikroskop üretiyordu."}],"correct":1,"explanation":"Bazı İngiliz manastırlarında hasta bakımı için ayrılmış yerler vardı. Manastır toplulukları bu mekânlarda hastaların bakımını üstlenebiliyordu.","retiredChoice":4},
+  {"id":"Q10-04","number":4,"topic":"hafta-10","stem":"Roger Bacon tabiatı incelemede hangi yöntemi öne çıkardı?","options":[{"text":"Metin karşılaştırması"},{"text":"Sözlü tanıklık"},{"text":"Tarihsel sınıflandırma"},{"text":"Deney ve gözlem"}],"correct":3,"explanation":"Roger Bacon, tabiat hakkındaki açıklamaları sınamak için gözlem ve deneyden yararlanmayı vurguladı. Matematiğe de tabiatı incelemede önemli bir yer verdi.","retiredChoice":4},
+  {"id":"Q10-05","number":5,"topic":"hafta-10","stem":"Londra Kraliyet Cemiyeti’nin çevresi hangi özelliğiyle öne çıktı?","options":[{"text":"Farklı uzmanlıklardan kişileri bir araya getirmesiyle"},{"text":"Üyelerini tek bir meslekten seçmesiyle"},{"text":"Yalnız tıp araştırmalarına yer vermesiyle"},{"text":"Çalışmalarını dil araştırmalarıyla sınırlamasıyla"}],"correct":0,"explanation":"Cemiyetin ilk çevresi farklı bilgi ve meslek alanlarından gelen kişileri buluşturdu. Bu ortam, gözlem ve deney sonuçlarının paylaşılmasına imkân verdi.","retiredChoice":4},
+  {"id":"Q10-06","number":6,"topic":"hafta-10","stem":"Robert Hooke şişe mantarında gördüğü küçük bölmelere ne ad verdi?","options":[{"text":"Molekül"},{"text":"Organel"},{"text":"Hücre"},{"text":"Doku"}],"correct":2,"explanation":"Hooke, mikroskopla incelediği şişe mantarında gördüğü küçük bölmelere hücre adını verdi. Bu gözlemi 1665’te yayımlanan Micrographia’da anlattı.","retiredChoice":4},
+  {"id":"Q10-07","number":7,"topic":"hafta-10","stem":"Bir türün iki sözcüklü bilimsel adı hangi parçalardan oluşur?","options":[{"text":"Tür ve sınıf"},{"text":"Cins adı ve türü belirten ikinci ad"},{"text":"Aile ve takım"},{"text":"Takım ve cins"}],"correct":1,"explanation":"İki sözcük birlikte türün bilimsel adını oluşturur. Örneğin Homo sapiens adında Homo cinsi, sapiens ise tür adının ikinci bölümünü gösterir.","retiredChoice":4},
+  {"id":"Q10-08","number":8,"topic":"hafta-10","stem":"Kepler’in gök hareketleri araştırmasında öne çıkan konu nedir?","options":[{"text":"Hastalıkların yayılması"},{"text":"Matematiksel ahenk"},{"text":"Hücre yapısının incelenmesi"},{"text":"Canlıların sınıflandırılması"}],"correct":1,"explanation":"Kepler, gezegenlerin hareketleri arasında matematiksel oranlar ve düzen aradı. Dünyanın Ahengi adlı eseri bu araştırmanın bir örneğidir.","retiredChoice":4},
+  {"id":"Q10-09","number":9,"topic":"hafta-10","stem":"Newton çekim yasasını yaratıcı inancıyla nasıl bağdaştırdı?","options":[{"text":"Kanunu yaratıcının müdahalesini dışlayan bir düzen saydı."},{"text":"Kanunu yalnız kutsal metinden çıkardı."},{"text":"Kanunu ilahî varlığın kendisiyle özdeşleştirdi."},{"text":"Kanunu yaratıcı idaresiyle uyumlu gördü."}],"correct":3,"explanation":"Newton, çekim yasasını gözlenen hareketi matematikle açıklayan bir düzenlilik olarak gördü. Bu düzenin işlemesini yaratıcının evreni yönetmesiyle bağdaşır saydı.","retiredChoice":3},
+  {"id":"Q10-10","number":10,"topic":"hafta-10","stem":"Descartes’ın düalizmi hangi iki cevheri ayırır?","options":[{"text":"Kütle ve hareket"},{"text":"Mekân ve zaman"},{"text":"Madde ve düşünen cevher"},{"text":"Sebep ve sonuç"}],"correct":2,"explanation":"Descartes, yer kaplayan maddî cevher ile düşünen cevheri birbirinden ayırır. Düalizm bu iki cevher ayrımını ifade eder.","retiredChoice":2},
+  {"id":"Q10-11","number":11,"topic":"hafta-10","stem":"Gaye sebep bir değişikliğin hangi yönünü açıklar?","options":[{"text":"Meydana getiren etkeni"},{"text":"Ölçülen hızını"},{"text":"Gözlendiği zamanı"},{"text":"Yöneldiği amacı"}],"correct":3,"explanation":"Gaye sebep, bir değişikliğin ne için gerçekleştiğini açıklar. Değişikliği meydana getiren etken ise fail sebep olarak adlandırılır.","retiredChoice":4},
+  {"id":"Q10-12","number":12,"topic":"hafta-10","stem":"Orta Çağ’da Arapça bilim eserlerinin Batı Avrupa’daki öğrenim çevrelerine yayılmasında başlıca çeviri dili hangisiydi?","options":[{"text":"Fransızca"},{"text":"İngilizce"},{"text":"İspanyolca"},{"text":"Latince"}],"correct":3,"explanation":"Latince çeviriler, Arapça bilim ve felsefe eserlerinin Batı Avrupa’daki öğrenim çevrelerine ulaşmasında başlıca araçlardan biriydi. Kastilyaca gibi dillere de çeviriler yapıldı.","retiredChoice":3},
+  {"id":"Q10-13","number":13,"topic":"hafta-10","stem":"Bilim ile din arasındaki çatışma tezi neyi savunur?","options":[{"text":"Aralarındaki ilişkinin her dönemde uyumlu olduğunu"},{"text":"Dinî kurumların her dönemde aynı görevleri üstlendiğini"},{"text":"Aralarındaki ilişkinin sürekli mücadeleyle biçimlendiğini"},{"text":"Bilimsel çalışmaların yalnız üniversitelerde yapıldığını"}],"correct":2,"explanation":"Draper ve White’ın yaygınlaştırdığı çatışma tezi, bilim ile din arasındaki ilişkiyi sürekli bir mücadele olarak yorumlar. Bu yorumun bütün dönemlere genellenmesi tarihçilerce eleştirilmiştir.","retiredChoice":4},
+  {"id":"Q10-14","number":14,"topic":"hafta-10","stem":"Bilim ve din tarihindeki bir anlaşmazlığı anlamak için önce ne incelenir?","options":[{"text":"Yalnız bugünkü ders kitapları"},{"text":"En çok tekrarlanan genel yargı"},{"text":"Yalnız tartışmanın ne kadar sürdüğü"},{"text":"Olayın tarafları ve yaşandığı koşullar"}],"correct":3,"explanation":"Olayın taraflarını, dönemin koşullarını ve eldeki belgeleri incelemek, anlaşmazlığın ne hakkında olduğunu gösterir. Böylece tek bir olaydan bütün dönemler için sonuç çıkarma hatası önlenir.","retiredChoice":4},
+  {"id":"Q10-15","number":15,"topic":"hafta-10","stem":"İki kitap modelinde kâinat kitabı hangi araçlarla okunur?","options":[{"text":"İbadet, dua ve tefekkürle"},{"text":"Gelenek, hitabet ve törenle"},{"text":"Hukuk, yönetim ve yaptırımla"},{"text":"Ölçüm, deney ve matematikle"}],"correct":3,"explanation":"İki kitap modelinde kâinatı okumak, tabiatın işleyişini araştırmaktır. Ölçüm, deney ve matematik bu işleyişi incelemeye yardım eder.","retiredChoice":4},
+  {"id":"Q10-16","number":16,"topic":"hafta-10","stem":"İki kitap modelinde vahiy kitabı neye rehberlik eder?","options":[{"text":"İman, gaye ve sorumluluğa"},{"text":"Maddelerin sıcaklık ölçümüne"},{"text":"Canlıların ikili adlandırılmasına"},{"text":"Hücrelerin mikroskopla ölçümüne"}],"correct":0,"explanation":"İki kitap modelinde vahiy, iman, ahlâk ve insanın sorumluluğu hakkında yol gösterir. Gaye, insan hayatının neye yöneldiğiyle ilgili sorudur.","retiredChoice":4},
+  {"id":"Q10-17","number":17,"topic":"hafta-10","stem":"Hücre zarı örneğinde hangi soru felsefî yorum gerektirir?","options":[{"text":"Zar hangi maddeleri geçirir?"},{"text":"Zarda hangi lipitler bulunur?"},{"text":"Hücredeki düzenin nihai kaynağı nedir?"},{"text":"Zarın kalınlığı ne kadardır?"}],"correct":2,"explanation":"Zarın kalınlığı veya hangi maddeleri geçirdiği ölçümle incelenebilir. Hücredeki düzenin nihai kaynağını sormak ise ölçülen mekanizmanın ötesinde felsefî bir yorum gerektirir.","retiredChoice":4},
+  {"id":"Q10-18","number":18,"topic":"hafta-10","stem":"Mîzan sözcüğünün temel anlamı nedir?","options":[{"text":"Zaman ve mekân"},{"text":"Sebep ve etki"},{"text":"Ölçü ve denge"},{"text":"Hareket ve hız"}],"correct":2,"explanation":"Mîzan ölçü ve denge anlamına gelir. Rahmân sûresinde bu kavram, düzenle birlikte tartıda ölçüyü koruma sorumluluğuyla da ilişkilendirilir.","retiredChoice":2},
+  {"id":"Q10-19","number":19,"topic":"hafta-10","stem":"Arapça matematik geleneğiyle Avrupa’ya aktarılan hangi yenilik hesabı kolaylaştırdı?","options":[{"text":"Yansıtmalı teleskop kullanımı"},{"text":"Konumsal sayı yazımı ve sıfır"},{"text":"Çekimin hareket yasasıyla açıklanması"},{"text":"Canlıların ikili adlandırılması"}],"correct":1,"explanation":"Konumsal yazımda rakamın değeri bulunduğu basamağa göre değişir ve sıfır boş basamağı gösterebilir. Hint kökenli bu hesap geleneğinin Avrupa’ya ulaşmasında Arapça matematik eserleri rol oynadı.","retiredChoice":4},
+  {"id":"Q10-20","number":20,"topic":"hafta-10","stem":"İslam dünyasındaki tercüme hareketi araştırmayı nasıl destekledi?","options":[{"text":"Eski eserleri erişilebilir kılıp yeni çalışmalara zemin hazırladı."},{"text":"Eserlerin yalnız sözlü yolla yayılmasını sağladı."},{"text":"Yalnızca kitap adlarını farklı dillere aktardı."},{"text":"Önceki eserlerin yerine sadece ders listeleri hazırladı."}],"correct":0,"explanation":"Tercüme, önceki çalışmaları yeni okurlar için erişilebilir kıldı. Bilginler bu eserleri inceleyip eleştirebildi ve birikimi yeni araştırmalarla geliştirebildi.","retiredChoice":4}
 ]);
