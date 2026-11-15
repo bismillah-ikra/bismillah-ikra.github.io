@@ -475,7 +475,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1483);
+  assert.equal(counts,1583);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -489,6 +489,19 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
       assert.ok(question.explanation?.trim(),question.id);
       assert.doesNotMatch([question.stem, ...options, question.explanation].join(' '),/<\/?bdi\b/i,question.id);
     }
+  }
+});
+test('11. hafta soruları beş derste listelenir ve cevaplanır',()=>{
+  const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
+  for(const slug of ['batida-islam-arastirmalari','guncel-fikhi-problemler','islam-ticaret-hukuku','klasik-ve-cagdas-islami-dini-akimlar','ornek-hadis-metinleri']){
+    const questions=sets[slug].questions.filter(q=>q.topic==='hafta-11');
+    assert.equal(questions.length,20,slug);
+    assert.deepEqual(Array.from(questions,q=>q.number),Array.from({length:20},(_,i)=>i+1),slug);
+    h.nav(`ders/${slug}/lesson/hafta-11`);
+    assert.equal((h.html().match(/class="bank-item"/g)||[]).length,20,slug);
+    h.app.actions.single(questions[0].id);h.flush();
+    h.events.keydown({target:{matches:()=>false},key:String(questions[0].correct+1),preventDefault(){}});
+    assert.ok(h.html().includes(questions[0].explanation),slug);
   }
 });
 test('Din-Bilim ana sorularının görünen numaraları sıralı ve tekildir',()=>{
@@ -739,7 +752,7 @@ test('Örnek Hadis sayılar ek seti başlık, cevap ve kayıtlarla çalışır',
   assert.equal(reopened.app.getState().records[thirty.id].lastCorrect,true);
   reopened.nav('ders/ornek-hadis-metinleri/bank');
   reopened.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(reopened.node('bank-results').innerHTML,/223 soru listeleniyor/);
+  assert.match(reopened.node('bank-results').innerHTML,/243 soru listeleniyor/);
   reopened.events.change({target:{name:'bank-source',value:'main',checked:false}});
   assert.match(reopened.node('bank-results').innerHTML,/27 soru listeleniyor/);
   reopened.events.change({target:{name:'extra-bank-week',value:'sayilar',checked:true}});
@@ -749,11 +762,11 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   const h=harness(published,fakeStorage(),true);
   const navCount=()=>Number(h.node('nav').innerHTML.match(/<span>Tüm sorular<\/span><span class="nav-count">(\d+)<\/span>/)?.[1]);
   h.nav('ders/ornek-hadis-metinleri/academy');
-  assert.equal(navCount(),223);
+  assert.equal(navCount(),243);
   h.nav('ders/ornek-hadis-metinleri/bank');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.equal(navCount(),223);
-  assert.match(h.node('bank-results').innerHTML,/223 soru listeleniyor/);
+  assert.equal(navCount(),243);
+  assert.match(h.node('bank-results').innerHTML,/243 soru listeleniyor/);
   h.nav('academy');
   assert.equal(navCount(),237);
   h.nav('bank');
@@ -762,7 +775,7 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   h.nav('ders/kelam/academy');
   assert.equal(navCount(),151);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
-  assert.equal(navCount(),223);
+  assert.equal(navCount(),243);
 });
 test('Mobil menü ve filtreler kapanır, seçimler filtre yeniden çizilince korunur',()=>{
   const h=harness(published,fakeStorage(),true);
@@ -868,3 +881,4 @@ test('Dağıtılan varlıklarda izleyici, ağ çağrısı, belge veya kişisel k
   console.log('✓ Görsel kopyalama ve desteklenmeyen cihazda alternatifler doğrulandı');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 console.log(`\n${passed} test grubu geçti. Gerçek tarayıcı render testi yapılmadı.`);
+
