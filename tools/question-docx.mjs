@@ -40,15 +40,18 @@ const styles = '<w:styles xmlns:w="' + word + '">' +
   style('Subtitle', 'Subtitle', { size: 24, after: 180 }) +
   style('Heading1', 'heading 1', { size: 32, weight: bold, before: 240, after: 120, heading: '<w:outlineLvl w:val="0"/>' }) +
   style('Heading2', 'heading 2', { size: 26, weight: bold, before: 200, after: 100, heading: '<w:outlineLvl w:val="1"/>' }) +
+  style('Heading3', 'heading 3', { size: 24, weight: bold, before: 200, after: 80, heading: '<w:outlineLvl w:val="2"/>' }) +
   style('Question', 'Soru', { size: 22, weight: bold, before: 140, after: 60 }) +
   style('Option', 'Seçenek', { size: 22, after: 35, indent: 300 }) +
   style('AnswerKey', 'Cevap dizisi', { size: 22, after: 100 }) +
+  style('AnswerLabel', 'Açıklama numarası', { size: 22, weight: bold, before: 100, after: 40 }) +
+  style('AnswerExplanation', 'Açıklama metni', { size: 22, after: 110 }) +
   '</w:styles>';
 
 export function buildQuestionDocx(name, sets) {
   const body = [
     paragraph(name, 'Title', { keepNext: true }),
-    paragraph('Tüm çalışma soruları ve cevap anahtarı', 'Subtitle', { keepNext: true })
+    paragraph('Tüm çalışma soruları ve açıklamalı cevaplar', 'Subtitle', { keepNext: true })
   ];
   for (const set of sets) {
     body.push(paragraph(set.name, 'Heading1', { keepNext: true }));
@@ -68,6 +71,22 @@ export function buildQuestionDocx(name, sets) {
     for (const topic of set.topics) {
       const answers = topic.questions.map((question, index) => (index + 1) + '.\u00a0' + answerLetters[question.correct]);
       body.push(paragraph([topic.name, ...answers].join('\u00a0·  '), 'AnswerKey'));
+    }
+  }
+  body.push(paragraph('Cevap Açıklamaları', 'Heading1', { keepNext: true }));
+  const hasExtraSets = sets.length > 1;
+  const topicHeading = hasExtraSets ? 'Heading3' : 'Heading2';
+  for (const set of sets) {
+    if (hasExtraSets) body.push(paragraph(set.name, 'Heading2', { keepNext: true }));
+    for (const topic of set.topics) {
+      body.push(paragraph(topic.name, topicHeading, { keepNext: true }));
+      for (const [index, question] of topic.questions.entries()) {
+        const explanation = question.explanation?.trim()
+          ? question.explanation
+          : question.options[question.correct].explanation?.trim() || 'Bu soru için açıklama henüz eklenmedi.';
+        body.push(paragraph((index + 1) + '. soru · ' + answerLetters[question.correct] + ' şıkkı', 'AnswerLabel', { keepNext: true }));
+        body.push(paragraph(explanation, 'AnswerExplanation'));
+      }
     }
   }
   const document = '<w:document xmlns:w="' + word + '"><w:body>' + body.join('') +
