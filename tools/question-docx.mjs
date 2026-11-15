@@ -6,6 +6,11 @@ const office = 'http://schemas.openxmlformats.org/officeDocument/2006/relationsh
 const packageRelations = 'http://schemas.openxmlformats.org/package/2006/relationships';
 const arabic = /([\p{Script_Extensions=Arabic}\u200C\u200D]+(?:[ \t]+[\p{Script_Extensions=Arabic}\u200C\u200D]+)*)/gu;
 export const answerLetters = 'ABCDE';
+export function answerExplanation(question) {
+  return question.explanation?.trim()
+    ? question.explanation
+    : question.options[question.correct].explanation?.trim() || 'Bu soru için açıklama henüz eklenmedi.';
+}
 
 const escape = text => text.replace(/[&<>]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[character]);
 const runs = text => text.split(arabic).map((part, index) => {
@@ -81,11 +86,8 @@ export function buildQuestionDocx(name, sets) {
     for (const topic of set.topics) {
       body.push(paragraph(topic.name, topicHeading, { keepNext: true }));
       for (const [index, question] of topic.questions.entries()) {
-        const explanation = question.explanation?.trim()
-          ? question.explanation
-          : question.options[question.correct].explanation?.trim() || 'Bu soru için açıklama henüz eklenmedi.';
         body.push(paragraph((index + 1) + '. soru · ' + answerLetters[question.correct] + ' şıkkı', 'AnswerLabel', { keepNext: true }));
-        body.push(paragraph(explanation, 'AnswerExplanation'));
+        body.push(paragraph(answerExplanation(question), 'AnswerExplanation'));
       }
     }
   }

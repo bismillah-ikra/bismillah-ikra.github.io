@@ -30,6 +30,20 @@
     if(rtl)segments.reverse();
     return segments.map(s=>s.text).join('');
   }
+  function courseActualText(text) {
+    const spans=/([\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+(?:\s+[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+)*)/gu;
+    const logical=text.replace(spans,'$1\u200e');
+    const bidi=window.bidi_js();
+    let balance=0, previous;
+    for(const char of logical){
+      const type=bidi.getBidiCharTypeName(char);
+      const direction=type==='R'||type==='AL'?'R':type==='L'?'L':'';
+      if(direction&&direction!==previous)balance+=direction==='R'?1:-1;
+      previous=direction;
+    }
+    // Keep mixed ActualText lines left-to-right without inserting marks into Arabic words.
+    return logical+(' \u200e').repeat(Math.max(0,balance+1));
+  }
   async function loadFonts() {
     if (!window.FontFace || !document.fonts) return;
     const fonts = [
@@ -45,7 +59,7 @@
       return bytes;
     }));
   }
-  async function download(questions, title) {
+  async function download(questions, title, sets) {
     if (!questions.length || questions.some(q => !q || !Array.isArray(q.options) || !Number.isInteger(q.correct) || !q.options[q.correct])) throw new Error('Sorular bulunamadı');
     const [,fontBytes]=await Promise.all([loadLibrary(), loadFonts()]);
     const pdf = await PDFLib.PDFDocument.create();
@@ -65,18 +79,28 @@
     const ctx=canvas.getContext('2d'); let y=0, page=0, textLines=[];
     function blank() { ctx.fillStyle='#fff'; ctx.fillRect(0,0,width,height); y=margin; page++; textLines=[]; }
     async function flush() {
-      ctx.fillStyle='#536173'; ctx.font='21px TestLatin, TestArabic, sans-serif'; ctx.fillText(String(page),width-margin-25,height-40);
-      const data=canvas.toDataURL('image/jpeg',0.92);
-      const picture=await pdf.embedJpg(data);
       const pdfPage=pdf.addPage([595.28,841.89]);
-      pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
+      if (!sets) {
+        ctx.fillStyle='#536173'; ctx.font='21px TestLatin, TestArabic, sans-serif'; ctx.fillText(String(page),width-margin-25,height-40);
+        const picture=await pdf.embedJpg(canvas.toDataURL('image/jpeg',0.92));
+        pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
+      } else if (textLines.some(line=>line.raster)) {
+        const picture=await pdf.embedPng(canvas.toDataURL('image/png'));
+        pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
+      }
       for(const line of textLines){
+        const fontSize=(line.bold?28:26)/2;
+        if(!line.raster){
+          pdfPage.drawText(line.text,{x:(margin+line.indent)/2,y:(height-line.y)/2,size:fontSize,
+            font:line.bold?bold:latin,color:PDFLib.rgb(0.114,0.161,0.227)});
+          continue;
+        }
         ctx.font=`${line.bold?28:26}px ${line.bold?'TestLatinBold':'TestLatin'}, TestArabic, sans-serif`;
-        const properties=pdf.context.obj({ActualText:PDFLib.PDFHexString.fromText(pdfiumVisual(line.text))});
+        const actualText=sets?courseActualText(line.text):pdfiumVisual(line.text);
+        const properties=pdf.context.obj({ActualText:PDFLib.PDFHexString.fromText(actualText)});
         pdfPage.pushOperators(PDFLib.PDFOperator.of('BDC',[PDFLib.PDFName.of('Span'),properties]));
         // Give the replacement text a box spanning the printed line, so that
         // selection is not confined to the tiny width of one space.
-        const fontSize=(line.bold?28:26)/2;
         const count=Math.max(1,Math.round(ctx.measureText(line.text).width/2/anchorFont.widthOfTextAtSize('x',fontSize)));
         pdfPage.drawText('x'.repeat(count),{x:(margin+line.indent)/2-1,y:(height-line.y)/2,size:fontSize,font:anchorFont,opacity:0});
         const pieces=line.text.split(/([\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+(?:\s+[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufeff]+)*)/u);
@@ -127,11 +151,17 @@
     async function write(text, bold=false, indent=0) {
       ctx.font=`${bold?28:26}px ${bold?'TestLatinBold':'TestLatin'}, TestArabic, sans-serif`;
       const wrapped=lines(text,width-2*margin-indent);
-      for(const line of wrapped) { await space(42); ctx.fillStyle='#1d293a'; ctx.textAlign='left'; ctx.direction='ltr'; ctx.fillText(line,margin+indent,y); textLines.push({text:line,y,bold,indent}); y+=42; }
+      for(const line of wrapped) {
+        await space(42);
+        const raster=!sets||/\p{Script=Arabic}/u.test(line);
+        if(raster){
+          ctx.fillStyle='#1d293a'; ctx.textAlign='left'; ctx.direction='ltr';
+          ctx.fillText(line,margin+indent,y);
+        }
+        textLines.push({text:line,y,bold,indent,raster}); y+=42;
+      }
     }
-    blank(); await write(title,true); y+=14; await write(`${questions.length} soru`); y+=32;
-    for(let i=0;i<questions.length;i++) {
-      const q=questions[i];
+    async function writeQuestion(q, i) {
       ctx.font='28px TestLatinBold, TestArabic, sans-serif';
       let heightNeeded=lines(`${i+1}. ${q.stem}`,width-2*margin).length*42+24;
       ctx.font='26px TestLatin, TestArabic, sans-serif';
@@ -141,8 +171,47 @@
       for(let j=0;j<q.options.length;j++) await write(`${'ABCDE'[j]}) ${q.options[j].text}`,false,22);
       y+=24;
     }
-    await flush(); blank(); await write('Cevap anahtarı',true); y+=20;
-    for(let i=0;i<questions.length;i+=8) await write(questions.slice(i,i+8).map((q,j)=>`${i+j+1}. ${'ABCDE'[q.correct]}`).join('  ·  '));
+    blank(); await write(title,true); y+=14;
+    if (sets) {
+      await write('Tüm çalışma soruları ve açıklamalı cevaplar');
+      for (const set of sets) {
+        y+=24; await space(126); await write(set.name,true);
+        for (const topic of set.topics) {
+          y+=14; await space(126); await write(topic.name,true);
+          for (const [index, question] of topic.questions.entries()) await writeQuestion(question,index);
+        }
+      }
+      await flush(); blank(); await write('Cevap Anahtarı',true); y+=20;
+      for (const set of sets) {
+        await space(126); await write(set.name,true);
+        for (const topic of set.topics) {
+          await space(126); await write(topic.name,true);
+          for (let i=0;i<topic.questions.length;i+=8)
+            await write(topic.questions.slice(i,i+8).map((q,j)=>`${i+j+1}. ${'ABCDE'[q.correct]}`).join('  ·  '));
+          y+=12;
+        }
+      }
+      y+=18; await space(210); await write('Cevap Açıklamaları',true);
+      for (const set of sets) {
+        if (sets.length>1) { y+=14; await space(168); await write(set.name,true); }
+        for (const topic of set.topics) {
+          y+=12; await space(168); await write(topic.name,true);
+          for (const [index, question] of topic.questions.entries()) {
+            ctx.font='26px TestLatin, TestArabic, sans-serif';
+            const lineCount=lines(question.explanation,width-2*margin).length;
+            await space(Math.min((lineCount+1)*42,bottom-margin));
+            await write(`${index+1}. soru · ${'ABCDE'[question.correct]} şıkkı`,true);
+            await write(question.explanation);
+            y+=14;
+          }
+        }
+      }
+    } else {
+      await write(`${questions.length} soru`); y+=32;
+      for(const [index, question] of questions.entries()) await writeQuestion(question,index);
+      await flush(); blank(); await write('Cevap anahtarı',true); y+=20;
+      for(let i=0;i<questions.length;i+=8) await write(questions.slice(i,i+8).map((q,j)=>`${i+j+1}. ${'ABCDE'[q.correct]}`).join('  ·  '));
+    }
     await flush();
     await anchorFont.embed();
     pdf.context.lookup(anchorFont.ref,PDFLib.PDFDict).set(PDFLib.PDFName.of('ToUnicode'),pdf.context.register(pdf.context.flateStream(anchorCmap)));

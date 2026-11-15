@@ -512,12 +512,12 @@
     const course = catalogId();
     const filename = esc(courseById.get(course)) + ' - Tüm Sorular';
     const release = document.querySelector('meta[name="site-release"]')?.content;
-    const wordVersion = release ? '?v=' + encodeURIComponent(release) : '';
+    const downloadVersion = release ? '?v=' + encodeURIComponent(release) : '';
     main.innerHTML=heading(courseTitle(),'Tüm sorular')+`<section class="question-downloads">
       <div><strong>Tüm sorular bir arada</strong><p>Ana sorular, varsa ek sorular ve cevap anahtarı.</p></div>
       <div class="question-download-actions">
-        <a class="secondary" href="./soru-pdf/${esc(course)}.pdf" download="${filename}.pdf">PDF indir ↓</a>
-        <a class="secondary" href="./soru-word/${esc(course)}.docx${wordVersion}" download="${filename}.docx">Word indir ↓</a>
+        <a class="secondary" href="./soru-pdf/${esc(course)}.pdf${downloadVersion}" download="${filename}.pdf">PDF indir ↓</a>
+        <a class="secondary" href="./soru-word/${esc(course)}.docx${downloadVersion}" download="${filename}.docx">Word indir ↓</a>
       </div>
     </section>
     <section class="bank-filters" id="bank-filters" aria-label="Soruları filtrele">

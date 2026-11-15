@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { access, mkdtemp, readFile, rm } from 'node:fs/promises';
 import { extname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { setTimeout as delay } from 'node:timers/promises';
+import { answerExplanation, answerLetters } from './question-docx.mjs';
 
 const candidates=[process.env.PDF_CHROME,...(process.platform==='win32'
   ? ['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']
@@ -55,6 +56,55 @@ try{
   assert.ok(result.count>0,'Arapça soru bulunamadı.');
   assert.deepEqual(result.missing,[],`PDF metninde eksik veya hatalı soru: ${result.missing.join(', ')}`);
   console.log(`✓ ${result.count} Arapça soru ve şık PDF metninde doğrulandı`);
+
+  execFileSync(process.execPath, ['tools/export-question-data.cjs', profile]);
+  const courses = JSON.parse(await readFile(join(profile, 'question-data.json'), 'utf8'));
+  const expected = courses.map(course => {
+    const explanations = [];
+    const answers = [];
+    for (const set of course.sets) {
+      if (course.sets.length > 1) explanations.push(set.name);
+      for (const topic of set.topics) {
+        const questions = set.questions.filter(q => q.topic === topic.id);
+        if (!questions.length) continue;
+        explanations.push(topic.name);
+        for (const [index, question] of questions.entries()) {
+          const letter = answerLetters[question.correct];
+          answers.push(`${index + 1}.${letter}`);
+          explanations.push(`${index + 1}. soru · ${letter} şıkkı`, answerExplanation(question));
+        }
+      }
+    }
+    return { id: course.id, explanations: explanations.join(''), answers };
+  });
+  const files = await evaluate(`(async courses => {
+    const pdfjs=await import('./assets/pdfjs/pdf.min.mjs');
+    pdfjs.GlobalWorkerOptions.workerSrc='./assets/pdfjs/pdf.worker.min.mjs';
+    const norm=text=>text.replace(/\\s+/gu,'').normalize('NFC');
+    const failures=[];
+    for(const course of courses){
+      const pdf=await pdfjs.getDocument('./soru-pdf/'+course.id+'.pdf').promise;
+      let text='';
+      for(let i=1;i<=pdf.numPages;i++){
+        const content=await (await pdf.getPage(i)).getTextContent();
+        text+=content.items.map(item=>item.str).join('');
+      }
+      await pdf.destroy();
+      text=norm(text);
+      const answerKey=text.indexOf('CevapAnahtarı');
+      const heading='CevapAçıklamaları';
+      const explanation=text.indexOf(heading,answerKey);
+      if(answerKey<0||explanation<=answerKey||text.slice(explanation+heading.length)!==norm(course.explanations)){
+        failures.push(course.id+' (açıklamalar)');
+        continue;
+      }
+      const answers=text.slice(answerKey,explanation).match(/\\d+\\.[A-E]/g)||[];
+      if(answers.join()!==course.answers.join())failures.push(course.id+' (cevap anahtarı)');
+    }
+    return failures;
+  })(${JSON.stringify(expected)})`);
+  assert.deepEqual(files, [], `PDF cevap açıklaması veya sıralama hatası: ${files.join(', ')}`);
+  console.log(`✓ ${courses.length} ders PDF’sinde cevap anahtarı ve sıralı açıklamalar doğrulandı`);
 }finally{
   if(ws)ws.close();chrome.kill();server.close();await delay(500);
   await rm(profile,{recursive:true,force:true,maxRetries:5,retryDelay:200});
