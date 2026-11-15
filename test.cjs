@@ -255,6 +255,16 @@ test('Soru haritası doğru, yanlış, boş ve tekrar bak durumlarını korur',(
   reopened.app.actions['clear-answer']();assert.match(reopened.html(),/1\. soru, boş, tekrar bakılacak/);
   reopened.app.actions.flag();assert.doesNotMatch(reopened.html(),/tekrar bakılacak/);
 });
+test('Soru haritası boş, yanlış ve tekrar bak seçimlerini filtreler',()=>{
+  const h=harness(D);h.app.actions['topic-quick'](D.topics[0].id);h.flush();
+  const r=h.app.getRun(),first=lookup[r.ids[0]],second=lookup[r.ids[1]];
+  h.app.actions.answer(String(first.correct));h.app.actions.flag();h.app.actions.next();
+  h.app.actions.answer(String((second.correct+1)%4));
+  h.app.actions['palette-filter']('wrong');assert.match(h.html(),/2\. soru, yanlış/);assert.doesNotMatch(h.html(),/1\. soru, doğru/);
+  h.app.actions['palette-filter']('review');assert.match(h.html(),/1\. soru, doğru, tekrar bakılacak/);assert.doesNotMatch(h.html(),/2\. soru, yanlış/);
+  h.app.actions['palette-filter']('blank');assert.doesNotMatch(h.html(),/1\. soru, doğru/);assert.match(h.html(),/3\. soru, boş/);
+  h.app.actions['palette-filter']('all');assert.match(h.html(),/1\. soru, doğru/);assert.match(h.html(),/2\. soru, yanlış/);
+});
 test('Deneme bitmeden soru haritası doğruluğu gizler',()=>{
   const h=harness();h.app.actions['start-exam']();h.flush();const r=h.app.getRun(),q=lookup[r.ids[0]];
   h.app.actions.answer(String(q.correct));
@@ -264,12 +274,30 @@ test('Deneme bitmeden soru haritası doğruluğu gizler',()=>{
   h.app.actions.finish();h.node('confirm-ok').click();h.flush();h.app.actions.review();h.flush();
   assert.match(h.html(),/1\. soru, doğru/);
 });
-test('Arayüz kontrolü: deneme navigasyon kilidi, değişen cevap ve bitiş incelemesi',()=>{
+test('Arayüz kontrolü: denemeden ayrılıp dönme, değişen cevap ve bitiş incelemesi',()=>{
   const h=harness();h.app.actions['start-exam']();h.flush();const r=h.app.getRun(),q=lookup[r.ids[0]];
   h.app.actions.answer(String((q.correct+1)%4));h.app.actions.answer(String(q.correct));assert.ok(!h.html().includes('Dört seçenekten öğren'));
-  assert.equal(Object.keys(h.app.getState().records).length,0);h.nav('inspect/'+q.id);assert.equal(h.html().includes('Dört seçenekten öğren'),false);h.flush();
+  assert.equal(Object.keys(h.app.getState().records).length,0);h.nav('academy');assert.match(h.html(),/Denemeye devam et/);
+  assert.equal(h.app.getRun(),r);assert.equal(r.finished,false);
+  h.nav('quick');assert.match(h.html(),/Tek tek soru çöz/);assert.match(h.html(),/Soruları listele/);
+  assert.equal(h.app.getRun(),r);h.app.actions.resume();h.flush();
+  assert.ok(!h.html().includes('Dört seçenekten öğren'));
   h.app.actions.finish();assert.equal(h.node('confirm-dialog').open,true);h.node('confirm-ok').click();h.flush();
   assert.equal(h.app.getRun().finished,true);assert.ok(h.html().includes('Konu bazında sonuç'));h.app.actions.review();h.flush();assert.ok(h.html().includes('Dört seçenekten öğren'));
+});
+test('Başka derse geçilen süreli deneme süresi dolunca kaybolmadan tamamlanır',()=>{
+  const storage=fakeStorage(),h=harness(published,storage,true);
+  h.events.change({target:{id:'remember',checked:true,dataset:{}}});
+  h.nav('exam');h.node('exam-count').value='10';h.node('exam-minutes').value='1';
+  h.events.submit({target:{id:'exam-form'},preventDefault(){}});h.flush();
+  const r=h.app.getRun(),question=published.questions.find(q=>q.id===r.ids[0])||h.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi'].questions.find(q=>q.id===r.ids[0]);
+  h.app.actions.answer(String(question.correct));
+  h.nav('sorular/batida-islam-arastirmalari');assert.equal(r.finished,false);
+  h.advance(20000);h.nav('sorular/din-bilim-iliskisi');assert.ok(r.elapsed>=20);
+  h.nav('sorular/batida-islam-arastirmalari');h.advance(40001);assert.equal(r.finished,true);assert.equal(h.app.getRun(),null);
+  h.nav('sorular/din-bilim-iliskisi');assert.equal(h.app.getRun(),r);
+  h.nav('exam');assert.match(h.html(),/Deneme sonucunu gör/);
+  h.app.actions.result();h.flush();assert.equal(h.app.getState().history.at(-1).correct,1);
 });
 test('Arayüz kontrolü: 23 soru ve 23 dakika ile başlayan deneme süre dolunca değerlendirilir',()=>{
   const h=harness(published);
@@ -623,8 +651,9 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   assert.doesNotMatch(h.html(),/class="letter">E</);
   h.app.actions.answer('0');
   h.nav('academy');
-  assert.match(h.html(),/DENEME SINAVI|Deneme sınavı/);
-  h.flush();
+  assert.match(h.html(),/Haftalara göre sorular/);
+  h.nav(four+'exam');assert.match(h.html(),/Denemeye devam et/);
+  h.app.actions.resume();h.flush();
   h.app.actions.finish();h.node('confirm-ok').click();h.flush();
   h.app.actions.review();h.flush();
   assert.match(h.html(),/<h3>Cevap açıklaması<\/h3>/);

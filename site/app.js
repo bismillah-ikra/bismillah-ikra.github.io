@@ -35,6 +35,7 @@
   const courseRuns=new Map();
   let run=null,route='',renderedHash='',lessonLevel=1,teacherContext=null,confirmAction=null,toastTimer=null;
   const cardAnswers=new Map();
+  let paletteFilter='all',paletteOpen=false;
   let bankStatus='';
   const bankWeeks=new Set();
   const bankSources=new Set(['main']);
@@ -81,7 +82,7 @@
     const restoredRun={...saved,ids,index,answers:keepEntries(saved.answers),times:keepEntries(saved.times),
       flags:saved.flags.filter(id=>retained.has(id))};
     if(saved.recordBaselines)restoredRun.recordBaselines=keepEntries(saved.recordBaselines);
-    if(!restoredRun.finished)restoredRun.tickAt=Date.now();
+    if(!restoredRun.finished&&(restoredRun.type!=='exam'||!Number.isFinite(restoredRun.tickAt)))restoredRun.tickAt=Date.now();
     return restoredRun;
   }
   loadQuestions();
@@ -96,13 +97,14 @@
   }
   function activateCourse(id){
     if(id===activeCourse)return;
-    courseRuns.set(activeCourse,run);
+    if(run&&!run.finished)M.tick(run);
+    save();courseRuns.set(activeCourse,run);
     activeCourse=id;
     D=datasets[id];
     state=loadCourseProgress(id);
     loadQuestions();
     run=courseRuns.has(id)?courseRuns.get(id):restoreRun(state.activeRun);
-    if(run&&!run.finished)run.tickAt=Date.now();
+    if(run&&!run.finished){if(run.type==='exam')M.tick(run);else run.tickAt=Date.now();}
     bankStatus='';
     bankWeeks.clear();
     extraBankTopics.clear();
@@ -133,6 +135,23 @@
     if(!saved)toast('Yeni değişiklik kaydedilemedi. Önceki kayıtlar korunuyor; tarayıcıda yeterli alan olduğundan emin ol.');
     refreshChrome();
     return saved;
+  }
+  function finishBackgroundExams(){
+    for(const [id,examRun] of courseRuns){
+      if(id===activeCourse||!examRun||examRun.finished||examRun.type!=='exam'||!examRun.deadline||Date.now()<examRun.deadline)continue;
+      const dataset=datasets[id],progress=loadCourseProgress(id);
+      const questions=Object.fromEntries([...dataset.questions,...dataset.reinforcement].map(q=>[q.id,q]));
+      const extraId=extraSetsByCourse.get(id),extra=datasets[extraId];
+      if(extra)for(const q of extra.questions)questions['extra:'+q.id]={...q,id:'extra:'+q.id,originalId:q.id,owner:extraId,topic:'extra:'+q.topic};
+      M.finish(examRun,progress,questions);
+      for(const qid of examRun.ids){const q=questions[qid];if(q.owner&&Object.hasOwn(examRun.answers,qid)){
+        const extraProgress=loadCourseProgress(q.owner);
+        M.record(extraProgress,{...q,id:q.originalId},examRun.answers[qid],examRun.times[qid]||0);
+        delete progress.records[qid];M.persist(storage,extraProgress,consent,progressKey(q.owner));
+      }}
+      progress.activeRun=examRun;
+      if(!M.persist(storage,progress,consent,progressKey(id)))toast('Deneme sonucu kaydedilemedi. Tarayıcı depolama alanını kontrol et.');
+    }
   }
   function toast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4000);}
   function confirm(title,text,callback){const dialog=document.getElementById('confirm-dialog');document.getElementById('confirm-title').textContent=title;document.getElementById('confirm-text').textContent=text;confirmAction=callback;dialog.showModal();}
@@ -389,10 +408,6 @@
   }
 
   function openCoursePicker(currentCourse=catalogId()){
-    if(run?.type==='exam'&&!run.finished){
-      toast('Deneme sürüyor. Ders değiştirmek için önce denemeyi bitir.');
-      return;
-    }
     function courseGroup(title,extras){
       const options=courses.filter(([id])=>extraCourseIds.has(id)===extras).map(([id,name])=>{
         const label=`<span><strong>${esc(name)}</strong><small>${courseCount(id)}</small></span>`;
@@ -409,9 +424,8 @@
 
   function studyControls(){
     const canResume=D.weekly?continuation():run&&!run.finished;
-    const resumeLabel=canResume&&D.weekly
-      ?run?.type==='exam'&&!run.finished?'Denemeye devam et'
-        :`${esc(canResume.question.topicName)} · ${canResume.ids?`Kalan ${canResume.ids.length} soruyu çöz`:`${runQuestionNumber(canResume.index)}. sorudan devam et`}`
+    const resumeLabel=run?.type==='exam'&&!run.finished?'Denemeye devam et':canResume&&D.weekly
+      ?`${esc(canResume.question.topicName)} · ${canResume.ids?`Kalan ${canResume.ids.length} soruyu çöz`:`${runQuestionNumber(canResume.index)}. sorudan devam et`}`
       :'Kaldığın yerden devam et';
     return `<div class="study-controls">
       ${!consent?`<label class="device-save" for="remember">
@@ -548,7 +562,7 @@
   }
   function start(type,ids,minutes=0,replaceSameWeek=false){
     if(!ids.length)return toast('Bu seçimde çözülecek soru bulunmuyor.');
-    const begin=()=>{run=M.createRun(type,ids,Date.now(),minutes);markRunPosition();teacherContext=null;save();navigate('run');if(route==='run')render(false);};
+    const begin=()=>{paletteFilter='all';paletteOpen=false;run=M.createRun(type,ids,Date.now(),minutes);markRunPosition();teacherContext=null;save();navigate('run');if(route==='run')render(false);};
     if(run&&!run.finished&&!replaceSameWeek)return confirm('Yeni çalışma başlatılsın mı?', 'Devam eden çalışma kapanır; kaydedilmiş cevapların ve diğer sonuçların korunur.',begin);
     begin();
   }
@@ -593,9 +607,22 @@
       const status={blank:'boş',answered:'cevaplandı',correct:'doğru',wrong:'yanlış'}[outcome];
       return `<button type="button" data-action="jump" data-id="${i}" class="palette-${outcome}${current?' current':''}${marked?' flagged':''}" aria-label="${runQuestionNumber(i)}. soru, ${status}${marked?', tekrar bakılacak':''}"${current?' aria-current="step"':''}>${runQuestionNumber(i)}${current&&(outcome==='correct'||outcome==='wrong')?`<span class="palette-result-mark ${outcome}" aria-hidden="true">${outcome==='correct'?'✓':'×'}</span>`:''}${marked?'<span class="palette-review-mark" aria-hidden="true">↻</span>':''}</button>`;
     };
+    if(isExam&&!review&&paletteFilter==='wrong')paletteFilter='all';
+    const paletteItems=run.ids.map((id,i)=>({id,i})).filter(({id})=>{
+      const answered=Object.hasOwn(run.answers,id);
+      return paletteFilter==='all'||(paletteFilter==='blank'&&!answered)||
+        (paletteFilter==='wrong'&&answered&&run.answers[id]!==lookup[id].correct)||
+        (paletteFilter==='review'&&run.flags.includes(id));
+    });
+    const filters=[['all','Tümü'],['blank','Boş'],...(!isExam||review?[['wrong','Yanlış']]:[]),['review','Tekrar bak']];
+    const filterButtons=filters.map(([key,label])=>`<button type="button" data-action="palette-filter" data-id="${key}" aria-pressed="${paletteFilter===key}">${label}</button>`).join('');
     main.innerHTML=`<div class="run-meta"><span>${review?'Cevap incelemesi':isExam?'DENEME SINAVI':run.type==='reinforce'?'PEKİŞTİRME':'Çalışmadaki sıra'} · ${run.index+1} / ${run.ids.length}</span><span class="timer" id="run-timer">${clock()}</span></div><div class="progress" style="margin-bottom:25px"><span style="width:${Object.keys(run.answers).length/run.ids.length*100}%"></span></div>
     <div class="question-layout"><section>${question(q,run.answers,`${runQuestionNumber(run.index)}. soru`,reveal,review)}<div class="question-bottom"><button class="secondary" data-action="previous"${run.index===0?' disabled':''}>${icon('back')} Önceki</button><div class="actions">${!review?`<button type="button" class="secondary review-toggle" data-action="flag" aria-pressed="${run.flags.includes(q.id)}">↻ ${run.flags.includes(q.id)?'Tekrar bak işaretini kaldır':'Tekrar bak'}</button>`:''}${run.index===run.ids.length-1?btn(review?'Sonuca dön':'Çalışmayı bitir',review?'result':'finish'):btn('Sonraki '+icon('arrow'),'next')}</div></div></section>
-    <aside class="panel palette-panel"><h3>Sorular</h3><p class="small-copy">${Object.keys(run.answers).length} cevaplandı · ${run.ids.length-Object.keys(run.answers).length} boş</p><div class="palette" aria-label="Sorular">${run.ids.map(paletteItem).join('')}</div><div class="palette-legend"><span><i class="legend-current"></i>Açık soru</span><span><i class="legend-blank"></i>Boş</span>${isExam&&!review?'<span><i class="legend-answered"></i>Cevaplandı</span>':'<span><i class="legend-correct"></i>Doğru</span><span><i class="legend-wrong"></i>Yanlış</span>'}<span><i class="legend-review">↻</i>Tekrar bak</span></div>${isExam&&!review?'<div class="notice">Cevaplar ve açıklamalar deneme bittikten sonra açılacak.</div>':''}${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</aside></div>`;
+    <aside class="panel palette-panel" aria-label="Soru seçimi"><button type="button" class="palette-toggle" data-action="palette-toggle" aria-expanded="${paletteOpen}" aria-controls="palette-details"><span><strong>Sorular</strong> <small>· ${Object.keys(run.answers).length} cevaplandı / ${run.ids.length}</small></span><span aria-hidden="true">${paletteOpen?'⌃':'⌄'}</span></button><div class="palette-details" id="palette-details" data-open="${paletteOpen}"><div class="palette-desktop-heading"><h3>Sorular</h3><p class="small-copy">${Object.keys(run.answers).length} cevaplandı · ${run.ids.length-Object.keys(run.answers).length} boş · ${run.ids.length} soru</p></div><div class="palette-filters" aria-label="Soruları filtrele">${filterButtons}</div><div class="palette" aria-label="Sorular">${paletteItems.map(({id,i})=>paletteItem(id,i)).join('')}</div>${paletteItems.length?'':'<p class="palette-empty">Bu seçimde soru yok.</p>'}<div class="palette-legend"><span><i class="legend-current"></i>Açık soru</span><span><i class="legend-blank"></i>Boş</span>${isExam&&!review?'<span><i class="legend-answered"></i>Cevaplandı</span>':'<span><i class="legend-correct"></i>Doğru</span><span><i class="legend-wrong"></i>Yanlış</span>'}<span><i class="legend-review">↻</i>Tekrar bak</span></div><p class="palette-hint">Diğer sorular için listeyi kaydır.</p>${btn(review?'Sonuç ekranı':'Çalışmayı bitir',review?'result':'finish','','secondary')}</div></aside></div>`;
+    const panel=main.querySelector?.('.palette-panel'),host=document.getElementById('question-navigator-host');
+    if(host)host.replaceChildren?.();
+    if(panel&&host&&window.matchMedia?.('(min-width: 801px)').matches)host.replaceChildren(panel);
+    if(panel&&window.matchMedia?.('(max-width: 800px)').matches)main.querySelector('.question-layout')?.prepend(panel);
     const palette=document.querySelector('.palette');
     if(palette){
       palette.scrollTop=previousScroll;
@@ -636,6 +663,7 @@
     if(!D.questions.length){main.innerHTML=emptyContent('DENEME SINAVI','Henüz soru eklenmedi','Sorular eklendiğinde deneme oluşturabilirsin.');return;}
     const count=examPool().length;
     main.innerHTML=heading(courseTitle(),'Deneme sınavı')+
+      (run?.type==='exam'?(run.finished?`<div class="notice exam-resume">Denemen tamamlandı. ${btn('Deneme sonucunu gör','result','','secondary')}</div>`:`<div class="notice exam-resume"><strong>Devam eden denemen var.</strong> Süreli denemede sayaç işlemeye devam eder. ${btn('Denemeye devam et','resume','','secondary')}</div>`):'')+
       `<form class="panel exam-setup" id="exam-form">
         <h2>Denemeni oluştur</h2>
         <fieldset class="bank-sources"><legend>Soru türü</legend><label><input type="checkbox" name="exam-source" value="main"${examSources.has('main')?' checked':''}> Ana sorular</label><label><input type="checkbox" name="exam-source" value="extra"${examSources.has('extra')?' checked':''}${extraSetsByCourse.has(activeCourse)?'':' disabled'}> Ek sorular</label></fieldset>
@@ -698,18 +726,13 @@
     <div class="setting-row"><div><h3>${consent?'Bu cihazda saklama açık':'Yalnız bu oturumda çalışıyorsun'}</h3><p>Bu seçeneği kapatmak kalıcı kayıtları kaldırır; mevcut oturumdaki çalışman devam eder. Ortak cihazda yerel kayıtları başkaları görebilir. Uygulama diğer ziyaretçilere sonuçlarını göstermez.</p></div><span class="tag">${consent?'YEREL KAYIT':'OTURUM'}</span></div>
     <div class="setting-row"><div><h3>Kayıtları temizle</h3><p>Bu uygulamanın yerel kayıtları ve oturumdaki çözüm verileri silinir; yanlışlar, yer imleri ve sonuç geçmişi sıfırlanır.</p></div>${btn('Kayıtları temizle','clear','','secondary')}</div></section>
     <section class="lesson-section"><h2>Gizlilik bildirimi</h2><p>Uygulama cevaplarını, puanlarını veya yer imlerini herhangi bir merkezi API’ye göndermez. Uygulamada reklam, analiz pikseli, harici yazı tipi çağrısı ve canlı yapay zekâ bağlantısı yoktur.</p></section></div>`;}
-  function finishNow(){
+  function finishNow(showResult=true){
     const wasFinished=run.finished;M.finish(run,state,lookup);
     if(!wasFinished&&run.type==='exam')for(const id of run.ids){const q=lookup[id];if(q.owner&&Object.hasOwn(run.answers,id)){M.record(loadCourseProgress(q.owner),{...q,id:q.originalId},run.answers[id],run.times[id]||0);delete state.records[id];}}
-    save(true);navigate('result');
+    save(true);if(showResult)navigate('result');
   }
   function render(scroll=true){
     const hash=location.hash.slice(1)||'home';
-    if(run?.type==='exam'&&!run.finished&&hash!==practicePath('run')){
-      toast('Deneme sürüyor. Diğer ekranlar için önce denemeyi bitir.');
-      navigate('run');
-      return;
-    }
     let next=hash,nextCourse=activeCourse;
     const [section,key,...parts]=hash.split('/');
     if(section==='ders'){
@@ -724,6 +747,7 @@
       nextCourse=defaultCourse;
     }
     if(renderedHash!==hash){
+      const host=document.getElementById('question-navigator-host');if(host)host.innerHTML='';
       if(coursePicker.open)coursePicker.close();
       cardAnswers.clear();
       setCourseMenu(false);
@@ -737,7 +761,11 @@
     if(page==='home')home();
     else if(page==='dersler')window.LessonArchive.render();
     else if(page==='sorular')chooseCourse(id);
-    else if(page==='quick'){if(!D.questions.length)main.innerHTML=emptyContent('HIZLI ÇÖZÜM','Henüz soru eklenmedi','Yeni sorular eklendiğinde burada çözebilirsin.');else if(run&&!run.finished)navigate('run');else start('quick',D.questions.map(q=>q.id));}
+    else if(page==='quick'){
+      if(!D.questions.length)main.innerHTML=emptyContent('HIZLI ÇÖZÜM','Henüz soru eklenmedi','Yeni sorular eklendiğinde burada çözebilirsin.');
+      else if(run?.type==='exam'&&!run.finished)main.innerHTML=heading(courseTitle(),'Tek tek soru çöz')+`<section class="panel"><p>Devam eden bir denemen var. İstersen denemene dönebilir veya soruları liste üzerinden çözebilirsin.</p><div class="actions">${btn('Denemeye devam et','resume')} <a class="secondary" href="${practiceHref('bank')}">Soruları listele</a> ${btn('Yeni çalışma başlat','start-quick-anyway','','secondary')}</div></section>`;
+      else if(run&&!run.finished)navigate('run');else start('quick',D.questions.map(q=>q.id));
+    }
     else if(page==='academy')academy();else if(page==='lesson')lesson(id);else if(page==='bank'||page==='about')bank();
     else if(page==='extras')main.innerHTML=emptyContent(courseTitle(false),'Ek sorular','Bu ders için henüz ek soru eklenmedi.');
     else if(page==='wrong'||page==='saved')collection(page);else if(page==='exam')exam();else if(page==='analysis')analysis();
@@ -842,6 +870,9 @@
     'copy-prayer-text':()=>{closePrayerMenu();return copyPrayer();},
     'copy-prayer-image':()=>{closePrayerMenu();return copyPrayerImage();},
     'save-prayer-image':savePrayerImage,
+    'start-quick-anyway':()=>start('quick',D.questions.map(q=>q.id)),
+    'palette-toggle':()=>{paletteOpen=!paletteOpen;runView(route==='review');document.querySelector('.palette-toggle')?.focus();},
+    'palette-filter':id=>{if(['all','blank','wrong','review'].includes(id)){paletteFilter=id;runView(route==='review');document.querySelector(`[data-action="palette-filter"][data-id="${id}"]`)?.focus();}},
     'next-prayer':(_id,target)=>{closePrayerMenu();resetPrayerImage();target.querySelector('.dua-icerik').innerHTML=prayerContent(nextPrayer());},
     'pdf-topic':(id,target)=>exportTest(D.questions.filter(q=>q.topic===id),`${courseTitle(false)} - ${topics[id].name}`,target),
     'pdf-run':(id,target)=>{if(run?.finished)exportTest(run.ids.map(qid=>lookup[qid]),`${courseTitle(false)} - ${run.type==='exam'?'Deneme sınavı':'Çalışma testi'}`,target);},
@@ -1089,9 +1120,10 @@
   document.getElementById('confirm-ok').addEventListener('click',()=>{document.getElementById('confirm-dialog').close();const fn=confirmAction;confirmAction=null;if(fn)fn();});
   document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea')||coursePicker.open||document.getElementById('confirm-dialog').open)return;if(route==='run'&&run&&!run.finished&&/^[1-5]$/.test(e.key)){e.preventDefault();actions.answer(String(Number(e.key)-1));}});
   window.addEventListener('storage',event=>{if(event.key===window.SiteTheme.key){theme=window.SiteTheme.get();refreshChrome();}});
+  window.matchMedia?.('(min-width: 801px)').addEventListener?.('change',()=>{if(['run','review'].includes(route.split('/')[0])&&run)runView(route==='review');});
   window.addEventListener('hashchange',()=>render());
   window.addEventListener('pagehide',()=>{if(run&&!run.finished&&route==='run'&&!document.hidden)M.tick(run);save();});
-  setInterval(()=>{if(!run||run.finished)return;if(run.type==='exam'||(route==='run'&&!document.hidden))M.tick(run);else run.tickAt=Date.now();if(run.deadline&&Date.now()>=run.deadline){document.getElementById('confirm-dialog').close();confirmAction=null;finishNow();toast('Süre doldu. Deneme mevcut cevaplarınla tamamlandı.');return;}const el=document.getElementById('run-timer');if(el)el.textContent=clock();},1000);
+  setInterval(()=>{finishBackgroundExams();if(!run||run.finished)return;if(run.type==='exam'||(route==='run'&&!document.hidden))M.tick(run);else run.tickAt=Date.now();if(run.deadline&&Date.now()>=run.deadline){document.getElementById('confirm-dialog').close();confirmAction=null;finishNow(route==='run');toast('Süre doldu. Deneme mevcut cevaplarınla tamamlandı.');return;}const el=document.getElementById('run-timer');if(el)el.textContent=clock();},1000);
   render();
   window.SiteRelease?.start(() => {
     const page=route.split('/')[0];
