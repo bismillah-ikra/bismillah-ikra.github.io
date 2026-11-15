@@ -254,7 +254,7 @@ test('Arayüz kontrolü: 23 soru ve 23 dakika ile başlayan deneme süre dolunca
   for(const value of weeks) {
     h.events.change({target:{name:'exam-week',value,checked:true}});
   }
-  assert.equal(h.node('exam-count').max,'45');
+  assert.equal(h.node('exam-count').max,'42');
   h.node('exam-count').value='23';
   h.node('exam-minutes').value='23';
   h.events.submit({target:{id:'exam-form'},preventDefault(){}});
@@ -326,9 +326,10 @@ test('Boş soru bankasında çalışmayan başlatma düğmesi yok',()=>{
 });
 test('Din-Bilim soruları dört seçenek ve geçerli cevap anahtarı içeriyor',()=>{
   assert.equal(published.topics.length,11);
-  assert.equal(published.questions.length,175);
-  assert.equal(new Set(published.questions.map(q=>q.id)).size,175);
-  for(const t of published.topics)assert.equal(published.questions.filter(q=>q.topic===t.id).length,['hafta-10','hafta-11'].includes(t.id)?20:15);
+  assert.equal(published.questions.length,163);
+  assert.equal(new Set(published.questions.map(q=>q.id)).size,163);
+  const weeklyCounts=[14,13,15,15,15,14,15,15,15,15,17];
+  assert.deepEqual(Array.from(published.topics,t=>published.questions.filter(q=>q.topic===t.id).length),weeklyCounts);
   for(const q of published.questions){
     assert.equal(q.options.length,4);
     assert.ok(q.options[q.correct].text);
@@ -337,20 +338,20 @@ test('Din-Bilim soruları dört seçenek ve geçerli cevap anahtarı içeriyor',
   const h=harness(published);
   h.nav('sorular/din-bilim-iliskisi');
   assert.match(h.html(),/<h1>Haftalara göre sorular<\/h1>/);
-  assert.match(h.html(),/175 soru · 11 hafta/);
+  assert.match(h.html(),/163 soru · 11 hafta/);
   assert.match(h.html(),/id="remember"/);
-  h.nav('lesson/hafta-1');assert.equal((h.html().match(/class="bank-item"/g)||[]).length,15);
-  h.app.actions['topic-quick']('hafta-1');h.flush();assert.equal(h.app.getRun().ids.length,15);
+  h.nav('lesson/hafta-1');assert.equal((h.html().match(/class="bank-item"/g)||[]).length,14);
+  h.app.actions['topic-quick']('hafta-1');h.flush();assert.equal(h.app.getRun().ids.length,14);
   h.nav('bank');
   for(const value of ['hafta-1','hafta-2','hafta-3']) {
     h.events.change({target:{name:'bank-week',value,checked:true}});
   }
-  assert.match(h.node('bank-results').innerHTML,/45 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/42 soru listeleniyor/);
   h.events.change({target:{id:'bank-status',value:'saved'}});
   assert.match(h.node('bank-results').innerHTML,/0 soru listeleniyor/);
   h.events.change({target:{id:'bank-status',value:''}});
   h.app.actions['clear-bank-weeks']();
-  assert.match(h.node('bank-results').innerHTML,/175 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/163 soru listeleniyor/);
 });
 test('Hafta düğmesi açık çalışmayı konumu ve cevaplarıyla sürdürür',()=>{
   const h=harness(published);
@@ -368,9 +369,9 @@ test('Listede çözülen sorular atlanır; hafta tamamen çözülünce yeniden �
   const item={innerHTML:'',querySelector:()=>({focus(){}})},target={closest:()=>item};
   h.nav('lesson/hafta-1');
   h.app.actions['answer-card'](qs[0].id+'/0',target);
-  assert.match(h.node('week-study-action').innerHTML,/Kalan 14 soruyu çöz/);
+  assert.match(h.node('week-study-action').innerHTML,/Kalan 13 soruyu çöz/);
   h.app.actions['topic-quick']('hafta-1');h.flush();
-  assert.equal(h.app.getRun().ids.length,14);assert.equal(h.app.getRun().ids[0],qs[1].id);
+  assert.equal(h.app.getRun().ids.length,13);assert.equal(h.app.getRun().ids[0],qs[1].id);
   h.nav('lesson/hafta-1');
   for(const q of qs.slice(1))h.app.actions['answer-card'](q.id+'/0',target);
   assert.match(h.node('week-study-action').innerHTML,/Soruları yeniden çöz/);
@@ -384,7 +385,7 @@ test('Kalan hafta sorularında soru numaraları listeyle aynı kalır',()=>{
   assert.equal(h.app.getRun().ids[0],qs[1].id);
   assert.match(h.html(),new RegExp('>'+qs[1].number+'\\. soru</span>'));
   assert.match(h.html(),new RegExp('aria-label="'+qs[1].number+'\\. soru, boş"'));
-  assert.match(h.html(),/Çalışmadaki sıra · 1 \/ 14/);
+  assert.match(h.html(),/Çalışmadaki sıra · 1 \/ 13/);
   assert.match(h.html(),/<h3>Sorular<\/h3>/);
   h.nav('lesson/hafta-1');
   assert.match(h.html(),new RegExp(qs[1].number+'\\. sorudan devam et'));
@@ -397,7 +398,7 @@ test('Devam düğmesi son listede çözülen haftayı seçer ve yenilemede korur
   h.advance(1000);h.nav('lesson/hafta-2');
   h.app.actions['answer-card'](qs[0].id+'/0',{closest:()=>({innerHTML:'',querySelector:()=>({focus(){}})})});
   const restored=harness(published,storage);restored.nav('academy');
-  assert.match(restored.html(),/2\. Hafta · Kalan 14 soruyu çöz/i);
+  assert.match(restored.html(),/2\. Hafta · Kalan 12 soruyu çöz/i);
   restored.app.actions.resume();
   assert.equal(restored.node('confirm-dialog').open,true);
   restored.node('confirm-ok').click();restored.flush();
@@ -429,7 +430,7 @@ test('E’den taşınan doğru cevap tek tek çözümde ve denemede değerlendir
   assert.equal(h.app.getState().records[q.id].lastCorrect,true);
   assert.match(h.html(),/Cevap açıklaması/);assert.ok(h.html().includes(q.explanation));
   h.nav('exam');h.events.change({target:{name:'exam-week',value:q.topic,checked:true}});
-  h.app.actions['exam-count']('20');h.app.actions['start-exam']();assert.equal(h.node('confirm-dialog').open,true);h.node('confirm-ok').click();h.flush();
+  h.app.actions['exam-count']('15');h.app.actions['start-exam']();assert.equal(h.node('confirm-dialog').open,true);h.node('confirm-ok').click();h.flush();
   const examQuestionIndex=h.app.getRun().ids.indexOf(q.id);
   assert.ok(examQuestionIndex>=0);
   h.app.actions.jump(String(examQuestionIndex));
@@ -474,7 +475,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1641);
+  assert.equal(counts,1629);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -494,8 +495,8 @@ test('Din-Bilim ana sorularının görünen numaraları sıralı ve tekildir',()
   const h=harness(published,fakeStorage(),true);
   h.nav('bank');
   const labels=[...h.node('bank-results').innerHTML.matchAll(/<span class="number">(\d+)\. soru<\/span>/g)].map(match=>Number(match[1]));
-  assert.equal(labels.length,214);
-  assert.deepEqual(labels,Array.from({length:214},(_,index)=>index+1));
+  assert.equal(labels.length,190);
+  assert.deepEqual(labels,Array.from({length:190},(_,index)=>index+1));
 });
 test('10. hafta dört derste çözülebilir',()=>{
   const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
@@ -506,11 +507,12 @@ test('10. hafta dört derste çözülebilir',()=>{
     ['ornek-hadis-metinleri',sets['ornek-hadis-metinleri'].questions]
   ]){
     const weekly=questions.filter(q=>q.topic==='hafta-10');
-    assert.equal(weekly.length,20,slug);
-    assert.equal(weekly.map(q=>q.number).join(','),Array.from({length:20},(_,i)=>i+1).join(','),slug);
+    const count=slug==='din-bilim-iliskisi'?15:20;
+    assert.equal(weekly.length,count,slug);
+    assert.equal(weekly.map(q=>q.number).join(','),Array.from({length:count},(_,i)=>i+1).join(','),slug);
     assert.ok(weekly.every(q=>q.options[q.correct]?.text),slug);
     h.nav(slug==='din-bilim-iliskisi'?'lesson/hafta-10':`ders/${slug}/lesson/hafta-10`);
-    assert.equal((h.html().match(/class="bank-item"/g)||[]).length,20,slug);
+    assert.equal((h.html().match(/class="bank-item"/g)||[]).length,count,slug);
     h.app.actions.single(weekly[0].id);h.flush();
     h.events.keydown({target:{matches:()=>false},key:'1',preventDefault(){}});
     assert.match(h.html(),/Cevap açıklaması/,slug);
@@ -558,7 +560,7 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   assert.ok(extraQuestions.every(q=>q.options.length===4&&Number.isInteger(q.correct)&&q.options[q.correct]?.text));
   const four='ders/din-bilim-iliskisi-4-sikli/';
   h.nav('academy');
-  assert.match(h.html(),/214 soru · 11 hafta/);
+  assert.match(h.html(),/190 soru · 11 hafta/);
   assert.doesNotMatch(h.node('nav').innerHTML,/<span>Ek sorular<\/span>/);
   assert.doesNotMatch(h.node('nav').innerHTML,/4 şıklı|5 şıklı/);
   h.app.actions.bookmark(published.questions[0].id);
@@ -573,7 +575,7 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   assert.deepEqual(mainLinks,['quick','academy','exam','bank','wrong','saved','analysis']);
   assert.doesNotMatch(h.html(),/Ek sorulardan deneme|Tüm sorular bir arada/);
   h.nav(mainLinks[3]);
-  assert.match(h.node('bank-results').innerHTML,/214 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/190 soru listeleniyor/);
   assert.doesNotMatch(h.node('bank-results').innerHTML,/class="letter">E</);
   h.nav(four+'exam');
   h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
@@ -608,7 +610,7 @@ test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   h.nav('bank');
   h.events.change({target:{id:'remember',checked:true}});
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/239 soru listeleniyor/);
   assert.match(h.node('bank-results').innerHTML,/id="question-S-01-02"/);
   assert.match(h.node('bank-results').innerHTML,/id="question-extra-S-01-02"/);
   h.events.change({target:{name:'bank-source',value:'main',checked:false}});
@@ -678,7 +680,7 @@ test('Karma denemede seçilen haftalar ve ek başlıklar birlikte kullanılır',
   h.nav('exam');h.events.change({target:{name:'exam-source',value:'extra',checked:true}});
   h.events.change({target:{name:'exam-week',value:'hafta-1',checked:true}});
   h.events.change({target:{name:'exam-extra-week',value:'hafta-2',checked:true}});
-  const total=Number(h.node('exam-count').max);assert.equal(total,21);
+  const total=Number(h.node('exam-count').max);assert.equal(total,20);
   h.app.actions['exam-count'](String(total));h.app.actions['start-exam']();h.flush();
   const ids=Array.from(h.app.getRun().ids);
   assert.ok(ids.some(id=>id.startsWith('extra:S-02-')));
@@ -752,10 +754,10 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   assert.equal(navCount(),230);
   assert.match(h.node('bank-results').innerHTML,/230 soru listeleniyor/);
   h.nav('academy');
-  assert.equal(navCount(),263);
+  assert.equal(navCount(),239);
   h.nav('bank');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/239 soru listeleniyor/);
   h.nav('ders/kelam/academy');
   assert.equal(navCount(),180);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
@@ -770,7 +772,7 @@ test('Mobil menü ve filtreler kapanır, seçimler filtre yeniden çizilince kor
   assert.equal(h.node('course-menu-toggle').attrs['aria-expanded'],'false');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
   assert.equal(h.document.documentElement.dataset.bankFilters,'open');
-  assert.match(h.node('bank-results').innerHTML,/263 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/239 soru listeleniyor/);
   h.node('course-menu-toggle').click();
   assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
   h.node('course-filter-toggle').click();

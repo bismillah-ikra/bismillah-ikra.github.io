@@ -113,29 +113,6 @@ window.MUSKAM_DATA = {
       "retiredChoice": 3
     },
     {
-      "id": "Q004",
-      "number": 4,
-      "topic": "hafta-1",
-      "stem": "Vahiy merkezli ilim anlayışı, tabiatın işleyişi hakkında hangi ek soruyu sorar?",
-      "options": [
-        {
-          "text": "Bu düzenin yaratılış ve insan için anlamı nedir?"
-        },
-        {
-          "text": "Olay hangi fizik kanunuyla açıklanır?"
-        },
-        {
-          "text": "Sonuçlar nasıl tekrar sınanabilir?"
-        },
-        {
-          "text": "Süreç hangi şartlarda değişir?"
-        }
-      ],
-      "correct": 0,
-      "explanation": "Bu anlayış, tabiat araştırmalarından edinilen bilgiyi vahiy ve insanın hayatına dair anlam sorularıyla birlikte ele alır.",
-      "retiredChoice": 0
-    },
-    {
       "id": "Q005",
       "number": 5,
       "topic": "hafta-1",
@@ -685,52 +662,6 @@ window.MUSKAM_DATA = {
       ],
       "correct": 1,
       "explanation": "Geçerli çıkarım ve doğru öncüller birlikte doğru sonucu güvenceye alır.",
-      "retiredChoice": 4
-    },
-    {
-      "id": "Q029-v2",
-      "number": 29,
-      "topic": "hafta-2",
-      "stem": "Bir hipotezden çıkarılan tahmin, sınanabilir olması için hangi özelliği taşımalıdır?",
-      "options": [
-        {
-          "text": "Gözlem veya deney sonucu ile karşılaştırılabilmelidir."
-        },
-        {
-          "text": "Araştırmacının beklentisiyle uyumlu olmalıdır."
-        },
-        {
-          "text": "Konuyla ilgili bütün olasılıkları tek seferde açıklamalıdır."
-        },
-        {
-          "text": "Hipotezin cümlesiyle aynı biçimde yazılmalıdır."
-        }
-      ],
-      "correct": 0,
-      "explanation": "Bir tahmin, hangi sonucun gözleneceğini belirtirse gözlem veya deneyle karşılaştırılabilir.",
-      "retiredChoice": 4
-    },
-    {
-      "id": "Q030",
-      "number": 30,
-      "topic": "hafta-2",
-      "stem": "Bir geometrik teoremin ispatına ek olarak hangi konuda gözlem ve ölçüm gerekir?",
-      "options": [
-        {
-          "text": "İspatta hangi tanımların kullanıldığını belirlemek"
-        },
-        {
-          "text": "Sonucun aksiyomlardan çıktığını göstermek"
-        },
-        {
-          "text": "Modelin fiziksel dünyaya uygunluğunu belirlemek"
-        },
-        {
-          "text": "Çıkarımın mantık kurallarına uyduğunu göstermek"
-        }
-      ],
-      "correct": 2,
-      "explanation": "Bir ispat sistem içindeki geçerliliği gösterir. Fiziksel uygunluk ayrıca gözlem ve ölçümle sınanır.",
       "retiredChoice": 4
     },
     {
@@ -2045,29 +1976,6 @@ window.MUSKAM_DATA = {
       "retiredChoice": 4
     },
     {
-      "id": "Q088",
-      "number": 88,
-      "topic": "hafta-6",
-      "stem": "İbnü’n-Nefîs’in küçük kan dolaşımı tarifinde kan hangi yolu izler?",
-      "options": [
-        {
-          "text": "Kalbin sağ tarafından akciğerlere, oradan kalbin sol tarafına"
-        },
-        {
-          "text": "Kalbin sağ tarafından doğrudan kalbin sol tarafına"
-        },
-        {
-          "text": "Kalbin sağ tarafından karaciğere, oradan kalbin sol tarafına"
-        },
-        {
-          "text": "Kalbin sağ tarafından böbreklere, oradan kalbin sol tarafına"
-        }
-      ],
-      "correct": 0,
-      "explanation": "İbnü’n-Nefîs, kalbin iki tarafı arasında doğrudan geçiş olduğu görüşünü sorguladı ve kanın akciğerlerden geçtiğini açıkladı.",
-      "retiredChoice": 4
-    },
-    {
       "id": "Q089",
       "number": 89,
       "topic": "hafta-6",
@@ -3156,26 +3064,21 @@ window.MUSKAM_DATA = {
 // 10. hafta kaynak testinden aktarıldı.
 window.MUSKAM_DATA.topics.push({id:'hafta-10',name:'10. Hafta'});
 window.MUSKAM_DATA.questions.push(...[
-  {"id":"Q10-01","number":1,"topic":"hafta-10","stem":"Nil taşkınlarından sonra geometri ne için kullanıldı?","options":[{"text":"Toprağın türünü belirlemek"},{"text":"Tohum miktarını hesaplamak"},{"text":"Tarla sınırlarını yeniden ölçmek"},{"text":"Taşkın zamanını takvime yazmak"}],"correct":2,"explanation":"Ders notunda verilen örnekte, Nil’in taşması tarla sınırlarının yeniden belirlenmesini gerektiriyordu. Geometrik ölçümler arazinin sınırlarını ve alanını hesaplamaya yardım etti.","retiredChoice":4},
-  {"id":"Q10-02","number":2,"topic":"hafta-10","stem":"Babil’de dinî günleri belirlemek hangi çalışmayı gerektiriyordu?","options":[{"text":"Gökyüzünü düzenli gözlemlemek"},{"text":"Hastalıkları sınıflandırmak"},{"text":"Yazılı yasaları derlemek"},{"text":"Tarım alanlarını ölçmek"}],"correct":0,"explanation":"Güneş ve Ay’ın düzenli hareketlerini izlemek, takvimin hazırlanmasına yardım etti. Dinî günler bu takvimle belirlenebiliyordu.","retiredChoice":4},
-  {"id":"Q10-03","number":3,"topic":"hafta-10","stem":"İngiltere’de bazı manastırlar sağlık alanında ne yapıyordu?","options":[{"text":"Tıp dergileri yayımlıyordu."},{"text":"Hasta bakımı sağlıyordu."},{"text":"İlaçların fiyatını belirliyordu."},{"text":"Mikroskop üretiyordu."}],"correct":1,"explanation":"Bazı İngiliz manastırlarında hasta bakımı için ayrılmış yerler vardı. Manastır toplulukları bu mekânlarda hastaların bakımını üstlenebiliyordu.","retiredChoice":4},
-  {"id":"Q10-04","number":4,"topic":"hafta-10","stem":"Roger Bacon tabiatı incelemede hangi yöntemi öne çıkardı?","options":[{"text":"Metin karşılaştırması"},{"text":"Sözlü tanıklık"},{"text":"Tarihsel sınıflandırma"},{"text":"Deney ve gözlem"}],"correct":3,"explanation":"Roger Bacon, tabiat hakkındaki açıklamaları sınamak için gözlem ve deneyden yararlanmayı vurguladı. Matematiğe de tabiatı incelemede önemli bir yer verdi.","retiredChoice":4},
-  {"id":"Q10-05","number":5,"topic":"hafta-10","stem":"Londra Kraliyet Cemiyeti’nin çevresi hangi özelliğiyle öne çıktı?","options":[{"text":"Farklı uzmanlıklardan kişileri bir araya getirmesiyle"},{"text":"Üyelerini tek bir meslekten seçmesiyle"},{"text":"Yalnız tıp araştırmalarına yer vermesiyle"},{"text":"Çalışmalarını dil araştırmalarıyla sınırlamasıyla"}],"correct":0,"explanation":"Cemiyetin ilk çevresi farklı bilgi ve meslek alanlarından gelen kişileri buluşturdu. Bu ortam, gözlem ve deney sonuçlarının paylaşılmasına imkân verdi.","retiredChoice":4},
-  {"id":"Q10-06","number":6,"topic":"hafta-10","stem":"Robert Hooke şişe mantarında gördüğü küçük bölmelere ne ad verdi?","options":[{"text":"Molekül"},{"text":"Organel"},{"text":"Hücre"},{"text":"Doku"}],"correct":2,"explanation":"Hooke, mikroskopla incelediği şişe mantarında gördüğü küçük bölmelere hücre adını verdi. Bu gözlemi 1665’te yayımlanan Micrographia’da anlattı.","retiredChoice":4},
-  {"id":"Q10-07","number":7,"topic":"hafta-10","stem":"Bir türün iki sözcüklü bilimsel adı hangi parçalardan oluşur?","options":[{"text":"Tür ve sınıf"},{"text":"Cins adı ve türü belirten ikinci ad"},{"text":"Aile ve takım"},{"text":"Takım ve cins"}],"correct":1,"explanation":"İki sözcük birlikte türün bilimsel adını oluşturur. Örneğin Homo sapiens adında Homo cinsi, sapiens ise tür adının ikinci bölümünü gösterir.","retiredChoice":4},
-  {"id":"Q10-08","number":8,"topic":"hafta-10","stem":"Kepler’in gök hareketleri araştırmasında öne çıkan konu nedir?","options":[{"text":"Hastalıkların yayılması"},{"text":"Matematiksel ahenk"},{"text":"Hücre yapısının incelenmesi"},{"text":"Canlıların sınıflandırılması"}],"correct":1,"explanation":"Kepler, gezegenlerin hareketleri arasında matematiksel oranlar ve düzen aradı. Dünyanın Ahengi adlı eseri bu araştırmanın bir örneğidir.","retiredChoice":4},
-  {"id":"Q10-09","number":9,"topic":"hafta-10","stem":"Newton çekim yasasını yaratıcı inancıyla nasıl bağdaştırdı?","options":[{"text":"Kanunu yaratıcının müdahalesini dışlayan bir düzen saydı."},{"text":"Kanunu yalnız kutsal metinden çıkardı."},{"text":"Kanunu ilahî varlığın kendisiyle özdeşleştirdi."},{"text":"Kanunu yaratıcı idaresiyle uyumlu gördü."}],"correct":3,"explanation":"Newton, çekim yasasını gözlenen hareketi matematikle açıklayan bir düzenlilik olarak gördü. Bu düzenin işlemesini yaratıcının evreni yönetmesiyle bağdaşır saydı.","retiredChoice":3},
-  {"id":"Q10-10","number":10,"topic":"hafta-10","stem":"Descartes’ın düalizmi hangi iki cevheri ayırır?","options":[{"text":"Kütle ve hareket"},{"text":"Mekân ve zaman"},{"text":"Madde ve düşünen cevher"},{"text":"Sebep ve sonuç"}],"correct":2,"explanation":"Descartes, yer kaplayan maddî cevher ile düşünen cevheri birbirinden ayırır. Düalizm bu iki cevher ayrımını ifade eder.","retiredChoice":2},
-  {"id":"Q10-11","number":11,"topic":"hafta-10","stem":"Gaye sebep bir değişikliğin hangi yönünü açıklar?","options":[{"text":"Meydana getiren etkeni"},{"text":"Ölçülen hızını"},{"text":"Gözlendiği zamanı"},{"text":"Yöneldiği amacı"}],"correct":3,"explanation":"Gaye sebep, bir değişikliğin ne için gerçekleştiğini açıklar. Değişikliği meydana getiren etken ise fail sebep olarak adlandırılır.","retiredChoice":4},
-  {"id":"Q10-12","number":12,"topic":"hafta-10","stem":"Orta Çağ’da Arapça bilim eserlerinin Batı Avrupa’daki öğrenim çevrelerine yayılmasında başlıca çeviri dili hangisiydi?","options":[{"text":"Fransızca"},{"text":"İngilizce"},{"text":"İspanyolca"},{"text":"Latince"}],"correct":3,"explanation":"Latince çeviriler, Arapça bilim ve felsefe eserlerinin Batı Avrupa’daki öğrenim çevrelerine ulaşmasında başlıca araçlardan biriydi. Kastilyaca gibi dillere de çeviriler yapıldı.","retiredChoice":3},
-  {"id":"Q10-13","number":13,"topic":"hafta-10","stem":"Bilim ile din arasındaki çatışma tezi neyi savunur?","options":[{"text":"Aralarındaki ilişkinin her dönemde uyumlu olduğunu"},{"text":"Dinî kurumların her dönemde aynı görevleri üstlendiğini"},{"text":"Aralarındaki ilişkinin sürekli mücadeleyle biçimlendiğini"},{"text":"Bilimsel çalışmaların yalnız üniversitelerde yapıldığını"}],"correct":2,"explanation":"Draper ve White’ın yaygınlaştırdığı çatışma tezi, bilim ile din arasındaki ilişkiyi sürekli bir mücadele olarak yorumlar. Bu yorumun bütün dönemlere genellenmesi tarihçilerce eleştirilmiştir.","retiredChoice":4},
-  {"id":"Q10-14","number":14,"topic":"hafta-10","stem":"Bilim ve din tarihindeki bir anlaşmazlığı anlamak için önce ne incelenir?","options":[{"text":"Yalnız bugünkü ders kitapları"},{"text":"En çok tekrarlanan genel yargı"},{"text":"Yalnız tartışmanın ne kadar sürdüğü"},{"text":"Olayın tarafları ve yaşandığı koşullar"}],"correct":3,"explanation":"Olayın taraflarını, dönemin koşullarını ve eldeki belgeleri incelemek, anlaşmazlığın ne hakkında olduğunu gösterir. Böylece tek bir olaydan bütün dönemler için sonuç çıkarma hatası önlenir.","retiredChoice":4},
-  {"id":"Q10-15","number":15,"topic":"hafta-10","stem":"İki kitap modelinde kâinat kitabı hangi araçlarla okunur?","options":[{"text":"İbadet, dua ve tefekkürle"},{"text":"Gelenek, hitabet ve törenle"},{"text":"Hukuk, yönetim ve yaptırımla"},{"text":"Ölçüm, deney ve matematikle"}],"correct":3,"explanation":"İki kitap modelinde kâinatı okumak, tabiatın işleyişini araştırmaktır. Ölçüm, deney ve matematik bu işleyişi incelemeye yardım eder.","retiredChoice":4},
-  {"id":"Q10-16","number":16,"topic":"hafta-10","stem":"İki kitap modelinde vahiy kitabı neye rehberlik eder?","options":[{"text":"İman, gaye ve sorumluluğa"},{"text":"Maddelerin sıcaklık ölçümüne"},{"text":"Canlıların ikili adlandırılmasına"},{"text":"Hücrelerin mikroskopla ölçümüne"}],"correct":0,"explanation":"İki kitap modelinde vahiy, iman, ahlâk ve insanın sorumluluğu hakkında yol gösterir. Gaye, insan hayatının neye yöneldiğiyle ilgili sorudur.","retiredChoice":4},
-  {"id":"Q10-17","number":17,"topic":"hafta-10","stem":"Hücre zarı örneğinde hangi soru felsefî yorum gerektirir?","options":[{"text":"Zar hangi maddeleri geçirir?"},{"text":"Zarda hangi lipitler bulunur?"},{"text":"Hücredeki düzenin nihai kaynağı nedir?"},{"text":"Zarın kalınlığı ne kadardır?"}],"correct":2,"explanation":"Zarın kalınlığı veya hangi maddeleri geçirdiği ölçümle incelenebilir. Hücredeki düzenin nihai kaynağını sormak ise ölçülen mekanizmanın ötesinde felsefî bir yorum gerektirir.","retiredChoice":4},
-  {"id":"Q10-18","number":18,"topic":"hafta-10","stem":"Mîzan sözcüğünün temel anlamı nedir?","options":[{"text":"Zaman ve mekân"},{"text":"Sebep ve etki"},{"text":"Ölçü ve denge"},{"text":"Hareket ve hız"}],"correct":2,"explanation":"Mîzan ölçü ve denge anlamına gelir. Rahmân sûresinde bu kavram, düzenle birlikte tartıda ölçüyü koruma sorumluluğuyla da ilişkilendirilir.","retiredChoice":2},
-  {"id":"Q10-19","number":19,"topic":"hafta-10","stem":"Arapça matematik geleneğiyle Avrupa’ya aktarılan hangi yenilik hesabı kolaylaştırdı?","options":[{"text":"Yansıtmalı teleskop kullanımı"},{"text":"Konumsal sayı yazımı ve sıfır"},{"text":"Çekimin hareket yasasıyla açıklanması"},{"text":"Canlıların ikili adlandırılması"}],"correct":1,"explanation":"Konumsal yazımda rakamın değeri bulunduğu basamağa göre değişir ve sıfır boş basamağı gösterebilir. Hint kökenli bu hesap geleneğinin Avrupa’ya ulaşmasında Arapça matematik eserleri rol oynadı.","retiredChoice":4},
-  {"id":"Q10-20","number":20,"topic":"hafta-10","stem":"İslam dünyasındaki tercüme hareketi araştırmayı nasıl destekledi?","options":[{"text":"Eski eserleri erişilebilir kılıp yeni çalışmalara zemin hazırladı."},{"text":"Eserlerin yalnız sözlü yolla yayılmasını sağladı."},{"text":"Yalnızca kitap adlarını farklı dillere aktardı."},{"text":"Önceki eserlerin yerine sadece ders listeleri hazırladı."}],"correct":0,"explanation":"Tercüme, önceki çalışmaları yeni okurlar için erişilebilir kıldı. Bilginler bu eserleri inceleyip eleştirebildi ve birikimi yeni araştırmalarla geliştirebildi.","retiredChoice":4}
+  {"id":"Q10-03","number":1,"topic":"hafta-10","stem":"İngiltere’de bazı manastırlar sağlık alanında ne yapıyordu?","options":[{"text":"Tıp dergileri yayımlıyordu."},{"text":"Hasta bakımı sağlıyordu."},{"text":"İlaçların fiyatını belirliyordu."},{"text":"Mikroskop üretiyordu."}],"correct":1,"explanation":"Bazı İngiliz manastırlarında hasta bakımı için ayrılmış yerler vardı. Manastır toplulukları bu mekânlarda hastaların bakımını üstlenebiliyordu.","retiredChoice":4},
+  {"id":"Q10-05","number":2,"topic":"hafta-10","stem":"Londra Kraliyet Cemiyeti’nin çevresi hangi özelliğiyle öne çıktı?","options":[{"text":"Farklı uzmanlıklardan kişileri bir araya getirmesiyle"},{"text":"Üyelerini tek bir meslekten seçmesiyle"},{"text":"Yalnız tıp araştırmalarına yer vermesiyle"},{"text":"Çalışmalarını dil araştırmalarıyla sınırlamasıyla"}],"correct":0,"explanation":"Cemiyetin ilk çevresi farklı bilgi ve meslek alanlarından gelen kişileri buluşturdu. Bu ortam, gözlem ve deney sonuçlarının paylaşılmasına imkân verdi.","retiredChoice":4},
+  {"id":"Q10-06","number":3,"topic":"hafta-10","stem":"Robert Hooke şişe mantarında gördüğü küçük bölmelere ne ad verdi?","options":[{"text":"Molekül"},{"text":"Organel"},{"text":"Hücre"},{"text":"Doku"}],"correct":2,"explanation":"Hooke, mikroskopla incelediği şişe mantarında gördüğü küçük bölmelere hücre adını verdi. Bu gözlemi 1665’te yayımlanan Micrographia’da anlattı.","retiredChoice":4},
+  {"id":"Q10-07","number":4,"topic":"hafta-10","stem":"Bir türün iki sözcüklü bilimsel adı hangi parçalardan oluşur?","options":[{"text":"Tür ve sınıf"},{"text":"Cins adı ve türü belirten ikinci ad"},{"text":"Aile ve takım"},{"text":"Takım ve cins"}],"correct":1,"explanation":"İki sözcük birlikte türün bilimsel adını oluşturur. Örneğin Homo sapiens adında Homo cinsi, sapiens ise tür adının ikinci bölümünü gösterir.","retiredChoice":4},
+  {"id":"Q10-08","number":5,"topic":"hafta-10","stem":"Kepler’in gök hareketleri araştırmasında öne çıkan konu nedir?","options":[{"text":"Hastalıkların yayılması"},{"text":"Matematiksel ahenk"},{"text":"Hücre yapısının incelenmesi"},{"text":"Canlıların sınıflandırılması"}],"correct":1,"explanation":"Kepler, gezegenlerin hareketleri arasında matematiksel oranlar ve düzen aradı. Dünyanın Ahengi adlı eseri bu araştırmanın bir örneğidir.","retiredChoice":4},
+  {"id":"Q10-09","number":6,"topic":"hafta-10","stem":"Newton çekim yasasını yaratıcı inancıyla nasıl bağdaştırdı?","options":[{"text":"Kanunu yaratıcının müdahalesini dışlayan bir düzen saydı."},{"text":"Kanunu yalnız kutsal metinden çıkardı."},{"text":"Kanunu ilahî varlığın kendisiyle özdeşleştirdi."},{"text":"Kanunu yaratıcı idaresiyle uyumlu gördü."}],"correct":3,"explanation":"Newton, çekim yasasını gözlenen hareketi matematikle açıklayan bir düzenlilik olarak gördü. Bu düzenin işlemesini yaratıcının evreni yönetmesiyle bağdaşır saydı.","retiredChoice":3},
+  {"id":"Q10-10","number":7,"topic":"hafta-10","stem":"Descartes’ın düalizmi hangi iki cevheri ayırır?","options":[{"text":"Kütle ve hareket"},{"text":"Mekân ve zaman"},{"text":"Madde ve düşünen cevher"},{"text":"Sebep ve sonuç"}],"correct":2,"explanation":"Descartes, yer kaplayan maddî cevher ile düşünen cevheri birbirinden ayırır. Düalizm bu iki cevher ayrımını ifade eder.","retiredChoice":2},
+  {"id":"Q10-11","number":8,"topic":"hafta-10","stem":"Gaye sebep bir değişikliğin hangi yönünü açıklar?","options":[{"text":"Meydana getiren etkeni"},{"text":"Ölçülen hızını"},{"text":"Gözlendiği zamanı"},{"text":"Yöneldiği amacı"}],"correct":3,"explanation":"Gaye sebep, bir değişikliğin ne için gerçekleştiğini açıklar. Değişikliği meydana getiren etken ise fail sebep olarak adlandırılır.","retiredChoice":4},
+  {"id":"Q10-12","number":9,"topic":"hafta-10","stem":"Orta Çağ’da Arapça bilim eserlerinin Batı Avrupa’daki öğrenim çevrelerine yayılmasında başlıca çeviri dili hangisiydi?","options":[{"text":"Fransızca"},{"text":"İngilizce"},{"text":"İspanyolca"},{"text":"Latince"}],"correct":3,"explanation":"Latince çeviriler, Arapça bilim ve felsefe eserlerinin Batı Avrupa’daki öğrenim çevrelerine ulaşmasında başlıca araçlardan biriydi. Kastilyaca gibi dillere de çeviriler yapıldı.","retiredChoice":3},
+  {"id":"Q10-13","number":10,"topic":"hafta-10","stem":"Bilim ile din arasındaki çatışma tezi neyi savunur?","options":[{"text":"Aralarındaki ilişkinin her dönemde uyumlu olduğunu"},{"text":"Dinî kurumların her dönemde aynı görevleri üstlendiğini"},{"text":"Aralarındaki ilişkinin sürekli mücadeleyle biçimlendiğini"},{"text":"Bilimsel çalışmaların yalnız üniversitelerde yapıldığını"}],"correct":2,"explanation":"Draper ve White’ın yaygınlaştırdığı çatışma tezi, bilim ile din arasındaki ilişkiyi sürekli bir mücadele olarak yorumlar. Bu yorumun bütün dönemlere genellenmesi tarihçilerce eleştirilmiştir.","retiredChoice":4},
+  {"id":"Q10-14","number":11,"topic":"hafta-10","stem":"Bilim ve din tarihindeki bir anlaşmazlığı anlamak için önce ne incelenir?","options":[{"text":"Yalnız bugünkü ders kitapları"},{"text":"En çok tekrarlanan genel yargı"},{"text":"Yalnız tartışmanın ne kadar sürdüğü"},{"text":"Olayın tarafları ve yaşandığı koşullar"}],"correct":3,"explanation":"Olayın taraflarını, dönemin koşullarını ve eldeki belgeleri incelemek, anlaşmazlığın ne hakkında olduğunu gösterir. Böylece tek bir olaydan bütün dönemler için sonuç çıkarma hatası önlenir.","retiredChoice":4},
+  {"id":"Q10-15","number":12,"topic":"hafta-10","stem":"İki kitap modelinde kâinat kitabı hangi araçlarla okunur?","options":[{"text":"İbadet, dua ve tefekkürle"},{"text":"Gelenek, hitabet ve törenle"},{"text":"Hukuk, yönetim ve yaptırımla"},{"text":"Ölçüm, deney ve matematikle"}],"correct":3,"explanation":"İki kitap modelinde kâinatı okumak, tabiatın işleyişini araştırmaktır. Ölçüm, deney ve matematik bu işleyişi incelemeye yardım eder.","retiredChoice":4},
+  {"id":"Q10-16","number":13,"topic":"hafta-10","stem":"İki kitap modelinde vahiy kitabı neye rehberlik eder?","options":[{"text":"İman, gaye ve sorumluluğa"},{"text":"Maddelerin sıcaklık ölçümüne"},{"text":"Canlıların ikili adlandırılmasına"},{"text":"Hücrelerin mikroskopla ölçümüne"}],"correct":0,"explanation":"İki kitap modelinde vahiy, iman, ahlâk ve insanın sorumluluğu hakkında yol gösterir. Gaye, insan hayatının neye yöneldiğiyle ilgili sorudur.","retiredChoice":4},
+  {"id":"Q10-17","number":14,"topic":"hafta-10","stem":"Hücre zarı örneğinde hangi soru felsefî yorum gerektirir?","options":[{"text":"Zar hangi maddeleri geçirir?"},{"text":"Zarda hangi lipitler bulunur?"},{"text":"Hücredeki düzenin nihai kaynağı nedir?"},{"text":"Zarın kalınlığı ne kadardır?"}],"correct":2,"explanation":"Zarın kalınlığı veya hangi maddeleri geçirdiği ölçümle incelenebilir. Hücredeki düzenin nihai kaynağını sormak ise ölçülen mekanizmanın ötesinde felsefî bir yorum gerektirir.","retiredChoice":4},
+  {"id":"Q10-18","number":15,"topic":"hafta-10","stem":"Mîzan sözcüğünün temel anlamı nedir?","options":[{"text":"Zaman ve mekân"},{"text":"Sebep ve etki"},{"text":"Ölçü ve denge"},{"text":"Hareket ve hız"}],"correct":2,"explanation":"Mîzan ölçü ve denge anlamına gelir. Rahmân sûresinde bu kavram, düzenle birlikte tartıda ölçüyü koruma sorumluluğuyla da ilişkilendirilir.","retiredChoice":2},
 ]);
 
 // 11. hafta çalışma dosyasından.
@@ -3187,18 +3090,15 @@ window.MUSKAM_DATA.questions.push(...[
   {"id":"Q11-04","number":4,"topic":"hafta-11","stem":"Bilimsel uzmanlaşmanın artmasına ne katkı sağlar?","options":[{"text":"Bilgi ve inceleme yöntemlerinin çeşitlenmesi"},{"text":"Yöntemler arasındaki farkların ortadan kalkması"},{"text":"Tüm çalışmaların aynı ölçeğe inmesi"},{"text":"Araştırma araçlarının azalması"}],"correct":0,"explanation":"Bilgi ve araştırma araçları çeşitlendikçe inceleme alanları derinleşir. Örneğin hücre ve doku ayrı uzmanlık alanlarına konu olur."},
   {"id":"Q11-05","number":5,"topic":"hafta-11","stem":"Dokuları mikroskopla inceleyen alan hangisidir?","options":[{"text":"Histoloji"},{"text":"Zooloji"},{"text":"Anatomi"},{"text":"Botanik"}],"correct":0,"explanation":"Histoloji, canlı dokuların mikroskobik yapısını inceler. Hücrenin yapısı ise sitolojinin konusudur."},
   {"id":"Q11-06","number":6,"topic":"hafta-11","stem":"Pepsin örneği hangi işlevi gösterir?","options":[{"text":"Kasın sinirle uyarılması"},{"text":"Işığın gözde kırılması"},{"text":"Proteinlerin midede parçalanması"},{"text":"Hücrede enerji üretilmesi"}],"correct":2,"explanation":"Pepsin, midede proteinleri daha küçük peptitlere parçalayan sindirim enzimlerinden biridir."},
-  {"id":"Q11-07","number":7,"topic":"hafta-11","stem":"Boşlukların tanrısı yaklaşımı yaratıcıya ne zaman başvurur?","options":[{"text":"Bilimsel açıklamanın bulunmadığı yerde"},{"text":"Bütün ölçümler tekrarlandığında"},{"text":"Deney koşulları değiştirildiğinde"},{"text":"Veri ortak birimle gösterildiğinde"}],"correct":0,"explanation":"Bu yaklaşım, bilimsel açıklamanın henüz kurulamadığı olaylarda açıklama olarak yaratıcıya başvurur."},
-  {"id":"Q11-08","number":8,"topic":"hafta-11","stem":"Higgs bozonunun adı hangi araştırma alanına aittir?","options":[{"text":"Jeoloji"},{"text":"Anatomi"},{"text":"Parçacık fiziği"},{"text":"Bitki fizyolojisi"}],"correct":2,"explanation":"Higgs bozonu bir temel parçacıktır. 2012’de CERN’deki ATLAS ve CMS deneyleri bu parçacığın gözlendiğini duyurdu."},
-  {"id":"Q11-09","number":9,"topic":"hafta-11","stem":"Whitehead’in süreç felsefesinde evren nasıl düşünülür?","options":[{"text":"Yalnızca dilsel kurallar bütünü olarak"},{"text":"Sürekli oluş içindeki bir süreç olarak"},{"text":"Sadece deney aletlerinin ürünü olarak"},{"text":"Değişmeyen nesneler toplamı olarak"}],"correct":1,"explanation":"Whitehead süreç felsefesinde gerçekliği oluş hâlindeki olaylar ve bunların ilişkileri üzerinden düşünür."},
-  {"id":"Q11-10","number":10,"topic":"hafta-11","stem":"Bilimsel paradigma neyi ifade eder?","options":[{"text":"Her araştırmacının kişisel beğenisini"},{"text":"Yalnızca ölçümün hata payını"},{"text":"Bir aygıtın kullanım kılavuzunu"},{"text":"Araştırmayı yönlendiren ortak çerçeveyi"}],"correct":3,"explanation":"Kuhn’un kullandığı anlamıyla paradigma, bir bilim topluluğunun paylaştığı örnekleri, yöntemleri ve kabulleri içeren çalışma çerçevesidir."},
-  {"id":"Q11-11","number":11,"topic":"hafta-11","stem":"Kuhn’un olağan bilim döneminde araştırmacılar ne yapar?","options":[{"text":"Araştırmayı ortak yöntemlerden ayırırlar"},{"text":"Bütün ölçümleri bırakırlar"},{"text":"Her sonuçla çerçeveyi değiştirirler"},{"text":"Ortak çerçeve içinde problemler çözerler"}],"correct":3,"explanation":"Olağan bilimde araştırmacılar, genel çerçeveyi benimseyerek o çerçeve içinde tanımlanan problemleri çözmeye çalışır."},
-  {"id":"Q11-12","number":12,"topic":"hafta-11","stem":"Kuhn’a göre bir paradigmada kriz ne zaman oluşabilir?","options":[{"text":"Yeni bir laboratuvar açıldığında"},{"text":"Bir kavram başka dile çevrildiğinde"},{"text":"Tek bir ölçüm yuvarlandığında"},{"text":"Açıklanamayan sonuçlar biriktiğinde"}],"correct":3,"explanation":"Yerleşik çerçeveyle açıklanamayan önemli sonuçlar biriktiğinde çerçevenin yeterliliği sorgulanabilir ve kriz doğabilir."},
-  {"id":"Q11-13","number":13,"topic":"hafta-11","stem":"Yeni bir bilimsel çerçeve kurulduğunda eski sonuçlar ne olabilir?","options":[{"text":"Her durumda tümüyle geçersiz olurlar"},{"text":"Sadece yeni adlarla kullanılabilirler"},{"text":"Geçerli oldukları alanda kullanılabilirler"},{"text":"Hiçbir koşulda tekrar incelenmezler"}],"correct":2,"explanation":"Yeni bir çerçeve önceki açıklamanın sınırlarını gösterebilir. Örneğin Newton mekaniği, düşük hızlarda ve zayıf kütleçekim alanlarında iyi bir yaklaşım verir."},
-  {"id":"Q11-14","number":14,"topic":"hafta-11","stem":"Newton hangi fizik açıklamasıyla öne çıkar?","options":[{"text":"Kuantum belirsizliği"},{"text":"Atom çekirdeği"},{"text":"Evrensel çekim"},{"text":"Görelilik"}],"correct":2,"explanation":"Newton evrensel çekim yasasıyla, örneğin bir cismin düşmesi ile gezegenlerin yörüngede dolanmasını aynı çekim ilkesiyle ilişkilendirdi."},
-  {"id":"Q11-15","number":15,"topic":"hafta-11","stem":"Yüksek rakımda suyun daha düşük sıcaklıkta kaynamasının nedeni nedir?","options":[{"text":"Hava basıncının düşmesi"},{"text":"Suyun donma noktasının artması"},{"text":"Havadaki oksijenin suya dönüşmesi"},{"text":"Yer çekiminin ortadan kalkması"}],"correct":0,"explanation":"Bir sıvı, buhar basıncı dış basınca ulaştığında kaynar. Yüksek rakımda dış basınç daha düşük olduğu için su daha düşük sıcaklıkta kaynar."},
-  {"id":"Q11-16","number":16,"topic":"hafta-11","stem":"Osmanlı eğitiminde mektep ve medrese ayrılığı neyi anlatır?","options":[{"text":"Bütün derslerin tek okulda toplanmasını"},{"text":"Mekteplerin dinî kurumlara dönüşmesini"},{"text":"Medreselerin tümünün aynı anda kapanmasını"},{"text":"Yeni ve eski kurumların yan yana gelişmesini"}],"correct":3,"explanation":"Osmanlı’da modern eğitim veren mektepler açılırken geleneksel medreseler de öğretime devam etti. Soruda bu iki kurum türünün birlikte varlığı kastedilir."},
-  {"id":"Q11-17","number":17,"topic":"hafta-11","stem":"Müderris atamalarında hangi durum ilmî seviyeyi düşürür?","options":[{"text":"Adayların bilgisine başvurulması"},{"text":"Görev için yeterliliğin aranması"},{"text":"Liyakat yerine imtiyazın belirleyici olması"},{"text":"Uzmanlık alanının dikkate alınması"}],"correct":2,"explanation":"Öğretme yeterliliği yerine aile bağı veya ayrıcalık gibi etkenlerin belirleyici olması, atamada ilmî liyakati zayıflatır."},
-  {"id":"Q11-18","number":18,"topic":"hafta-11","stem":"Mekteb-i Tıbbiye hangi alana yönelik bir kurumdur?","options":[{"text":"Askerî mühendislik"},{"text":"Tıp eğitimi"},{"text":"Diplomasi eğitimi"},{"text":"Hukuk eğitimi"}],"correct":1,"explanation":"Mekteb-i Tıbbiye, modern hekimlik ve cerrahi eğitimi vermek üzere gelişen Osmanlı okuludur."},
-  {"id":"Q11-19","number":19,"topic":"hafta-11","stem":"Bilim ile din arasında zorunlu karşıtlık gören yaklaşım hangisidir?","options":[{"text":"Uzmanlaşma"},{"text":"Olağan bilim"},{"text":"İki kitap modeli"},{"text":"Çatışma tezi"}],"correct":3,"explanation":"Çatışma tezi, bilim ve din ilişkisini tarih boyunca süren zorunlu bir karşıtlık olarak yorumlar."},
-  {"id":"Q11-20","number":20,"topic":"hafta-11","stem":"Ders notunda bilim ve din ilişkisi için hangi eğitim anlayışı önerilir?","options":[{"text":"Fen eğitimini tümüyle kaldırmak"},{"text":"Fen ve din bilimlerini birlikte değerlendirmek"},{"text":"Okulları yalnız teknik beceriye yöneltmek"},{"text":"Dinî düşünceyi araştırmadan ayırmak"}],"correct":1,"explanation":"Ders notunda fen bilimlerinin yöntemlerini öğrenmek ve bu bilginin anlamını dinî düşünceyle birlikte değerlendirmek önerilir."}
+  {"id":"Q11-08","number":7,"topic":"hafta-11","stem":"Higgs bozonunun adı hangi araştırma alanına aittir?","options":[{"text":"Jeoloji"},{"text":"Anatomi"},{"text":"Parçacık fiziği"},{"text":"Bitki fizyolojisi"}],"correct":2,"explanation":"Higgs bozonu bir temel parçacıktır. 2012’de CERN’deki ATLAS ve CMS deneyleri bu parçacığın gözlendiğini duyurdu."},
+  {"id":"Q11-09","number":8,"topic":"hafta-11","stem":"Whitehead’in süreç felsefesinde evren nasıl düşünülür?","options":[{"text":"Yalnızca dilsel kurallar bütünü olarak"},{"text":"Sürekli oluş içindeki bir süreç olarak"},{"text":"Sadece deney aletlerinin ürünü olarak"},{"text":"Değişmeyen nesneler toplamı olarak"}],"correct":1,"explanation":"Whitehead süreç felsefesinde gerçekliği oluş hâlindeki olaylar ve bunların ilişkileri üzerinden düşünür."},
+  {"id":"Q11-11","number":9,"topic":"hafta-11","stem":"Kuhn’un olağan bilim döneminde araştırmacılar ne yapar?","options":[{"text":"Araştırmayı ortak yöntemlerden ayırırlar"},{"text":"Bütün ölçümleri bırakırlar"},{"text":"Her sonuçla çerçeveyi değiştirirler"},{"text":"Ortak çerçeve içinde problemler çözerler"}],"correct":3,"explanation":"Olağan bilimde araştırmacılar, genel çerçeveyi benimseyerek o çerçeve içinde tanımlanan problemleri çözmeye çalışır."},
+  {"id":"Q11-12","number":10,"topic":"hafta-11","stem":"Kuhn’a göre bir paradigmada kriz ne zaman oluşabilir?","options":[{"text":"Yeni bir laboratuvar açıldığında"},{"text":"Bir kavram başka dile çevrildiğinde"},{"text":"Tek bir ölçüm yuvarlandığında"},{"text":"Açıklanamayan sonuçlar biriktiğinde"}],"correct":3,"explanation":"Yerleşik çerçeveyle açıklanamayan önemli sonuçlar biriktiğinde çerçevenin yeterliliği sorgulanabilir ve kriz doğabilir."},
+  {"id":"Q11-13","number":11,"topic":"hafta-11","stem":"Yeni bir bilimsel çerçeve kurulduğunda eski sonuçlar ne olabilir?","options":[{"text":"Her durumda tümüyle geçersiz olurlar"},{"text":"Sadece yeni adlarla kullanılabilirler"},{"text":"Geçerli oldukları alanda kullanılabilirler"},{"text":"Hiçbir koşulda tekrar incelenmezler"}],"correct":2,"explanation":"Yeni bir çerçeve önceki açıklamanın sınırlarını gösterebilir. Örneğin Newton mekaniği, düşük hızlarda ve zayıf kütleçekim alanlarında iyi bir yaklaşım verir."},
+  {"id":"Q11-14","number":12,"topic":"hafta-11","stem":"Newton hangi fizik açıklamasıyla öne çıkar?","options":[{"text":"Kuantum belirsizliği"},{"text":"Atom çekirdeği"},{"text":"Evrensel çekim"},{"text":"Görelilik"}],"correct":2,"explanation":"Newton evrensel çekim yasasıyla, örneğin bir cismin düşmesi ile gezegenlerin yörüngede dolanmasını aynı çekim ilkesiyle ilişkilendirdi."},
+  {"id":"Q11-15","number":13,"topic":"hafta-11","stem":"Yüksek rakımda suyun daha düşük sıcaklıkta kaynamasının nedeni nedir?","options":[{"text":"Hava basıncının düşmesi"},{"text":"Suyun donma noktasının artması"},{"text":"Havadaki oksijenin suya dönüşmesi"},{"text":"Yer çekiminin ortadan kalkması"}],"correct":0,"explanation":"Bir sıvı, buhar basıncı dış basınca ulaştığında kaynar. Yüksek rakımda dış basınç daha düşük olduğu için su daha düşük sıcaklıkta kaynar."},
+  {"id":"Q11-16","number":14,"topic":"hafta-11","stem":"Osmanlı eğitiminde mektep ve medrese ayrılığı neyi anlatır?","options":[{"text":"Bütün derslerin tek okulda toplanmasını"},{"text":"Mekteplerin dinî kurumlara dönüşmesini"},{"text":"Medreselerin tümünün aynı anda kapanmasını"},{"text":"Yeni ve eski kurumların yan yana gelişmesini"}],"correct":3,"explanation":"Osmanlı’da modern eğitim veren mektepler açılırken geleneksel medreseler de öğretime devam etti. Soruda bu iki kurum türünün birlikte varlığı kastedilir."},
+  {"id":"Q11-17","number":15,"topic":"hafta-11","stem":"Müderris atamalarında hangi durum ilmî seviyeyi düşürür?","options":[{"text":"Adayların bilgisine başvurulması"},{"text":"Görev için yeterliliğin aranması"},{"text":"Liyakat yerine imtiyazın belirleyici olması"},{"text":"Uzmanlık alanının dikkate alınması"}],"correct":2,"explanation":"Öğretme yeterliliği yerine aile bağı veya ayrıcalık gibi etkenlerin belirleyici olması, atamada ilmî liyakati zayıflatır."},
+  {"id":"Q11-18","number":16,"topic":"hafta-11","stem":"Mekteb-i Tıbbiye hangi alana yönelik bir kurumdur?","options":[{"text":"Askerî mühendislik"},{"text":"Tıp eğitimi"},{"text":"Diplomasi eğitimi"},{"text":"Hukuk eğitimi"}],"correct":1,"explanation":"Mekteb-i Tıbbiye, modern hekimlik ve cerrahi eğitimi vermek üzere gelişen Osmanlı okuludur."},
+  {"id":"Q11-20","number":17,"topic":"hafta-11","stem":"Ders notunda bilim ve din ilişkisi için hangi eğitim anlayışı önerilir?","options":[{"text":"Fen eğitimini tümüyle kaldırmak"},{"text":"Fen ve din bilimlerini birlikte değerlendirmek"},{"text":"Okulları yalnız teknik beceriye yöneltmek"},{"text":"Dinî düşünceyi araştırmadan ayırmak"}],"correct":1,"explanation":"Ders notunda fen bilimlerinin yöntemlerini öğrenmek ve bu bilginin anlamını dinî düşünceyle birlikte değerlendirmek önerilir."}
 ]);
