@@ -2439,10 +2439,10 @@ window.MUSKAM_DATA = {
       "id": "Q109",
       "number": 109,
       "topic": "hafta-8",
-      "stem": "Cündişâpûr hangi alanda öne çıkan bir ilim merkeziydi?",
+      "stem": "Cündişâpûr, tarihî kaynaklarda hangi alanla ilişkili olarak anılır?",
       "options": [
         {
-          "text": "Tıp öğretimi ve hastane"
+          "text": "Tıp ve tedavi"
         },
         {
           "text": "Mûsiki ve saz yapımı"
@@ -2455,7 +2455,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Cündişâpûr’da farklı kültürlerin tıp birikimi, tedavi ve eğitim çevresinde buluştu.",
+      "explanation": "Cündişâpûr, tıp tarihi kaynaklarında hekimler ve tedaviyle ilişkilendirilir. Erken dönemdeki hastane ve okulun kuruluşu ve yapısı hakkında tarihçiler arasında görüş ayrılıkları vardır.",
       "retiredChoice": 4
     },
     {
