@@ -162,7 +162,7 @@ window.MUSKAM_DATA = {
       "id": "Q007",
       "number": 7,
       "topic": "hafta-1",
-      "stem": "Kelâmda mucize, hangi iddiayı destekleyen olağanüstü olaydır?",
+      "stem": "Ehl-i sünnet kelâmındaki tanıma göre mucize, hangi iddiayı destekleyen olağanüstü olaydır?",
       "options": [
         {
           "text": "Âlimlik"
@@ -178,7 +178,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Mucize, peygamberlik iddiasının doğruluğuna işaret eden olağanüstü olaydır.",
+      "explanation": "Ehl-i sünnet kelâmında mucize, peygamberlik iddiasının doğruluğuna işaret eder. Şiî gelenekte ise bazı imamların olağanüstü hâlleri için de mucize ifadesi kullanılır.",
       "retiredChoice": 3
     },
     {
