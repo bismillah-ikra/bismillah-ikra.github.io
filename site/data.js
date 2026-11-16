@@ -105,11 +105,11 @@ window.MUSKAM_DATA = {
           "text": "Koleksiyonu yapım malzemelerine göre ayırmak"
         },
         {
-          "text": "Aletlerin çalışma biçimini göstermek"
+          "text": "İslâm bilim mirasını görsel olarak tanıtmak"
         }
       ],
       "correct": 3,
-      "explanation": "Usturlap ve su saati gibi aletlerin modelleri, çalışma ilkelerini somutlaştırır.",
+      "explanation": "Sezgin, tarihî aletlerin modelleriyle İslâm bilim ve teknoloji mirasını görünür kılmayı amaçladı. Modeller, bazı aletlerin çalışma ilkelerini anlamaya da yardımcı olur.",
       "retiredChoice": 3
     },
     {
