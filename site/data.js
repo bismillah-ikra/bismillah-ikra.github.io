@@ -2370,7 +2370,7 @@ window.MUSKAM_DATA = {
       "id": "Q106",
       "number": 106,
       "topic": "hafta-8",
-      "stem": "Abbâsîler döneminde tercüme ve araştırmayla öne çıkan Bağdat kurumu hangisidir?",
+      "stem": "Abbâsîler döneminde Bağdat’ta halifelerin kitap hazinesiyle ilişkilendirilen kurum hangisidir?",
       "options": [
         {
           "text": "Dârülhikme"
@@ -2386,7 +2386,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 2,
-      "explanation": "Beytülhikme, Bağdat’ta kitap, tercüme ve araştırma faaliyetleriyle anılır.",
+      "explanation": "Beytülhikme, Abbâsî halifelerinin Bağdat’taki kitap hazinesiyle ilişkilendirilir. Büyük bir tercüme merkezi olarak işleyip işlemediği araştırmacılar arasında tartışmalıdır.",
       "retiredChoice": 2
     },
     {
