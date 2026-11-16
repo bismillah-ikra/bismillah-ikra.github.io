@@ -484,7 +484,7 @@ window.MUSKAM_DATA = {
       "id": "Q021",
       "number": 21,
       "topic": "hafta-2",
-      "stem": "Genel bir kuraldan özel bir sonuca ulaşmaya ne denir?",
+      "stem": "Öncüller doğru kabul edildiğinde sonucun zorunlu olarak çıktığı akıl yürütme hangisidir?",
       "options": [
         {
           "text": "Sınıflama"
@@ -500,7 +500,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Tümdengelim, genel öncülleri belirli bir duruma uygulayabilir. Dedüksiyon adıyla da anılır.",
+      "explanation": "Geçerli bir tümdengelimde öncüller doğruysa sonuç yanlış olamaz. Genel bir kuralı belirli bir duruma uygulamak bunun bir örneğidir; bütün tümdengelimler bu biçimle sınırlı değildir.",
       "retiredChoice": 4
     },
     {
