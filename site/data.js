@@ -2327,20 +2327,20 @@ window.MUSKAM_DATA = {
       "stem": "İbnü’l-Avvâm’ın Kitâbü’l-Filâha adlı eserinin ana konusu nedir?",
       "options": [
         {
-          "text": "Hayvan hastalıkları ve tedavileri"
+          "text": "Denizcilik ve gemi yapımı"
         },
         {
           "text": "İlaç yapımı ve eczacılık"
         },
         {
-          "text": "Tarım ve bahçecilik"
+          "text": "Tarım ve hayvancılık"
         },
         {
           "text": "Coğrafya ve iklim sınıflaması"
         }
       ],
       "correct": 2,
-      "explanation": "İbnü’l-Avvâm, Kitâbü’l-Filâha’da bitki yetiştirme, bahçecilik ve tarımsal uygulamaları ele alır.",
+      "explanation": "İbnü’l-Avvâm, Kitâbü’l-Filâha’da bitki yetiştirme ve bahçeciliğin yanı sıra evcil hayvanların yetiştirilmesini de ele alır.",
       "retiredChoice": 4
     },
     {
