@@ -1427,7 +1427,7 @@ window.MUSKAM_DATA = {
       "id": "Q064",
       "number": 64,
       "topic": "hafta-5",
-      "stem": "Aristoteles’in felsefesinden yararlanarak akıl ile vahyi bağdaştıran skolastik düşünür kimdir?",
+      "stem": "Summa Theologiae eserinde akıl ve vahiy ilişkisini ele alan, Aristoteles üzerine de yorumlar yazan düşünür kimdir?",
       "options": [
         {
           "text": "Aquinalı Thomas"
@@ -1443,7 +1443,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Aquinalı Thomas, aklın ve vahyin farklı yollardan bilgi sağladığını düşünür.",
+      "explanation": "Aquinalı Thomas, Summa Theologiae’de akıl ve vahyin bilgiye katkısını inceler. Bazı dinî hakikatlerin yalnızca akılla bilinemeyeceğini savunur.",
       "retiredChoice": 4
     },
     {
