@@ -990,7 +990,7 @@ window.MUSKAM_DATA = {
       "id": "Q045",
       "number": 45,
       "topic": "hafta-3",
-      "stem": "Antropik ilke, gözlemcinin varlığı ile gözlem koşulları arasında nasıl bir ilişki kurar?",
+      "stem": "Zayıf antropik ilkeye göre gözlemcinin varlığı ile gözlem koşulları arasında nasıl bir ilişki vardır?",
       "options": [
         {
           "text": "Gözlem koşulları gözlemcinin varlığına göre şekillenir."
@@ -1006,7 +1006,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Gözlem yapabilen varlıkların bulunması, gözlem yapılan koşulların gözlemciye elverişli olmasını gerektirir.",
+      "explanation": "Zayıf antropik ilke, gözlemcilerin ancak var olabildikleri koşulları gözlemleyebileceğine dikkat çeker. Bu, gözlemcinin o koşulları oluşturduğu anlamına gelmez.",
       "retiredChoice": 3
     },
     {
