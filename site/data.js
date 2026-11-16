@@ -1404,7 +1404,7 @@ window.MUSKAM_DATA = {
       "id": "Q063",
       "number": 63,
       "topic": "hafta-5",
-      "stem": "Orta Çağ İslâm hastanelerinde tedavinin yanı sıra hangi işler yürütülürdü?",
+      "stem": "Bazı Orta Çağ İslâm hastanelerinde tedavinin yanı sıra hangi işler yürütülürdü?",
       "options": [
         {
           "text": "Salgın takibi ve sınır denetimi"
@@ -1420,7 +1420,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Bu hastaneler, tedavi ve ilaç hazırlama hizmetleriyle hekimlerin uygulamalı eğitimini bir araya getirebiliyordu.",
+      "explanation": "Bazı hastaneler tedavi ve ilaç hazırlama hizmetleriyle hekimlerin uygulamalı eğitimini bir araya getiriyordu. Kurumların görevleri her yerde aynı değildi.",
       "retiredChoice": 4
     },
     {
