@@ -2462,7 +2462,7 @@ window.MUSKAM_DATA = {
       "id": "Q110",
       "number": 110,
       "topic": "hafta-8",
-      "stem": "Astronomi ve matematikle tanınan Sâbit b. Kurre hangi şehirde doğdu?",
+      "stem": "Astronomi ve matematikle tanınan Sâbit b. Kurre, Bağdat’a gitmeden önce hangi şehir çevresiyle ilişkilidir?",
       "options": [
         {
           "text": "Kurtuba"
@@ -2478,7 +2478,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 2,
-      "explanation": "Sâbit b. Kurre Harran’da doğdu. Daha sonra Bağdat’ta matematik eğitimi aldı ve bilimsel çalışmalarını sürdürdü.",
+      "explanation": "Sâbit b. Kurre Harran çevresiyle ilişkilidir. Daha sonra Bağdat’ta Benî Mûsâ ile matematik çalıştı ve bilimsel çalışmalarını sürdürdü.",
       "retiredChoice": 4
     },
     {
