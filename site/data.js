@@ -1788,7 +1788,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 2,
-      "explanation": "Zehrâvî, et-Tasrîf’in cerrahi bölümünde işlemleri ve kullanılan aletleri görsellerle anlatır.",
+      "explanation": "Zehrâvî, et-Tasrîf’in cerrahi bölümünde işlemleri açıklar ve kullanılan aletlerin çizimlerine yer verir.",
       "retiredChoice": 4
     },
     {
