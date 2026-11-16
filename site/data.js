@@ -270,7 +270,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Tabiat kanunu, yer çekimi gibi olaylardaki düzenliliği ifade eder.",
+      "explanation": "Tabiat kanunu, belirli koşullarda doğa olayları arasındaki düzenli ilişkiyi ifade eder. Her gözlenen düzenlilik tek başına bir kanun değildir; kanunun kapsamı ve koşulları önemlidir.",
       "retiredChoice": 4
     },
     {
