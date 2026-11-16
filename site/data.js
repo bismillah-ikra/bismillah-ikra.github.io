@@ -1036,7 +1036,7 @@ window.MUSKAM_DATA = {
       "id": "Q047",
       "number": 47,
       "topic": "hafta-4",
-      "stem": "Eski Mısır’da Nil taşkınları sonrasında arazi sınırlarını yeniden belirlemek hangi alanı besledi?",
+      "stem": "Herodotos’un anlatımında Nil taşkınlarından sonra arazi ölçme ihtiyacı hangi alanla ilişkilendirilir?",
       "options": [
         {
           "text": "Dil bilgisi"
@@ -1052,7 +1052,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Arazi ölçümü, alan ve sınır hesabı için pratik geometriyi gerekli kıldı.",
+      "explanation": "Herodotos, Mısır’da taşkınlardan etkilenen arazilerin ölçülmesiyle geometriyi ilişkilendirir. Bu tarihî anlatı, geometrinin tek kökeninin bu olduğunu kesin olarak göstermez.",
       "retiredChoice": 4
     },
     {
