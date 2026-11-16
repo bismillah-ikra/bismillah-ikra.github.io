@@ -1749,7 +1749,7 @@ window.MUSKAM_DATA = {
       "id": "Q078",
       "number": 78,
       "topic": "hafta-6",
-      "stem": "Kataraktı içi boş ince bir aletle emme tekniği hangi hekimle anılır?",
+      "stem": "Kitâbü’l-Müntehab’da yumuşak kataraktı içi boş iğneyle emme uygulamasını anlatan hekim kimdir?",
       "options": [
         {
           "text": "Ammâr b. Ali el-Mevsılî"
@@ -1765,7 +1765,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Ammâr, Kitâbü’l-Müntehab adlı eserinde içi boş bir iğneyle emme tekniğini ve uygulama deneyimini anlatır.",
+      "explanation": "Ammâr b. Ali el-Mevsılî, Kitâbü’l-Müntehab’da içi boş iğneyle emme yöntemini tarif eder ve bu yöntemi kullandığını aktarır.",
       "retiredChoice": 0
     },
     {
