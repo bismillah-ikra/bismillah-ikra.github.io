@@ -2163,7 +2163,7 @@ window.MUSKAM_DATA = {
       "id": "Q097",
       "number": 97,
       "topic": "hafta-7",
-      "stem": "Denklem çözmeyi sistemleştiren el-Cebr ve’l-mukābele kimin eseridir?",
+      "stem": "Denklem çözümünü ele alan Kitâbü’l-Muhtasar fî Hisâbi’l-Cebr ve’l-Mukābele kimin eseridir?",
       "options": [
         {
           "text": "Hârizmî"
