@@ -2373,7 +2373,7 @@ window.MUSKAM_DATA = {
       "stem": "Abbâsîler döneminde Bağdat’ta halifelerin kitap hazinesiyle ilişkilendirilen kurum hangisidir?",
       "options": [
         {
-          "text": "Dârülhikme"
+          "text": "Sahn-ı Semân"
         },
         {
           "text": "Karaviyyîn"
