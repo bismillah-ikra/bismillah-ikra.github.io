@@ -2225,7 +2225,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Maddelerin özelliklerini inceleme, karışımları ayırma ve maddeleri işleme çalışmaları kimya tarihinin bir parçasıdır.",
+      "explanation": "Maddelerin özelliklerini inceleme ve karışımları ayırma çalışmaları kimya tarihinin bir parçasıdır. Câbir’e atfedilen metinlerin yazarlığı ve hangi dönemde yazıldığı araştırmacılar arasında tartışmalıdır.",
       "retiredChoice": 0
     },
     {
