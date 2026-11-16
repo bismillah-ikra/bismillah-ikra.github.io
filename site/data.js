@@ -1887,7 +1887,7 @@ window.MUSKAM_DATA = {
       "id": "Q084",
       "number": 84,
       "topic": "hafta-6",
-      "stem": "Kitâbü’l-Hayevân hangi bilgine aittir?",
+      "stem": "Aşağıdaki bilginlerden hangisi Kitâbü’l-Hayevân adlı eserinde hayvanlarla ilgili gözlem ve anlatılara yer vermiştir?",
       "options": [
         {
           "text": "Câhiz"
@@ -1903,7 +1903,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Câhiz, eserinde hayvanlara ilişkin gözlemlere ve anlatılara yer verir.",
+      "explanation": "Câhiz, Kitâbü’l-Hayevân adlı eserinde hayvanlara ilişkin gözlemlere ve anlatılara yer verir. Aynı ad, başka yazarların eserleri için de kullanılmıştır.",
       "retiredChoice": 4
     },
     {
