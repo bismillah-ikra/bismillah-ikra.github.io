@@ -461,7 +461,7 @@ window.MUSKAM_DATA = {
       "id": "Q020",
       "number": 20,
       "topic": "hafta-2",
-      "stem": "Bir önerme ve olumsuzu aynı sistemde birlikte ispatlanamıyorsa sistem hangi özelliğe sahiptir?",
+      "stem": "Bir sistemde hiçbir önerme ile onun olumsuzu birlikte ispatlanamıyorsa sistem hangi özelliğe sahiptir?",
       "options": [
         {
           "text": "Tutarlılık"
@@ -477,7 +477,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Tutarlı bir sistemde bir önerme ile onun olumsuzu birlikte ispatlanamaz.",
+      "explanation": "Tutarlı bir sistemde hiçbir önerme ile onun olumsuzu birlikte ispatlanamaz.",
       "retiredChoice": 0
     },
     {
