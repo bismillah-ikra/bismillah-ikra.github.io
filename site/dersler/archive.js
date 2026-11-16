@@ -8,6 +8,8 @@
     folder: '<path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
     arrow: '<path d="M4 12h15m-6-6 6 6-6 6"/>',
     back: '<path d="M20 12H5m6-6-6 6 6 6"/>',
+    openFile: '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2"/>',
+    download: '<path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4"/>',
     chevron: '<path d="m9 6 6 6-6 6"/>'
   };
   const main = document.getElementById('main');
@@ -97,6 +99,20 @@
       <section class="grid folder-grid" aria-label="Dersin dosya bölümleri">${cards}</section>`;
   }
 
+  function downloadActions(record) {
+    const fileName = esc(record.name);
+    const pdf = `<a class="file-action" href="${esc(record.url)}?v=${encodeURIComponent(record.version)}" download="${fileName}" aria-label="${fileName} PDF dosyasını indir">${icon('download')}PDF indir</a>`;
+    if (!record.wordUrl) return pdf;
+
+    return `<details class="file-download">
+      <summary class="file-action">${icon('download')}İndir${icon('chevron')}</summary>
+      <div class="file-download-options">
+        ${pdf}
+        <a class="file-action" href="${esc(record.wordUrl)}" download="${esc(record.wordName)}" aria-label="${fileName} özgün Word dosyasını indir">${icon('download')}Word indir</a>
+      </div>
+    </details>`;
+  }
+
   function showFolder(course, folder) {
     const records = forFolder(course, folder);
     const switches = Object.entries(folders).map(([key, value]) =>
@@ -108,9 +124,8 @@
           <span class="meta">${numberFormat.format(record.size / 1024)} KB</span>
         </div>
         <div class="file-actions">
-          <a href="./dersler/pdf.html?file=${encodeURIComponent(record.url)}&amp;version=${encodeURIComponent(record.version)}&amp;back=${encodeURIComponent(currentPage())}" aria-label="${esc(record.name)} dosyasını aç">Aç</a>
-          <a href="${esc(record.url)}?v=${encodeURIComponent(record.version)}" download="${esc(record.name)}" aria-label="${esc(record.name)} PDF dosyasını indir">PDF indir</a>
-          ${record.wordUrl ? `<a href="${esc(record.wordUrl)}" download="${esc(record.wordName)}" aria-label="${esc(record.name)} özgün Word dosyasını indir">Word indir</a>` : ''}
+          <a class="file-action file-open" href="./dersler/pdf.html?file=${encodeURIComponent(record.url)}&amp;version=${encodeURIComponent(record.version)}&amp;back=${encodeURIComponent(currentPage())}" aria-label="${esc(record.name)} dosyasını aç">${icon('openFile')}Aç</a>
+          ${downloadActions(record)}
         </div>
       </div>`).join('');
     let fileList;
@@ -160,6 +175,27 @@
     }
     if (/^#dersler(?:\/|$)/.test(location.hash)) render();
   }
+  function closeDownload(menu) {
+    if (menu.querySelector('.file-download-options').contains(document.activeElement)) {
+      menu.querySelector('summary').focus();
+    }
+    menu.open = false;
+  }
+
+  document.addEventListener('click', event => {
+    for (const menu of main.querySelectorAll('.file-download[open]')) {
+      if (!menu.contains(event.target) || event.target.closest('a[download]')) closeDownload(menu);
+    }
+  });
+  main.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const menu = event.target.closest('.file-download[open]');
+    if (menu) {
+      event.preventDefault();
+      closeDownload(menu);
+    }
+  });
+
   let fileRequestStarted = false;
   window.LessonArchive = {
     render() {

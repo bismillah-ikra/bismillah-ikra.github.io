@@ -38,7 +38,7 @@
 :root[data-page="dersler"] .folder-card { padding: 23px; min-height: 180px; }
 :root[data-page="dersler"] .folder-card h3 { font-size: 21px; }
 :root[data-page="dersler"] .folder-card .meta { font-size: 13px; }
-:root[data-page="dersler"] .switcher { display: inline-flex; flex-wrap: wrap; gap: 4px; margin: 0 0 18px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+:root[data-page="dersler"] .switcher { display: inline-flex; flex-direction: row; gap: 4px; margin: 0 0 18px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 :root[data-page="dersler"] .switcher a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 11px; min-height: 44px; border-radius: 7px; color: var(--navy); font-size: 13px; font-weight: 650; }
 :root[data-page="dersler"] .switcher a svg { width: 16px; height: 16px; }
 :root[data-page="dersler"] .switcher a:hover { background: var(--blue-soft); }
@@ -54,20 +54,58 @@
 :root[data-page="dersler"] .file-icon { background: #f7e8e2; color: #88463b; border-radius: 8px; min-width: 36px; padding: 7px 5px; font-size: 10px; font-weight: 800; text-align: center; }
 :root[data-page="dersler"] .file-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 :root[data-page="dersler"] .file-name strong { display: block; font-weight: 660; }
-:root[data-page="dersler"] .file-actions { display: flex; gap: 7px; flex: none; }
-:root[data-page="dersler"] .file-actions a { display: inline-flex; align-items: center; border: 1px solid var(--line); color: var(--navy); padding: 6px 10px; border-radius: 7px; font-weight: 650; min-height: 36px; font-size: 12px; }
-:root[data-page="dersler"] .file-actions a:hover { background: var(--blue-soft); }
+:root[data-page="dersler"] .file-actions { display: flex; align-items: start; gap: 8px; flex: none; }
+:root[data-page="dersler"] .file-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+}
+:root[data-page="dersler"] .file-action .icon { width: 16px; height: 16px; }
+:root[data-page="dersler"] .file-action:hover,
+:root[data-page="dersler"] .file-download[open] > summary { background: var(--blue-soft); }
+:root[data-page="dersler"] .file-open { background: var(--navy); border-color: var(--navy); color: #fff; }
+:root[data-page="dersler"] .file-open:hover { background: #354e6d; }
+:root[data-page="dersler"] .file-download { position: relative; }
+:root[data-page="dersler"] .file-download > summary { cursor: pointer; list-style: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+:root[data-page="dersler"] .file-download > summary::-webkit-details-marker { display: none; }
+:root[data-page="dersler"] .file-download > summary .icon:last-child { width: 12px; height: 12px; transform: rotate(90deg); }
+:root[data-page="dersler"] .file-download[open] > summary .icon:last-child { transform: rotate(-90deg); }
+:root[data-page="dersler"] .file-download-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 2;
+  width: max-content;
+  min-width: 140px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+:root[data-page="dersler"] .file-download-options .file-action { justify-content: flex-start; border: 0; padding-inline: 8px; }
 :root[data-page="dersler"] .empty { padding: 22px 19px; color: var(--muted); }
 @media (max-width: 700px) {
+  :root[data-page="dersler"] .switcher { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; max-width: 440px; margin-bottom: 12px; }
+  :root[data-page="dersler"] .switcher a { min-width: 0; min-height: 48px; padding: 6px 4px; font-size: 12px; line-height: 1.2; text-align: center; }
   :root[data-page="dersler"] .file { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: start; gap: 8px 12px; }
   :root[data-page="dersler"] .file-icon { grid-column: 1; }
   :root[data-page="dersler"] .file-name { grid-column: 2; min-width: 0; }
-  :root[data-page="dersler"] .file-actions { grid-column: 1 / -1; flex-wrap: wrap; min-width: 0; }
+  :root[data-page="dersler"] .file-actions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2px; }
+  :root[data-page="dersler"] .file-download-options { position: static; width: 100%; min-width: 0; margin-top: 4px; box-shadow: none; }
 }
 @media (max-width: 480px) {
   :root[data-page="dersler"] .archive-nav { flex-direction: column; align-items: flex-start; }
-  :root[data-page="dersler"] .switcher { display: flex; }
-  :root[data-page="dersler"] .switcher a { flex: 1 1 120px; text-align: center; }
   :root[data-page="dersler"] .card { padding: 13px; gap: 9px; }
   :root[data-page="dersler"] .card h3 { font-size: 14px; }
   :root[data-page="dersler"] .folder-grid { grid-template-columns: 1fr; }
@@ -75,6 +113,6 @@
 }
 :root[data-page="dersler"][data-theme="dark"] .card:hover { background: #273851; border-color: #91b0d8; }
 :root[data-page="dersler"][data-theme="dark"] .eyebrow { color: var(--gold); }
-:root[data-page="dersler"][data-theme="dark"] :is(.switcher a[aria-current], .button) { color: var(--bg); }
-:root[data-page="dersler"][data-theme="dark"] .button:hover { background: #e0ebfb; }
+:root[data-page="dersler"][data-theme="dark"] :is(.switcher a[aria-current], .button, .file-open) { color: var(--bg); }
+:root[data-page="dersler"][data-theme="dark"] :is(.button, .file-open):hover { background: #e0ebfb; }
 :root[data-page="dersler"][data-theme="dark"] .file-icon { background: #4b3033; color: #ffd2c7; }
