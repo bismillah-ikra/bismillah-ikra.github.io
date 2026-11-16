@@ -638,7 +638,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Hipotezden çıkarılan tahminlerin yeni gözlem ve deneylerle uyuşması, hipoteze destek sağlar.",
+      "explanation": "Tahminlerin gözlem ve deneylerle uyuşması hipoteze destek sağlayabilir; kanıtın niteliği ve alternatif açıklamalar da değerlendirilmelidir.",
       "retiredChoice": 4
     },
     {
