@@ -1105,7 +1105,7 @@ window.MUSKAM_DATA = {
       "id": "Q050",
       "number": 50,
       "topic": "hafta-4",
-      "stem": "Antik Yunan’da “Kendini tanı” ilkesiyle doğru yaşayış üzerinde duran düşünür kimdir?",
+      "stem": "Platon’un Sokrates’in Savunması adlı eserinde, sorgulanmamış yaşamın yaşamaya değmeyeceğini söyleyen filozof kimdir?",
       "options": [
         {
           "text": "Aristoteles"
@@ -1121,7 +1121,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Sokrates, kişinin kendisini ve davranışlarını sorgulamasını ahlâkî hayatla ilişkilendirir.",
+      "explanation": "Platon’un Sokrates’in Savunması eserinde Sokrates, erdemi ve yaşamı sorgulamanın önemini vurgular.",
       "retiredChoice": 3
     },
     {
