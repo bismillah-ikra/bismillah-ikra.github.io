@@ -829,7 +829,7 @@ window.MUSKAM_DATA = {
       "id": "Q038",
       "number": 38,
       "topic": "hafta-3",
-      "stem": "Bilim tarihinin tek ve değişmez bir yöntemle açıklanmasını eleştiren düşünür kimdir?",
+      "stem": "Yönteme Karşı (Against Method) adlı eserinde bilim için değişmez yöntem kurallarını eleştiren düşünür kimdir?",
       "options": [
         {
           "text": "A. J. Ayer"
@@ -845,7 +845,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 1,
-      "explanation": "Feyerabend, bilim tarihindeki yöntem çeşitliliğini vurgular.",
+      "explanation": "Paul Feyerabend, Yönteme Karşı adlı eserinde bilim tarihi boyunca istisnasız uygulanan yöntem kuralları bulunduğu görüşünü eleştirir.",
       "retiredChoice": 4
     },
     {
