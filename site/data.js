@@ -2094,7 +2094,7 @@ window.MUSKAM_DATA = {
       "id": "Q094",
       "number": 94,
       "topic": "hafta-7",
-      "stem": "Endülüs’teki erken uçuş denemesiyle anılan kişi kimdir?",
+      "stem": "Endülüs’te kendisine atfedilen uçuş girişimi rivayetiyle anılan kişi kimdir?",
       "options": [
         {
           "text": "Hezârfen Ahmed Çelebi"
@@ -2110,7 +2110,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 3,
-      "explanation": "Abbas İbn Firnâs, Endülüs’te yaptığı süzülme denemesiyle uçuş girişimleri tarihinde anılır.",
+      "explanation": "Abbas İbn Firnâs’a bir uçuş girişimi atfedilir; ancak olayın ve kullanılan düzeneğin ayrıntıları tarihî rivayetlere dayanır ve kesin olarak bilinmez.",
       "retiredChoice": 4
     },
     {
