@@ -369,7 +369,7 @@ window.MUSKAM_DATA = {
       "id": "Q016",
       "number": 16,
       "topic": "hafta-2",
-      "stem": "Bir çalışmayı gözlemden ayırıp deney hâline getiren özellik hangisidir?",
+      "stem": "Bir müdahale deneyini gözlemsel çalışmadan ayıran özellik hangisidir?",
       "options": [
         {
           "text": "Gözlenen olayın adlandırılması"
@@ -385,7 +385,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 2,
-      "explanation": "Deneyde araştırmacı bir etkinin sonucunu incelemek için koşulları planlı biçimde düzenler.",
+      "explanation": "Müdahale deneyinde araştırmacı, etkisini incelemek için bir koşulu planlı olarak değiştirir. Deney sırasında da gözlem ve ölçüm yapılır.",
       "retiredChoice": 2
     },
     {
