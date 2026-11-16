@@ -415,7 +415,7 @@ window.MUSKAM_DATA = {
       "id": "Q018",
       "number": 18,
       "topic": "hafta-2",
-      "stem": "Bir matematik sisteminde başlangıçta ispatlanmadan kabul edilen önermeye ne denir?",
+      "stem": "Bir matematik sisteminde başlangıçta ispatlanmadan kabul edilen bir önerme hangi rolü üstlenir?",
       "options": [
         {
           "text": "Teorem"
@@ -431,14 +431,14 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 1,
-      "explanation": "Aksiyom başlangıç önermesidir. Teorem, bu başlangıçlardan kurallara uygun biçimde ispatlanır.",
+      "explanation": "Aksiyom sistemin başlangıç kabulü olarak görev yapar. Teorem ise sistemde ispatı bulunan önermedir; bir aksiyom da kullanılan biçimsel sisteme göre teorem sayılabilir.",
       "retiredChoice": 4
     },
     {
       "id": "Q019",
       "number": 19,
       "topic": "hafta-2",
-      "stem": "Bir matematik sisteminde kurallara göre ispatlanan önermeye ne denir?",
+      "stem": "Bir matematik sisteminde başlangıç aksiyomu olarak seçilmeyen ve kurallara göre ispatlanan önermeye ne denir?",
       "options": [
         {
           "text": "Teorem"
@@ -454,7 +454,7 @@ window.MUSKAM_DATA = {
         }
       ],
       "correct": 0,
-      "explanation": "Teorem, kabul edilen önermelerden geçerli çıkarımlarla elde edilir.",
+      "explanation": "Teorem, sistemin kurallarına uygun bir ispatı bulunan önermedir. Başlangıç aksiyomlarının da teorem sayılıp sayılmaması kullanılan biçimsel tanıma bağlıdır.",
       "retiredChoice": 4
     },
     {
