@@ -527,7 +527,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1583);
+  assert.equal(counts,1623);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -665,7 +665,7 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   reloaded.nav(four+'analysis');
   assert.equal(reloaded.app.getState().history.length,1);
   reloaded.nav('sorular/kelam');
-  assert.match(reloaded.html(),/151 soru · 9 hafta/);
+  assert.match(reloaded.html(),/171 soru · 10 hafta/);
   assert.equal(reloaded.node('current-course-name').textContent,'Kelam');
   assert.equal(reloaded.node('extra-question-nav').hidden,true);
   reloaded.events.change({target:{id:'remember',checked:false}});
@@ -826,7 +826,7 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
   assert.match(h.node('bank-results').innerHTML,/237 soru listeleniyor/);
   h.nav('ders/kelam/academy');
-  assert.equal(navCount(),151);
+  assert.equal(navCount(),171);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
   assert.equal(navCount(),243);
 });
