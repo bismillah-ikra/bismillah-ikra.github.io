@@ -520,7 +520,11 @@
     const results=document.getElementById('bank-results');if(!results)return;
     const total=list.length+extras.length;
     const solve=list.length?btn(extras.length?'Ana soruları sırayla çöz':'Listelenen soruları çöz','filtered','','secondary'):'';
-    results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
+    const extraTopics=new Set(extras.map(q=>q.topic));
+    const testLinks=(datasets[extraId]?.topics||[])
+      .filter(topic=>topic.kind==='test'&&extraTopics.has(topic.id))
+      .map(topic=>`<a class="secondary" href="${esc(practiceHref('lesson/'+topic.id,extraId))}">${esc(topic.name)} ${icon('arrow')}</a>`).join('');
+    results.innerHTML=`<div class="list-summary"><span>${total} soru listeleniyor</span><div class="actions">${solve}${testLinks}</div></div><div class="bank-list">${total?list.map(q=>card(q)).join('')+extras.map(q=>card(q,extraId)).join(''):'<div class="empty"><h3>Eşleşen soru yok</h3><p>Filtreleri değiştirerek diğer soruları görebilirsin.</p></div>'}</div>`;
   }
   function bank(){
     if(!D.questions.length){main.innerHTML=emptyContent('TÜM SORULAR','Henüz soru eklenmedi','Yeni sorular burada listelenecek.');return;}
