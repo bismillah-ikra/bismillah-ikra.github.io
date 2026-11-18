@@ -255,6 +255,21 @@
         <span class="progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
       </a>`;
     });
+    const extraId=extraSetsByCourse.get(activeCourse), extra=datasets[extraId];
+    if(!isExtraSet()&&activeCourse===defaultCourse&&extra){
+      const topic=extra.topics.find(t=>t.id==='50-calisma-sorusu-gruba-atilan');
+      if(topic){
+        const questions=extra.questions.filter(q=>q.topic===topic.id);
+        const progress=loadCourseProgress(extraId);
+        const solved=questions.filter(q=>progress.records[q.id]).length;
+        const percent=questions.length?solved/questions.length*100:0;
+        cards.push(`<a class="week-card" href="${practiceHref('lesson/'+topic.id,extraId)}">
+          <span class="week-card-title"><strong>${esc(topic.name)}</strong>${icon('arrow')}</span>
+          <span class="week-card-count">${solved}/${questions.length} çözüldü</span>
+          <span class="progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
+        </a>`);
+      }
+    }
     return `<div class="week-grid">${cards.join('')}</div>`;
   }
   function runContinuation(){
