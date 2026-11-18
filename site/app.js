@@ -369,9 +369,10 @@
       </button>
       <div class="dua-islemler">
         <button type="button" class="dua-kopyala" data-action="toggle-prayer-copy" aria-label="Kopyalama seçenekleri" aria-expanded="false" aria-controls="prayer-copy-menu" title="Kopyala"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg></button>
-        <div class="dua-kopya-menu" id="prayer-copy-menu" hidden><strong>Kopyala</strong>
+        <div class="dua-kopya-menu" id="prayer-copy-menu" hidden><strong>Seçenekler</strong>
           <button type="button" data-action="copy-prayer-image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m4 17 5-5 4 4 3-3 4 4"></path></svg>Kart olarak kopyala</button>
           <button type="button" data-action="copy-prayer-text"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"></path></svg>Metin olarak kopyala</button>
+          <button type="button" data-action="download-prayer-image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v3h14v-3"></path></svg>Dua kartını indir</button>
         </div>
         <div class="dua-kart-yardim" id="prayer-image-help" hidden>
           <p id="prayer-image-message" role="status"></p>
@@ -828,16 +829,20 @@
     if(preparedPrayer===prayer&&preparedImage)return;
     preparedPrayer=prayer;preparedImage=null;
     const button=document.querySelector('[data-action="copy-prayer-image"]');
+    const download=document.querySelector('[data-action="download-prayer-image"]');
     if(button){button.disabled=true;button.lastChild.textContent='Kart hazırlanıyor…';}
+    if(download)download.disabled=true;
     try{
       const blob=await window.PrayerCardImage.render(prayer);
       if(request!==prepareRequest||prayers[prayerIndex]!==prayer)return;
       preparedImage=blob;
       if(button?.isConnected){button.disabled=false;button.lastChild.textContent='Kart olarak kopyala';}
+      if(download?.isConnected)download.disabled=false;
     }catch{
       if(request!==prepareRequest)return;
       preparedPrayer=null;
       if(button?.isConnected){button.disabled=false;button.lastChild.textContent='Kart olarak kopyala';}
+      if(download?.isConnected)download.disabled=false;
       toast('Kart hazırlanamadı. Lütfen tekrar dene.');
     }
   }
@@ -858,7 +863,7 @@
     }catch{if(preparedPrayer!==prayer||preparedImage!==blob)return;showImageHelp(false);toast('Görsel kopyalanamadı; kartı kaydetmeyi deneyebilirsin.');}
   }
   function savePrayerImage(){
-    if(!preparedImage)return;
+    if(preparedPrayer!==prayers[prayerIndex]||!preparedImage){toast('Kart hazırlanamadı. Menüyü yeniden açıp tekrar dene.');return;}
     try{
       const url=URL.createObjectURL(preparedImage),link=document.createElement('a');
       link.href=url;link.download='dua-karti.png';document.body.appendChild(link);link.click();link.remove();
@@ -869,6 +874,7 @@
     'toggle-prayer-copy':(_id,target)=>{const menu=document.getElementById('prayer-copy-menu');menu.hidden=!menu.hidden;target.setAttribute('aria-expanded',String(!menu.hidden));if(!menu.hidden)preparePrayerImage();},
     'copy-prayer-text':()=>{closePrayerMenu();return copyPrayer();},
     'copy-prayer-image':()=>{closePrayerMenu();return copyPrayerImage();},
+    'download-prayer-image':()=>{closePrayerMenu();return savePrayerImage();},
     'save-prayer-image':savePrayerImage,
     'start-quick-anyway':()=>start('quick',D.questions.map(q=>q.id)),
     'palette-toggle':()=>{paletteOpen=!paletteOpen;runView(route==='review');document.querySelector('.palette-toggle')?.focus();},
