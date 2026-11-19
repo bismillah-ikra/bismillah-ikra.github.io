@@ -243,6 +243,8 @@
   const heading=(label,title,text='',extra='')=>`<div class="page-head">${label?`<div class="eyebrow">${label}</div>`:''}<div class="heading-row"><h1>${title}</h1>${extra}</div>${text?`<p>${text}</p>`:''}</div>`;
   const emptyContent=(label,title,text)=>heading(label,title)+`<div class="empty"><p>${text}</p></div>`;
   const stats=items=>`<div class="stat-grid">${items.map(([value,label])=>`<div class="stat"><strong>${value}</strong><span>${label}</span></div>`).join('')}</div>`;
+  const originalImage=(url,alt)=>`<img class="original-source-image" src="${esc(url)}" alt="${esc(alt)}" loading="lazy">`;
+  const questionContent=q=>q.sourceImage?originalImage(q.sourceImage,`${q.number}. sorunun PDF görüntüsü`):rich(q.stem);
   const lessonLabel=i=>`${i+1}. Ders`;
   function weekCards(){
     const cards=D.topics.map(t=>{
@@ -258,6 +260,20 @@
     const extraId=extraSetsByCourse.get(activeCourse), extra=datasets[extraId];
     if(!isExtraSet()&&activeCourse===defaultCourse&&extra){
       const topic=extra.topics.find(t=>t.id==='50-calisma-sorusu-gruba-atilan');
+      if(topic){
+        const questions=extra.questions.filter(q=>q.topic===topic.id);
+        const progress=loadCourseProgress(extraId);
+        const solved=questions.filter(q=>progress.records[q.id]).length;
+        const percent=questions.length?solved/questions.length*100:0;
+        cards.push(`<a class="week-card" href="${practiceHref('lesson/'+topic.id,extraId)}">
+          <span class="week-card-title"><strong>${esc(topic.name)}</strong>${icon('arrow')}</span>
+          <span class="week-card-count">${solved}/${questions.length} çözüldü</span>
+          <span class="progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
+        </a>`);
+      }
+    }
+    if(!isExtraSet()&&activeCourse===defaultCourse&&extra){
+      const topic=extra.topics.find(t=>t.id==='245-soru-bankasi');
       if(topic){
         const questions=extra.questions.filter(q=>q.topic===topic.id);
         const progress=loadCourseProgress(extraId);
@@ -495,7 +511,7 @@
     const chosen=cardAnswers.get(answerKey),answered=cardAnswers.has(answerKey);
     return `<div class="bank-content">
         <div class="meta-line"><span class="badge">${esc(q.topicName)}</span><span class="number">${q.number}. soru</span>${extra?'<span class="tag">Ek sorular</span>':''}${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}</div>
-        <h3 id="question-${extra?'extra-':''}${q.id}">${rich(q.stem)}</h3>
+        <h3 id="question-${extra?'extra-':''}${q.id}">${questionContent(q)}</h3>
         ${optionList(q,chosen,{reveal:answered,disabled:answered,inline:true,extra})}
         ${answered?answerReview(q,chosen,true):''}
         ${r?`<div class="actions">${answered?btn('Yeniden çöz',extra?'extra-retry-card':'retry-card',q.id,'text-button'):extra?`<a class="text-button" href="${practiceHref('inspect/'+q.id,owner)}">Cevabımı incele</a>`:btn('Cevabımı incele','inspect',q.id,'text-button')}</div>`:''}
@@ -601,7 +617,7 @@
       let cls=chosen===i?' selected':'';
       if(reveal&&i===q.correct)cls+=' correct';
       else if(reveal&&chosen===i)cls+=' wrong';
-      return `<button class="option${cls}" data-action="${action}" data-id="${prefix}${i}" aria-pressed="${chosen===i}"${disabled?' disabled':''}><span class="letter">${letters[i]}</span><span class="option-copy"><span>${rich(o.text)}</span>${reveal&&i===q.correct?'<span class="status-text">✓ Doğru cevap</span>':reveal&&chosen===i?'<span class="status-text">× Yanlış seçimin</span>':''}</span></button>`;
+      return `<button class="option${cls}" data-action="${action}" data-id="${prefix}${i}" aria-pressed="${chosen===i}"${disabled?' disabled':''}>${o.sourceImage?'':`<span class="letter">${letters[i]}</span>`}<span class="option-copy"><span>${o.sourceImage?originalImage(o.sourceImage,`${letters[i]} seçeneğinin PDF görüntüsü`):rich(o.text)}</span>${reveal&&i===q.correct?'<span class="status-text">✓ Doğru cevap</span>':reveal&&chosen===i?'<span class="status-text">× Yanlış seçimin</span>':''}</span></button>`;
     }).join('')}</div>`;
   }
   function answerReview(q,chosen,inline=false){
@@ -616,7 +632,7 @@
   }
   function question(q,answers,indexLabel,reveal=false,readonly=false){
     const chosen=answers[q.id],answered=Object.hasOwn(answers,q.id);
-    return `<div class="question-panel"><div class="question-top"><span class="badge">${esc(q.topicName)}</span>${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}<span class="tag">${indexLabel}</span>${saveButton(q.originalId||q.id,q.owner||activeCourse)}</div><h2 class="question-stem">${rich(q.stem)}</h2>${optionList(q,chosen,{reveal,disabled:readonly})}
+    return `<div class="question-panel"><div class="question-top"><span class="badge">${esc(q.topicName)}</span>${q.difficulty?`<span class="tag">${esc(q.difficulty)}</span>`:''}${q.id.startsWith('P')?'<span class="tag">Pekiştirme</span>':''}<span class="tag">${indexLabel}</span>${saveButton(q.originalId||q.id,q.owner||activeCourse)}</div><h2 class="question-stem">${questionContent(q)}</h2>${optionList(q,chosen,{reveal,disabled:readonly})}
     ${reveal?answerReview(q,chosen):''}${!readonly&&answered?`<div class="actions">${btn('Cevabı kaldır','clear-answer','','text-button')}<span class="small-copy">Cevabını başka bir seçenekle değiştirebilirsin.</span></div>`:''}</div>`;
   }
   function runView(review=false){if(!run)return navigate('academy');const q=lookup[run.ids[run.index]],isExam=run.type==='exam',reveal=review||(!isExam&&Object.hasOwn(run.answers,q.id));

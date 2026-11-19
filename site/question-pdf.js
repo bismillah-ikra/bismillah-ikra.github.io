@@ -76,15 +76,15 @@
       arabicFont.glyphForCodePoint(ch.codePointAt(0)).id.toString(16).padStart(4,'0')).join(''));
     const width=1190, height=1684, margin=90, bottom=height-95;
     const canvas=document.createElement('canvas'); canvas.width=width; canvas.height=height;
-    const ctx=canvas.getContext('2d'); let y=0, page=0, textLines=[];
-    function blank() { ctx.fillStyle='#fff'; ctx.fillRect(0,0,width,height); y=margin; page++; textLines=[]; }
+    const ctx=canvas.getContext('2d'); let y=0, page=0, textLines=[], pageHasImage=false;
+    function blank() { ctx.fillStyle='#fff'; ctx.fillRect(0,0,width,height); y=margin; page++; textLines=[]; pageHasImage=false; }
     async function flush() {
       const pdfPage=pdf.addPage([595.28,841.89]);
       if (!sets) {
         ctx.fillStyle='#536173'; ctx.font='21px TestLatin, TestArabic, sans-serif'; ctx.fillText(String(page),width-margin-25,height-40);
         const picture=await pdf.embedJpg(canvas.toDataURL('image/jpeg',0.92));
         pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
-      } else if (textLines.some(line=>line.raster)) {
+      } else if (pageHasImage || textLines.some(line=>line.raster)) {
         const picture=await pdf.embedPng(canvas.toDataURL('image/png'));
         pdfPage.drawImage(picture,{x:0,y:0,width:595.28,height:841.89});
       }
@@ -162,6 +162,19 @@
       }
     }
     async function writeQuestion(q, i) {
+      if(q.sourceFull){
+        const image=new Image();
+        image.src=q.sourceFull;
+        await image.decode();
+        const scale=Math.min((width-2*margin)/image.naturalWidth,(bottom-margin-70)/image.naturalHeight);
+        const imageWidth=image.naturalWidth*scale, imageHeight=image.naturalHeight*scale;
+        await space(imageHeight+66);
+        await write((i+1)+'. soru',true);
+        ctx.drawImage(image,margin,y,imageWidth,imageHeight);
+        pageHasImage=true;
+        y+=imageHeight+24;
+        return;
+      }
       ctx.font='28px TestLatinBold, TestArabic, sans-serif';
       let heightNeeded=lines(`${i+1}. ${q.stem}`,width-2*margin).length*42+24;
       ctx.font='26px TestLatin, TestArabic, sans-serif';

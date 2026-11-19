@@ -1,4 +1,6 @@
 import { packWord } from '../word-archive.mjs';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 const word = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
@@ -54,6 +56,25 @@ const styles = '<w:styles xmlns:w="' + word + '">' +
   '</w:styles>';
 
 export function buildQuestionDocx(name, sets) {
+  const images = [];
+  function imageParagraph(question) {
+    if (!/^assets\/bank245\/full\/\d{3}\.jpg$/.test(question.sourceFull) ||
+        !(question.sourceWidth > 0 && question.sourceHeight > 0)) throw Error('Geçersiz soru görüntüsü');
+    const index=images.length+1;
+    const path=resolve(import.meta.dirname,'..','site',question.sourceFull);
+    images.push([`word/media/question-${index}.jpg`,readFileSync(path)]);
+    const scale=Math.min(5943600/question.sourceWidth, 7498080/question.sourceHeight);
+    const cx=Math.round(question.sourceWidth*scale),cy=Math.round(question.sourceHeight*scale);
+    return `<w:p><w:pPr><w:spacing w:after="120"/><w:keepLines/></w:pPr><w:r><w:drawing>
+      <wp:inline xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" distT="0" distB="0" distL="0" distR="0">
+      <wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${index}" name="Soru ${question.number}" descr="${question.number}. sorunun PDF görüntüsü"/>
+      <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+      <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+      <pic:nvPicPr><pic:cNvPr id="${index}" name="Soru ${question.number}"/><pic:cNvPicPr/></pic:nvPicPr>
+      <pic:blipFill><a:blip xmlns:r="${office}" r:embed="rId${index+1}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>
+      <pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr>
+      </pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`;
+  }
   const body = [
     paragraph(name, 'Title', { keepNext: true }),
     paragraph('Tüm çalışma soruları ve açıklamalı cevaplar', 'Subtitle', { keepNext: true })
@@ -63,9 +84,13 @@ export function buildQuestionDocx(name, sets) {
     for (const topic of set.topics) {
       body.push(paragraph(topic.name, 'Heading2', { keepNext: true }));
       for (const [index, question] of topic.questions.entries()) {
-        body.push(paragraph((index + 1) + '. ' + question.stem, 'Question', { keepNext: true }));
-        for (const [choice, option] of question.options.entries()) {
-          body.push(paragraph(answerLetters[choice] + ') ' + option.text, 'Option', { keepNext: choice < question.options.length - 1 }));
+        if (question.sourceFull) {
+          body.push(imageParagraph(question));
+        } else {
+          body.push(paragraph((index + 1) + '. ' + question.stem, 'Question', { keepNext: true }));
+          for (const [choice, option] of question.options.entries()) {
+            body.push(paragraph(answerLetters[choice] + ') ' + option.text, 'Option', { keepNext: choice < question.options.length - 1 }));
+          }
         }
       }
     }
@@ -99,6 +124,7 @@ export function buildQuestionDocx(name, sets) {
   const contentTypes = '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
     '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
     '<Default Extension="xml" ContentType="application/xml"/>' +
+    '<Default Extension="jpg" ContentType="image/jpeg"/>' +
     '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
     '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>' +
     '</Types>';
@@ -109,7 +135,10 @@ export function buildQuestionDocx(name, sets) {
     ['[Content_Types].xml', contentTypes],
     ['_rels/.rels', relationship('officeDocument', 'word/document.xml')],
     ['word/document.xml', document],
-    ['word/_rels/document.xml.rels', relationship('styles', 'styles.xml')],
+    ['word/_rels/document.xml.rels', '<Relationships xmlns="' + packageRelations + '">' +
+      '<Relationship Id="rId1" Type="' + office + '/styles" Target="styles.xml"/>' +
+      images.map((_,index)=>'<Relationship Id="rId'+(index+2)+'" Type="'+office+'/image" Target="media/question-'+(index+1)+'.jpg"/>').join('') +
+      '</Relationships>'],
     ['word/styles.xml', styles]
-  ].map(([part, content]) => [part, Buffer.from(xml + content, 'utf8')]));
+  ].map(([part, content]) => [part, Buffer.from(xml + content, 'utf8')]).concat(images));
 }

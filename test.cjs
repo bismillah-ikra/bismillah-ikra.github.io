@@ -527,7 +527,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1673);
+  assert.equal(counts,1918);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -634,7 +634,7 @@ test('Ana ve ek soru havuzları ile çözüm kayıtları ayrıdır',()=>{
   h.nav(four+'academy');
   assert.match(h.html(),/<h1>Ek sorular<\/h1>/);
   assert.match(h.html(),/href="#academy"[^>]*>[^]*?Ana sorulara dön/);
-  assert.match(h.html(),/97 soru · 10 başlık/);
+  assert.match(h.html(),/342 soru · 11 başlık/);
   assert.match(h.html(),/din-bilim-iliskisi-4-sikli\/lesson\/hafta-1/);
   assert.equal(h.app.getState().bookmarks.length,0);
   const mainLinks=[...h.node('nav').innerHTML.matchAll(/href="#([^"]+)"/g)].map(match=>match[1]);
@@ -704,17 +704,35 @@ test('Gruba atılan 50 soru ayrı başlıkta orijinal anahtarla çözülür',()=
   assert.match(h.html(),/50 \/ 50/);
   assert.match(h.html(),/Osman Bey - İznik/);
 });
+test('245 soruluk kaynak test görselleri ve anahtarıyla çalışır',()=>{
+  const h=harness(published,fakeStorage(),true);
+  const set='din-bilim-iliskisi-4-sikli', topic='245-soru-bankasi';
+  const questions=h.window.PAYLASIM_COURSE_DATA[set].questions.filter(q=>q.topic===topic);
+  assert.equal(questions.length,245);
+  assert.equal(new Set(questions.map(q=>q.id)).size,245);
+  assert.equal(questions.map(q=>'ABCD'[q.correct]).join(''),'BDBCBBAABBABAADBABBBABCABCBBABAAABBBBBBBBBBBAAABBCBABBABBCABABAABBBABBBAAAAACABBBBAAABAAAAAAAAAAAAAABABAAAAAAAAAABCAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAABBCBABABABBABBBAAAABBBBABAAAAAADAAABBAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+  assert.ok(questions.every(q=>q.sourceImage&&q.sourceFull&&q.options.every(o=>o.sourceImage)));
+  h.nav('academy');
+  assert.match(h.html(),/245 Çalışma Sorusu-Gruba atılan/);
+  h.nav('ders/'+set+'/lesson/'+topic);
+  assert.match(h.html(),/245 Çalışma Sorusu-Gruba atılan/);
+  h.app.actions['topic-quick'](topic);h.flush();
+  assert.equal(h.app.getRun().ids.length,245);
+  assert.match(h.html(),/assets\/bank245\/parts\/001-0.webp/);
+  h.app.actions.answer('1');h.flush();
+  assert.match(h.html(),/PDF cevap anahtarı B/);
+});
 test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);
   h.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi-4-sikli'].questions[0].id='S-01-02';
   h.nav('bank');
   h.events.change({target:{id:'remember',checked:true}});
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/287 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/532 soru listeleniyor/);
   assert.match(h.node('bank-results').innerHTML,/id="question-S-01-02"/);
   assert.match(h.node('bank-results').innerHTML,/id="question-extra-S-01-02"/);
   h.events.change({target:{name:'bank-source',value:'main',checked:false}});
-  assert.match(h.node('bank-results').innerHTML,/97 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/342 soru listeleniyor/);
   h.events.change({target:{name:'extra-bank-week',value:'hafta-1',checked:true}});
   assert.match(h.node('bank-results').innerHTML,/6 soru listeleniyor/);
   const item={innerHTML:'',querySelector:()=>({focus(){}})};
@@ -854,10 +872,10 @@ test('Tüm sorular menüsü ana ve ek soruların toplamını gösterir',()=>{
   assert.equal(navCount(),243);
   assert.match(h.node('bank-results').innerHTML,/243 soru listeleniyor/);
   h.nav('academy');
-  assert.equal(navCount(),287);
+  assert.equal(navCount(),532);
   h.nav('bank');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
-  assert.match(h.node('bank-results').innerHTML,/287 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/532 soru listeleniyor/);
   h.nav('ders/kelam/academy');
   assert.equal(navCount(),171);
   h.nav('ders/ornek-hadis-metinleri-ek/academy');
@@ -872,7 +890,7 @@ test('Mobil menü ve filtreler kapanır, seçimler filtre yeniden çizilince kor
   assert.equal(h.node('course-menu-toggle').attrs['aria-expanded'],'false');
   h.events.change({target:{name:'bank-source',value:'extra',checked:true}});
   assert.equal(h.document.documentElement.dataset.bankFilters,'open');
-  assert.match(h.node('bank-results').innerHTML,/287 soru listeleniyor/);
+  assert.match(h.node('bank-results').innerHTML,/532 soru listeleniyor/);
   h.node('course-menu-toggle').click();
   assert.equal(h.document.documentElement.dataset.bankFilters,'closed');
   h.node('course-filter-toggle').click();
@@ -937,7 +955,7 @@ test('Ders indirmeleri ana ve ek soru kümelerini PDF ve Word olarak sunar',()=>
     }
     h.nav('ders/ornek-hadis-metinleri-ek/bank');
     assert.ok(h.html().includes('href="./soru-word/ornek-hadis-metinleri.docx"'));
-    assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,97);
+    assert.equal(exported.find(c=>c.id==='din-bilim-iliskisi').sets[1].questions.length,342);
     assert.equal(exported.find(c=>c.id==='ornek-hadis-metinleri').sets[1].questions.length,27);
   }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });

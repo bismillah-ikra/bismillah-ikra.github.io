@@ -21,7 +21,8 @@ export async function openQuestionPdfBrowser(chrome, site, profile) {
         .end('<!doctype html><html lang="tr"><script src="/question-pdf.js"></script></html>');
       return;
     }
-    const type = assets.get(request.url);
+    const imagePath = /^\/assets\/bank245\/full\/\d{3}\.jpg$/.test(request.url);
+    const type = imagePath ? 'image/jpeg' : assets.get(request.url);
     if (!type) { response.writeHead(404).end(); return; }
     try {
       const body = await readFile(join(site, request.url.slice(1)));

@@ -61,7 +61,9 @@ try {
       for (const set of sets) {
         body += `<h2>${esc(set.name)}</h2>`;
         for (const { name, questions } of set.topics) {
-          body += `<h3>${esc(name)}</h3>` + questions.map((q,i) => `<section class="question"><strong>${i+1}. ${renderText(q.stem)}</strong><div class="options">${q.options.map((o,j) => `<div>${answerLetters[j]}) ${renderText(o.text)}</div>`).join('')}</div></section>`).join('');
+          body += `<h3>${esc(name)}</h3>` + questions.map((q,i) => q.sourceFull
+            ? `<section class="question"><img class="source-question" src="${esc(pathToFileURL(join(root, 'site', q.sourceFull)).href)}" alt="${i+1}. sorunun PDF görüntüsü"></section>`
+            : `<section class="question"><strong>${i+1}. ${renderText(q.stem)}</strong><div class="options">${q.options.map((o,j) => `<div>${answerLetters[j]}) ${renderText(o.text)}</div>`).join('')}</div></section>`).join('');
         }
       }
       body += '<div class="answers"><h2>Cevap Anahtarı</h2>';
@@ -91,7 +93,7 @@ try {
         @font-face{font-family:Arabic;src:url(data:font/ttf;base64,${arabic})} @page{size:A4;margin:17mm 19mm}
         body{font:10pt/1.42 Questions,sans-serif;color:#202a3b} h1{font-size:22pt;margin:0 0 4mm} .subtitle{color:#536173;margin-bottom:9mm}
         h2{font-size:15pt;margin:8mm 0 4mm;color:#253b62} h3{font-size:12pt;margin:6mm 0 3mm;color:#253b62;break-after:avoid}
-        .question{margin:0 0 3mm;break-inside:avoid} .options{margin:1mm 0 0 5mm} .options div{margin:1mm 0} bdi{font:1.18em Arabic;unicode-bidi:isolate}
+        .question{margin:0 0 3mm;break-inside:avoid} .source-question{display:block;max-width:100%;max-height:230mm;width:auto;height:auto} .options{margin:1mm 0 0 5mm} .options div{margin:1mm 0} bdi{font:1.18em Arabic;unicode-bidi:isolate}
         .answers{break-before:page}.answers p{line-height:1.8}
         .explanations :is(h2,h3,h4){break-after:avoid}
         .explanations h4{font-size:11pt;margin:5mm 0 2.5mm;color:#253b62}

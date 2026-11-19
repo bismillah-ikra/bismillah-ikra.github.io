@@ -206,3 +206,9 @@
   .palette button { min-width: 44px; min-height: 44px; }
   .palette-legend { font-size: 11px; gap: 6px 10px; margin: 10px 0 4px; }
 }
+
+.original-source-image {display:block;width:100%;height:auto;max-width:100%;background:#fff}
+.option-copy:has(.original-source-image){display:block;min-width:0;width:100%}
+.option:has(.original-source-image){padding:8px;overflow:hidden;grid-template-columns:minmax(0,1fr)}
+.option-copy:has(.original-source-image)>span:first-child{display:block;width:100%}
+.question-stem:has(.original-source-image),.bank-item h3:has(.original-source-image){padding:0;overflow:hidden;border-radius:4px}
