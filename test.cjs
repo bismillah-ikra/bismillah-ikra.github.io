@@ -90,7 +90,7 @@ function harness(data=D,localStorage=fakeStorage(),withImportedCourses=false){
   const files=['assets/theme.js','dersler/courses.js','model.js','prayers.js','app.js'];
   if(withImportedCourses)files.unshift('course-data.js');
   for(const file of files)vm.runInContext(fs.readFileSync('./dist/'+file,'utf8'),ctx);
-  return {nodes,node,window,document,events,intervals,app:window.MuskamApp,html:()=>node('main').innerHTML,
+  return {nodes,node,window,document,events,winEvents,intervals,app:window.MuskamApp,html:()=>node('main').innerHTML,
     nav(path){location.hash=path;winEvents.hashchange();},flush(){winEvents.hashchange();},advance(ms){now+=ms;intervals.forEach(fn=>fn());}};
 }
 
@@ -745,6 +745,35 @@ test('Ana ve ek sorular birlikte filtrelenir, kayıtlar karışmaz',()=>{
   reopened.window.PAYLASIM_COURSE_DATA['din-bilim-iliskisi-4-sikli'].questions[0].id='S-01-02';
   reopened.nav('ders/din-bilim-iliskisi-4-sikli/academy');
   assert.equal(reopened.app.getState().records['S-01-02'].lastAnswer,0);
+});
+test('Kayıt seçilmemiş eski sekme diğer sekmenin iznini ve ilerlemesini silmez',()=>{
+  const storage=fakeStorage(),oldTab=harness(published,storage,true),newTab=harness(published,storage,true);
+  newTab.nav('academy');
+  newTab.events.change({target:{id:'remember',checked:true}});
+  newTab.app.actions.bookmark(published.questions[0].id);
+  const before=storage.getItem('muskam-progress');
+  oldTab.nav('ders/hadis/academy');
+  oldTab.winEvents.pagehide();
+  assert.equal(storage.getItem('muskam-consent'),'yes');
+  assert.equal(storage.getItem('muskam-progress'),before);
+  const reopened=harness(published,storage,true);
+  reopened.nav('academy');
+  assert.equal(reopened.app.getConsent(),true);
+  assert.doesNotMatch(reopened.html(),/class="device-save"/);
+  assert.ok(reopened.app.getState().bookmarks.includes(published.questions[0].id));
+});
+test('Diğer sekmede kayıt kapatıldığında açık sekme kayıtları yeniden oluşturmaz',()=>{
+  const storage=fakeStorage(),first=harness(published,storage,true);
+  first.nav('academy');
+  first.events.change({target:{id:'remember',checked:true}});
+  const second=harness(published,storage,true);
+  first.nav('settings');
+  first.events.change({target:{id:'remember',checked:false}});
+  second.winEvents.storage({key:'muskam-consent',newValue:null});
+  second.winEvents.pagehide();
+  assert.equal(second.app.getConsent(),false);
+  assert.equal(storage.getItem('muskam-consent'),null);
+  assert.equal(storage.getItem('muskam-progress'),null);
 });
 test('Denemede ana ve ek başlıklar seçilir; kayıtlar yenilemede korunur',()=>{
   const storage=fakeStorage(),h=harness(published,storage,true);

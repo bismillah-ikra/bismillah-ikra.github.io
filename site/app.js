@@ -123,8 +123,9 @@
   const time=s=>{s=Math.max(0,Math.floor(s));return `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;};
   const date=ms=>new Date(ms).toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
   const wrongIds=(dataset=D,progress=state)=>dataset.questions.filter(q=>progress.records[q.id]?.lastCorrect===false).map(q=>q.id);
-  function save(allCourses=false){
+  function save(allCourses=false,clearStorage=false){
     if(run||Object.hasOwn(state,'activeRun'))state.activeRun=run;
+    if(!consent&&!clearStorage){refreshChrome();return true;}
     const ids=allCourses?(consent?[...courseProgress.keys()]:Object.keys(datasets)):[activeCourse];
     let saved=true;
     for(const id of ids){
@@ -147,10 +148,10 @@
       for(const qid of examRun.ids){const q=questions[qid];if(q.owner&&Object.hasOwn(examRun.answers,qid)){
         const extraProgress=loadCourseProgress(q.owner);
         M.record(extraProgress,{...q,id:q.originalId},examRun.answers[qid],examRun.times[qid]||0);
-        delete progress.records[qid];M.persist(storage,extraProgress,consent,progressKey(q.owner));
+        delete progress.records[qid];if(consent)M.persist(storage,extraProgress,true,progressKey(q.owner));
       }}
       progress.activeRun=examRun;
-      if(!M.persist(storage,progress,consent,progressKey(id)))toast('Deneme sonucu kaydedilemedi. Tarayıcı depolama alanını kontrol et.');
+      if(consent&&!M.persist(storage,progress,true,progressKey(id)))toast('Deneme sonucu kaydedilemedi. Tarayıcı depolama alanını kontrol et.');
     }
   }
   function toast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4000);}
@@ -1071,7 +1072,7 @@
       courseProgress.set(activeCourse,state);
       consent=false;
       run=null;
-      save(true);
+      save(true,true);
       render(false);
       toast('Çalışma kayıtları temizlendi.');
     })
@@ -1139,7 +1140,7 @@
       if(consent&&!el.checked)for(const id of Object.keys(datasets))loadCourseProgress(id);
       const previousConsent=consent;
       consent=el.checked;
-      const saved=save(true);
+      const saved=save(true,!consent);
       if(!saved){consent=previousConsent;el.checked=previousConsent;refreshChrome();return;}
       el.checked=consent;
       if(route==='settings'){
@@ -1160,7 +1161,15 @@
   document.getElementById('confirm-cancel').addEventListener('click',()=>{document.getElementById('confirm-dialog').close();confirmAction=null;});
   document.getElementById('confirm-ok').addEventListener('click',()=>{document.getElementById('confirm-dialog').close();const fn=confirmAction;confirmAction=null;if(fn)fn();});
   document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea')||coursePicker.open||document.getElementById('confirm-dialog').open)return;if(route==='run'&&run&&!run.finished&&/^[1-5]$/.test(e.key)){e.preventDefault();actions.answer(String(Number(e.key)-1));}});
-  window.addEventListener('storage',event=>{if(event.key===window.SiteTheme.key){theme=window.SiteTheme.get();refreshChrome();}});
+  window.addEventListener('storage',event=>{
+    if(event.key===window.SiteTheme.key){theme=window.SiteTheme.get();refreshChrome();}
+    if(event.key==='muskam-consent'&&event.newValue!=='yes'&&consent){
+      consent=false;
+      refreshChrome();
+      if(route==='academy')academy();
+      else if(route==='settings')settings();
+    }
+  });
   window.matchMedia?.('(min-width: 801px)').addEventListener?.('change',()=>{if(['run','review'].includes(route.split('/')[0])&&run)runView(route==='review');});
   window.addEventListener('hashchange',()=>render());
   window.addEventListener('pagehide',()=>{if(run&&!run.finished&&route==='run'&&!document.hidden)M.tick(run);save();});
