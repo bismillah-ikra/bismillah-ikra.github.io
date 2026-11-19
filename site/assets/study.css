@@ -96,6 +96,24 @@
     font-size: 14px;
     font-weight: 600;
   }
+  .course-menu-toggle {
+    min-height: 54px;
+    padding: 10px 15px;
+    border-color: #253b62;
+    border-radius: 10px;
+    background: #253b62;
+    color: #fff;
+    font-weight: 700;
+    text-align: left;
+  }
+  .course-menu-toggle:hover, .course-menu-toggle[aria-expanded="true"] {
+    background: #304c79;
+  }
+  :root[data-theme="dark"] .course-menu-toggle { border-color: #758bb0; }
+  .course-menu-toggle .course-menu-icon { flex: none; width: 18px; height: 18px; }
+  .course-menu-toggle span { flex: 1; min-width: 0; }
+  .course-menu-toggle .course-menu-chevron { flex: none; width: 18px; height: 18px; }
+  .course-menu-toggle[aria-expanded="true"] .course-menu-chevron { transform: rotate(180deg); }
   .sidebar:has(.course-filter-toggle[hidden]) .course-menu-toggle { grid-column: 1 / -1; }
   .course-menu-toggle[aria-expanded="false"] ~ .course-menu { display: none; }
   .course-filter-toggle[aria-expanded="true"] { background: var(--accent-soft); }
