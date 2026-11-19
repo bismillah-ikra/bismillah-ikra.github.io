@@ -667,6 +667,9 @@ a.course-picker-option:hover { background: var(--accent-soft); }
 .dua-kopya-menu strong { display:block; text-align:center; font:600 19px Georgia,serif; margin:0 0 12px; }
 .dua-kopya-menu button { display:flex; align-items:center; gap:12px; width:100%; min-height:48px; margin-top:8px; padding:9px 12px; border:1px solid var(--line); border-radius:10px; background:var(--paper); color:var(--ink); font-size:13px; font-weight:600; text-align:left; }
 .dua-kopya-menu button:hover { background:var(--accent-soft); }
+.source-box a { color:var(--accent); font-weight:600; text-decoration:none; }
+.source-box a:hover { background:var(--accent-soft); border-radius:4px; }
+.source-box p a::after, p.source-box a::after { content:" ↗"; }
 .dua-kopya-menu svg { width:20px; height:20px; }
 .dua-kart-yardim { order:3; max-width:320px; margin:10px 0 0; padding:12px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); text-align:left; }
 .dua-kart-yardim[hidden] { display:none; }

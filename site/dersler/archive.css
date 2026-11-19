@@ -35,7 +35,7 @@
 :root[data-page="dersler"] .arrow svg { width: 15px; height: 15px; }
 :root[data-page="dersler"] .page-head { margin: 12px 0 25px; }
 :root[data-page="dersler"] .page-head h1 { color: var(--navy); }
-:root[data-page="dersler"] .folder-card { padding: 23px; min-height: 180px; }
+:root[data-page="dersler"] .folder-card { padding: 23px; min-height: 180px; text-decoration: none; }
 :root[data-page="dersler"] .folder-card h3 { font-size: 21px; }
 :root[data-page="dersler"] .folder-card .meta { font-size: 13px; }
 :root[data-page="dersler"] .switcher { display: inline-flex; flex-direction: row; gap: 4px; margin: 0 0 18px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
@@ -43,7 +43,7 @@
 :root[data-page="dersler"] .switcher a svg { width: 16px; height: 16px; }
 :root[data-page="dersler"] .switcher a:hover { background: var(--blue-soft); }
 :root[data-page="dersler"] .switcher a[aria-current] { color: #fff8ed; background: var(--navy); }
-:root[data-page="dersler"] .button { border: 0; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; background: var(--navy); color: #fff; padding: 9px 14px; min-height: 41px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+:root[data-page="dersler"] .button { border: 0; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; background: var(--navy); color: #fff; padding: 9px 14px; min-height: 44px; font-size: 13px; font-weight: 700; white-space: nowrap; text-decoration: none; }
 :root[data-page="dersler"] .button:hover { background: #354e6d; }
 :root[data-page="dersler"] .button:disabled { opacity: .58; cursor: wait; }
 :root[data-page="dersler"] .practice-link { margin-top: 12px; }
