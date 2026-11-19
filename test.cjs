@@ -527,7 +527,7 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
   const h=harness(published,fakeStorage(),true),data=h.window.PAYLASIM_COURSE_DATA;
   assert.equal(Object.keys(data).length,11);
   const counts=Object.values(data).reduce((sum,course)=>sum+course.questions.length,0);
-  assert.equal(counts,1918);
+  assert.equal(counts,1938);
   for(const [id,course] of Object.entries(data)){
     const weeks=new Set(course.topics.map(topic=>topic.id));
     assert.equal(new Set(course.questions.map(q=>q.id)).size,course.questions.length,id);
@@ -542,6 +542,17 @@ test('Aktarılan sorular geçerli şıklar, cevap anahtarı ve açıklama içeri
       assert.doesNotMatch([question.stem, ...options, question.explanation].join(' '),/<\/?bdi\b/i,question.id);
     }
   }
+});
+test('Tefsir 10. hafta soruları listelenir ve cevaplanır',()=>{
+  const h=harness(published,fakeStorage(),true),set=h.window.PAYLASIM_COURSE_DATA.tefsir;
+  const questions=set.questions.filter(q=>q.topic==='hafta-10');
+  assert.equal(questions.length,20);
+  assert.equal(set.topics.filter(topic=>topic.id==='hafta-10').length,1);
+  assert.equal(questions[0].options[questions[0].correct].text,'Davranışları toplumun barış ve güvenini bozuyorsa');
+  h.nav('ders/tefsir/lesson/hafta-10');
+  assert.match(h.html(),/10\. Hafta/);
+  assert.match(h.html(),/20 soru/);
+  assert.ok(h.html().includes(questions[0].stem));
 });
 test('11. hafta soruları beş derste listelenir ve cevaplanır',()=>{
   const h=harness(published,fakeStorage(),true),sets=h.window.PAYLASIM_COURSE_DATA;
